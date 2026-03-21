@@ -1,0 +1,32 @@
+# Node
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+dist/
+*.egg-info/
+
+# Dart
+.dart_tool/
+build/
+
+# Swift
+.build/
+*.xcodeproj/
+
+# Kotlin/Gradle
+.gradle/
+build/
+
+# C#
+bin/
+obj/
+*.user
+
+# General
+.DS_Store
+.superpowers/
