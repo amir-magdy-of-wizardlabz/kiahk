@@ -4,7 +4,9 @@ Coptic calendar arithmetic — date conversion, Easter, and feast days. Ported t
 
 ## Build status
 
+[![js tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-js.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-js.yml)
 [![py tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-py.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-py.yml)
+[![go tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-go.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-go.yml)
 
 (Additional language badges added as their ports land — see `docs/superpowers/specs/2026-05-23-multi-language-ports-design.md`.)
 
@@ -13,8 +15,8 @@ Coptic calendar arithmetic — date conversion, Easter, and feast days. Ported t
 | Language | Directory | Status |
 | --- | --- | --- |
 | TypeScript | `js/` | reference port |
-| Python | `py/` | this PR |
-| Go | `go/` | planned |
+| Python | `py/` | released |
+| Go | `go/` | this PR |
 | Dart | `dart/` | planned |
 | Swift | `swift/` | planned |
 | C# | `csharp/` | planned |
