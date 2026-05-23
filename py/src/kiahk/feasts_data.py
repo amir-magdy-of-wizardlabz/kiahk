@@ -1,0 +1,96 @@
+"""Hand-maintained mirror of core/feasts.json. Keep order identical for test parity."""
+from __future__ import annotations
+
+from typing import Any
+
+FEASTS: list[dict[str, Any]] = [
+    {
+        "id": "nativity",
+        "names": {"en": "Nativity of Christ", "ar": "عيد الميلاد المجيد"},
+        "type": "fixed",
+        "category": "major",
+        "coptic_month": 4,
+        "coptic_day": 29,
+    },
+    {
+        "id": "epiphany",
+        "names": {"en": "Epiphany (Theophany)", "ar": "عيد الغطاس"},
+        "type": "fixed",
+        "category": "major",
+        "coptic_month": 5,
+        "coptic_day": 11,
+    },
+    {
+        "id": "annunciation",
+        "names": {"en": "Annunciation", "ar": "عيد البشارة"},
+        "type": "fixed",
+        "category": "major",
+        "coptic_month": 7,
+        "coptic_day": 29,
+    },
+    {
+        "id": "assumption",
+        "names": {"en": "Assumption of Mary", "ar": "عيد انتقال العذراء"},
+        "type": "fixed",
+        "category": "major",
+        "coptic_month": 12,
+        "coptic_day": 16,
+    },
+    {
+        "id": "cross",
+        "names": {"en": "Feast of the Cross", "ar": "عيد الصليب"},
+        "type": "fixed",
+        "category": "major",
+        "coptic_month": 1,
+        "coptic_day": 17,
+    },
+    {
+        "id": "nineveh_fast",
+        "names": {"en": "Nineveh Fast", "ar": "صوم نينوى"},
+        "type": "moveable",
+        "category": "major",
+        "easter_offset": -69,
+    },
+    {
+        "id": "great_lent",
+        "names": {"en": "Great Lent (start)", "ar": "بداية الصوم الكبير"},
+        "type": "moveable",
+        "category": "major",
+        "easter_offset": -55,
+    },
+    {
+        "id": "palm_sunday",
+        "names": {"en": "Palm Sunday", "ar": "أحد الشعانين"},
+        "type": "moveable",
+        "category": "major",
+        "easter_offset": -7,
+    },
+    {
+        "id": "easter",
+        "names": {"en": "Easter Sunday", "ar": "عيد القيامة المجيد"},
+        "type": "moveable",
+        "category": "major",
+        "easter_offset": 0,
+    },
+    {
+        "id": "ascension",
+        "names": {"en": "Ascension", "ar": "عيد الصعود"},
+        "type": "moveable",
+        "category": "major",
+        "easter_offset": 39,
+    },
+    {
+        "id": "pentecost",
+        "names": {"en": "Pentecost", "ar": "عيد العنصرة"},
+        "type": "moveable",
+        "category": "major",
+        "easter_offset": 49,
+    },
+]
+
+
+def by_id(feast_id: str) -> dict[str, Any]:
+    for f in FEASTS:
+        if f["id"] == feast_id:
+            return f
+    raise KeyError(f"unknown feast id: {feast_id}")
