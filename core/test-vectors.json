@@ -1,0 +1,50 @@
+{
+  "gregorian_to_coptic": [
+    { "gregorian": { "year": 2025, "month": 1,  "day": 11 }, "coptic": { "year": 1741, "month": 5,  "day": 2  } },
+    { "gregorian": { "year": 2025, "month": 9,  "day": 11 }, "coptic": { "year": 1742, "month": 1,  "day": 1  } },
+    { "gregorian": { "year": 2000, "month": 1,  "day": 1  }, "coptic": { "year": 1716, "month": 4,  "day": 22 } },
+    { "gregorian": { "year": 2024, "month": 12, "day": 25 }, "coptic": { "year": 1741, "month": 4,  "day": 15 } },
+    { "gregorian": { "year": 1900, "month": 1,  "day": 1  }, "coptic": { "year": 1616, "month": 4,  "day": 22 } }
+  ],
+  "coptic_to_gregorian": [
+    { "coptic": { "year": 1741, "month": 5,  "day": 2  }, "gregorian": { "year": 2025, "month": 1,  "day": 11 } },
+    { "coptic": { "year": 1742, "month": 1,  "day": 1  }, "gregorian": { "year": 2025, "month": 9,  "day": 11 } },
+    { "coptic": { "year": 1716, "month": 4,  "day": 22 }, "gregorian": { "year": 2000, "month": 1,  "day": 1  } },
+    { "coptic": { "year": 1741, "month": 4,  "day": 15 }, "gregorian": { "year": 2024, "month": 12, "day": 25 } }
+  ],
+  "easter": [
+    { "gregorian_year": 2025, "date": { "year": 2025, "month": 4,  "day": 20 } },
+    { "gregorian_year": 2026, "date": { "year": 2026, "month": 4,  "day": 5  } },
+    { "gregorian_year": 2027, "date": { "year": 2027, "month": 4,  "day": 25 } },
+    { "gregorian_year": 2028, "date": { "year": 2028, "month": 4,  "day": 16 } },
+    { "gregorian_year": 2029, "date": { "year": 2029, "month": 5,  "day": 6  } },
+    { "gregorian_year": 2030, "date": { "year": 2030, "month": 4,  "day": 21 } },
+    { "gregorian_year": 2031, "date": { "year": 2031, "month": 4,  "day": 13 } },
+    { "gregorian_year": 2032, "date": { "year": 2032, "month": 5,  "day": 2  } },
+    { "gregorian_year": 2033, "date": { "year": 2033, "month": 4,  "day": 17 } },
+    { "gregorian_year": 2034, "date": { "year": 2034, "month": 4,  "day": 9  } },
+    { "gregorian_year": 2035, "date": { "year": 2035, "month": 4,  "day": 29 } },
+    { "gregorian_year": 2036, "date": { "year": 2036, "month": 4,  "day": 20 } },
+    { "gregorian_year": 2037, "date": { "year": 2037, "month": 4,  "day": 5  } }
+  ],
+  "moveable_feasts": [
+    { "gregorian_year": 2025, "feast_id": "nineveh_fast", "date": { "year": 2025, "month": 2,  "day": 10 } },
+    { "gregorian_year": 2025, "feast_id": "palm_sunday",  "date": { "year": 2025, "month": 4,  "day": 13 } },
+    { "gregorian_year": 2025, "feast_id": "ascension",    "date": { "year": 2025, "month": 5,  "day": 29 } },
+    { "gregorian_year": 2025, "feast_id": "pentecost",    "date": { "year": 2025, "month": 6,  "day": 8  } },
+    { "gregorian_year": 2026, "feast_id": "nineveh_fast", "date": { "year": 2026, "month": 1,  "day": 26 } },
+    { "gregorian_year": 2026, "feast_id": "easter",       "date": { "year": 2026, "month": 4,  "day": 5  } }
+  ],
+  "invalid_coptic_dates": [
+    { "year": 1741, "month": 0,  "day": 1  },
+    { "year": 1741, "month": 14, "day": 1  },
+    { "year": 1741, "month": 1,  "day": 31 },
+    { "year": 1741, "month": 13, "day": 7  }
+  ],
+  "invalid_gregorian_dates": [
+    { "year": 2025, "month": 0,  "day": 1  },
+    { "year": 2025, "month": 13, "day": 1  },
+    { "year": 2025, "month": 2,  "day": 29 },
+    { "year": 2025, "month": 4,  "day": 31 }
+  ]
+}

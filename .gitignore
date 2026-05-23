@@ -30,3 +30,5 @@ obj/
 # General
 .DS_Store
 .superpowers/
+docs
+.claude
