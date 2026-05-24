@@ -12,7 +12,24 @@ license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "WizardLabz" }]
 maintainers = [{ name = "Amir Magdy" }]
-keywords = ["coptic", "calendar", "easter", "kiahk"]
+keywords = [
+  "coptic",
+  "calendar",
+  "easter",
+  "coptic-calendar",
+  "kiahk",
+  "kiahk-calendar",
+  "orthodox",
+  "feast",
+  "aboqty",
+  "قبطي",
+  "تقويم",
+  "كيهك",
+  "عيد",
+  "القيامة",
+  "القيامه",
+  "أبقطي",
+]
 classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.10",

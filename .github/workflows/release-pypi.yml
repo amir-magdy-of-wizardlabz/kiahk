@@ -1,0 +1,88 @@
+name: release-pypi
+
+# Publishes the py/ package to PyPI when a tag like v0.1.0 is pushed.
+# Uses PyPI's Trusted Publisher OIDC flow — no API token needed. The
+# repo must have a matching Trusted Publisher configured at
+# https://pypi.org/manage/account/publishing/ (Project: kiahk, Owner:
+# amir-magdy-of-wizardlabz, Repo: kiahk, Workflow: release-pypi.yml).
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to publish (e.g. v0.1.0). Leave empty when triggering via tag push."
+        required: false
+
+permissions:
+  contents: read
+  id-token: write  # required for PyPI Trusted Publisher (OIDC)
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Resolve release version
+        id: ver
+        shell: bash
+        run: |
+          REF="${{ github.event.inputs.tag || github.ref_name }}"
+          TAG="${REF#refs/tags/}"
+          VERSION="${TAG#v}"
+          echo "tag=$TAG"          >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION"  >> "$GITHUB_OUTPUT"
+          echo "Release tag:     $TAG"
+          echo "Release version: $VERSION"
+
+      - name: Verify tag matches pyproject.toml version
+        shell: bash
+        working-directory: py
+        run: |
+          PKG_VERSION=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          if [ "$PKG_VERSION" != "${{ steps.ver.outputs.version }}" ]; then
+            echo "::error::Tag version (${{ steps.ver.outputs.version }}) does not match pyproject.toml version ($PKG_VERSION)."
+            echo "Bump py/pyproject.toml version first, commit, then re-tag."
+            exit 1
+          fi
+          echo "Version match: $PKG_VERSION"
+
+      - name: Install build deps
+        working-directory: py
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade build
+
+      - name: Run tests
+        working-directory: py
+        run: |
+          python -m pip install -e ".[dev]"
+          python -m pytest -v
+
+      - name: Build sdist + wheel
+        working-directory: py
+        run: python -m build
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: py/dist/
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "### Published kiahk ${{ steps.ver.outputs.version }} to PyPI" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- PyPI: https://pypi.org/project/kiahk/${{ steps.ver.outputs.version }}/" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Install: \`pip install kiahk==${{ steps.ver.outputs.version }}\`" >> "$GITHUB_STEP_SUMMARY"
