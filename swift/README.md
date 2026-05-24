@@ -12,7 +12,7 @@ Add to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/amir-magdy-of-wizardlabz/kiahk.git", from: "0.1.0"),
+    .package(url: "https://github.com/amir-magdy-of-wizardlabz/kiahk.git", from: "0.1.3"),
 ],
 targets: [
     .target(name: "YourTarget", dependencies: [
@@ -21,7 +21,7 @@ targets: [
 ]
 ```
 
-> The Swift package lives at the **`swift/` subpath** of the repo. SwiftPM consumers may need to point the package URL at the subpath or wait for a tagged release that publishes the Swift package as the root of a dedicated `swift-vX.Y.Z` tag. See the release workflow in `docs/superpowers/specs/2026-05-23-multi-language-ports-design.md` §10.
+> The repository's `Package.swift` lives at the **repo root** so SwiftPM resolves the GitHub URL directly. The Swift sources themselves remain under `swift/Sources/Kiahk/` (referenced via the manifest's `path:` parameters) to preserve the multi-language repo layout.
 
 ## Quick start
 
@@ -115,7 +115,7 @@ Supported locales for `Feast.name(locale:)` and `CopticCalendar.monthName(month:
 ## Run tests
 
 ```bash
-cd swift
+# Run from the repo root (Package.swift lives there now)
 swift test
 ```
 
