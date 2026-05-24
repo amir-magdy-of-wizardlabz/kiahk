@@ -4,13 +4,21 @@
 
 # kiahk (Go)
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/amir-magdy-of-wizardlabz/kiahk/go.svg)](https://pkg.go.dev/github.com/amir-magdy-of-wizardlabz/kiahk/go)
+[![Go Report Card](https://goreportcard.com/badge/github.com/amir-magdy-of-wizardlabz/kiahk/go)](https://goreportcard.com/report/github.com/amir-magdy-of-wizardlabz/kiahk/go)
+[![license](https://img.shields.io/github/license/amir-magdy-of-wizardlabz/kiahk.svg)](../LICENSE)
+
 Coptic calendar arithmetic — date conversion, Easter, and feast days. Go port of [kiahk](https://github.com/amir-magdy-of-wizardlabz/kiahk). Identical results to all other ports against `core/test-vectors.json`.
+
+**Package:** <https://pkg.go.dev/github.com/amir-magdy-of-wizardlabz/kiahk/go>
 
 ## Install
 
 ```bash
 go get github.com/amir-magdy-of-wizardlabz/kiahk/go
 ```
+
+Released via subdirectory-prefixed tags (e.g. `go/v0.1.3`). `go get` resolves the latest automatically.
 
 ## Quick start
 

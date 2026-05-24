@@ -1,0 +1,85 @@
+name: release-pub
+
+# Publishes dart/ to pub.dev when a tag like v0.1.0 is pushed.
+# Uses pub.dev's OIDC automated-publishing flow — no API token to manage.
+# Requires automated publishing to be configured at:
+#   https://pub.dev/packages/kiahk/admin
+# (Repository: amir-magdy-of-wizardlabz/kiahk; tag pattern: v{{version}})
+#
+# Note: the very first kiahk release on pub.dev (0.1.3) is published manually
+# via `dart pub publish` from a developer machine to claim the package name.
+# This workflow takes over from v0.1.4 onwards.
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to publish (e.g. v0.1.4). Leave empty when triggering via tag push."
+        required: false
+
+permissions:
+  contents: read
+  id-token: write  # required for pub.dev OIDC publishing
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Set up Dart
+        uses: dart-lang/setup-dart@v1
+
+      - name: Resolve release version
+        id: ver
+        shell: bash
+        run: |
+          REF="${{ github.event.inputs.tag || github.ref_name }}"
+          TAG="${REF#refs/tags/}"
+          VERSION="${TAG#v}"
+          echo "tag=$TAG"          >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION"  >> "$GITHUB_OUTPUT"
+          echo "Release tag:     $TAG"
+          echo "Release version: $VERSION"
+
+      - name: Verify tag matches pubspec.yaml version
+        shell: bash
+        working-directory: dart
+        run: |
+          PKG_VERSION=$(awk '/^version:/ {print $2}' pubspec.yaml)
+          if [ "$PKG_VERSION" != "${{ steps.ver.outputs.version }}" ]; then
+            echo "::error::Tag version (${{ steps.ver.outputs.version }}) does not match dart/pubspec.yaml version ($PKG_VERSION)."
+            echo "Bump dart/pubspec.yaml version first, commit, then re-tag."
+            exit 1
+          fi
+          echo "Version match: $PKG_VERSION"
+
+      - name: Install
+        working-directory: dart
+        run: dart pub get
+
+      - name: Analyze
+        working-directory: dart
+        run: dart analyze
+
+      - name: Test
+        working-directory: dart
+        run: dart test
+
+      - name: Publish to pub.dev
+        working-directory: dart
+        run: dart pub publish --force
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "### Published kiahk ${{ steps.ver.outputs.version }} to pub.dev" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- pub.dev: https://pub.dev/packages/kiahk/versions/${{ steps.ver.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Install: \`dart pub add kiahk\`" >> "$GITHUB_STEP_SUMMARY"

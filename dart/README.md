@@ -4,7 +4,14 @@
 
 # kiahk (Dart)
 
+[![pub.dev version](https://img.shields.io/pub/v/kiahk.svg)](https://pub.dev/packages/kiahk)
+[![pub points](https://img.shields.io/pub/points/kiahk)](https://pub.dev/packages/kiahk/score)
+[![pub likes](https://img.shields.io/pub/likes/kiahk)](https://pub.dev/packages/kiahk/score)
+[![license](https://img.shields.io/github/license/amir-magdy-of-wizardlabz/kiahk.svg)](../LICENSE)
+
 Coptic calendar arithmetic — date conversion, Easter, and feast days. Dart port of [kiahk](https://github.com/amir-magdy-of-wizardlabz/kiahk). Identical results to all other ports against `core/test-vectors.json`.
+
+**Package:** <https://pub.dev/packages/kiahk>
 
 ## Install
 

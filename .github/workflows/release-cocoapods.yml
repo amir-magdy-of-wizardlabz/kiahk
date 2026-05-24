@@ -1,0 +1,70 @@
+name: release-cocoapods
+
+# Publishes Kiahk.podspec to the CocoaPods trunk on every v*.*.* tag.
+# Requires the COCOAPODS_TRUNK_TOKEN repo secret (the value of the
+# COCOAPODS_TRUNK_TOKEN env var from your `pod trunk register` session,
+# or `cat ~/.netrc | grep trunk.cocoapods.org` after registering).
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag (e.g. v0.1.4)."
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    # CocoaPods publish requires macOS — the trunk push needs a working
+    # `pod spec lint` which needs Xcode.
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Resolve release version
+        id: ver
+        shell: bash
+        run: |
+          REF="${{ github.event.inputs.tag || github.ref_name }}"
+          TAG="${REF#refs/tags/}"
+          VERSION="${TAG#v}"
+          echo "tag=$TAG"          >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION"  >> "$GITHUB_OUTPUT"
+
+      - name: Verify tag matches podspec version
+        shell: bash
+        run: |
+          PODSPEC_VERSION=$(grep -oE "s\.version\s*=\s*'[^']+'" Kiahk.podspec | sed -E "s/.*'(.+)'/\1/")
+          if [ "$PODSPEC_VERSION" != "${{ steps.ver.outputs.version }}" ]; then
+            echo "::error::Tag version (${{ steps.ver.outputs.version }}) does not match Kiahk.podspec version ($PODSPEC_VERSION)."
+            echo "Bump Kiahk.podspec first, commit, then re-tag."
+            exit 1
+          fi
+          echo "Version match: $PODSPEC_VERSION"
+
+      - name: Install CocoaPods
+        run: gem install cocoapods --no-document
+
+      - name: Lint podspec
+        run: pod spec lint Kiahk.podspec --allow-warnings
+
+      - name: Publish to CocoaPods trunk
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+        run: pod trunk push Kiahk.podspec --allow-warnings --skip-import-validation
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "### Published Kiahk ${{ steps.ver.outputs.version }} to CocoaPods" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- CocoaPods: https://cocoapods.org/pods/Kiahk" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Install (Podfile): \`pod 'Kiahk', '~> ${{ steps.ver.outputs.version }}'\`" >> "$GITHUB_STEP_SUMMARY"

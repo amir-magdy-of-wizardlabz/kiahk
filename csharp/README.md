@@ -4,7 +4,13 @@
 
 # Kiahk (C#)
 
+[![NuGet version](https://img.shields.io/nuget/v/Kiahk.svg)](https://www.nuget.org/packages/Kiahk/)
+[![NuGet downloads](https://img.shields.io/nuget/dt/Kiahk.svg)](https://www.nuget.org/packages/Kiahk/)
+[![license](https://img.shields.io/github/license/amir-magdy-of-wizardlabz/kiahk.svg)](../LICENSE)
+
 Coptic calendar arithmetic — date conversion, Easter, and feast days. C# port of [kiahk](https://github.com/amir-magdy-of-wizardlabz/kiahk). Identical results to all other ports against `core/test-vectors.json`.
+
+**Package:** <https://www.nuget.org/packages/Kiahk/>
 
 ## Install
 
