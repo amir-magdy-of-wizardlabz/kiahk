@@ -1,0 +1,25 @@
+# Node / npm
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Test / coverage
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+yarn-debug.log*
+
+# Lint / build caches
+.eslintcache
+.npm/
+.yarn/cache/
+.parcel-cache/
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
+*.swp

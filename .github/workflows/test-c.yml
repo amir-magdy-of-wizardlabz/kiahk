@@ -1,0 +1,54 @@
+name: c tests
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "c/**"
+      - "core/**"
+      - ".github/workflows/test-c.yml"
+  pull_request:
+    branches: [master]
+    paths:
+      - "c/**"
+      - "core/**"
+      - ".github/workflows/test-c.yml"
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        compiler: [gcc, clang]
+        exclude:
+          # macos-latest's gcc is actually a clang alias; skip the duplicate.
+          - os: macos-latest
+            compiler: gcc
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install CMake (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential
+
+      - name: Install CMake (macOS)
+        if: matrix.os == 'macos-latest'
+        run: brew install cmake
+
+      - name: Configure
+        working-directory: c
+        env:
+          CC: ${{ matrix.compiler }}
+        run: cmake -S . -B build
+
+      - name: Build
+        working-directory: c
+        run: cmake --build build
+
+      - name: Test
+        working-directory: c
+        run: ctest --test-dir build --output-on-failure

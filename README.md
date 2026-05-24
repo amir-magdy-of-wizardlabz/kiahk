@@ -14,6 +14,7 @@ Coptic calendar arithmetic — date conversion, Easter, and feast days. Ported t
 [![dart tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-dart.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-dart.yml)
 [![swift tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-swift.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-swift.yml)
 [![csharp tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-csharp.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-csharp.yml)
+[![c tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-c.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-c.yml)
 
 (Additional language badges added as their ports land — see `docs/superpowers/specs/2026-05-23-multi-language-ports-design.md`.)
 
@@ -26,8 +27,8 @@ Coptic calendar arithmetic — date conversion, Easter, and feast days. Ported t
 | Go | `go/` | released |
 | Dart | `dart/` | released |
 | Swift | `swift/` | released |
-| C# | `csharp/` | this PR |
-| C | `c/` | planned |
+| C# | `csharp/` | released |
+| C | `c/` | released |
 
 ## Canonical spec
 
