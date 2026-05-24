@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiahk Demo — Coptic Calendar</title>
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/amir-magdy-of-wizardlabz/kiahk/master/assets/kiahk.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <img src="https://raw.githubusercontent.com/amir-magdy-of-wizardlabz/kiahk/master/assets/kiahk.png" alt="Kiahk logo" width="96" height="96">
+    <h1>Kiahk Demo</h1>
+    <p class="tagline">Browser demo of the <a href="https://github.com/amir-magdy-of-wizardlabz/kiahk">kiahk</a> Coptic calendar library.</p>
+  </header>
+
+  <main>
+    <section id="converter">
+      <h2>1. Convert a Date</h2>
+      <p>Pick any Gregorian date to see its Coptic equivalent.</p>
+      <div class="control">
+        <label for="gregInput">Gregorian date</label>
+        <input type="date" id="gregInput">
+      </div>
+      <div id="copticOutput" class="output" aria-live="polite"></div>
+    </section>
+
+    <section id="feasts">
+      <h2>2. Feasts of the Year</h2>
+      <p>Enter a Gregorian year to see all major Coptic feasts that fall inside it.</p>
+      <div class="control">
+        <label for="yearInput">Gregorian year</label>
+        <input type="number" id="yearInput" value="2025" min="1900" max="2099" step="1">
+      </div>
+      <div id="feastsOutput" class="output" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      <a href="https://github.com/amir-magdy-of-wizardlabz/kiahk">View on GitHub</a>
+      &middot;
+      MIT &middot; Maintained by Amir Magdy at WizardLabz
+    </p>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
