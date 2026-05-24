@@ -9,7 +9,7 @@
 
     <!-- NuGet package metadata -->
     <PackageId>Kiahk</PackageId>
-    <Version>0.1.3</Version>
+    <Version>0.1.4</Version>
     <Authors>WizardLabz</Authors>
     <Company>WizardLabz</Company>
     <Description>Coptic calendar arithmetic — date conversion, Easter, and feast days.</Description>

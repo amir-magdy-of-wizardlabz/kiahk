@@ -6,6 +6,6 @@
 // and the Python port at py/. All ports must produce identical results
 // against core/test-vectors.json.
 //
-// Module path: github.com/amir-magdy-of-wizardlabz/kiahk/go
+// Module path: github.com/amir-magdy-of-wizardlabz/kiahk (go.mod at repo root).
 // Import the package as: import kiahk "github.com/amir-magdy-of-wizardlabz/kiahk/go"
 package kiahk

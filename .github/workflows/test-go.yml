@@ -5,12 +5,16 @@ on:
     branches: [master]
     paths:
       - "go/**"
+      - "go.mod"
+      - "go.sum"
       - "core/**"
       - ".github/workflows/test-go.yml"
   pull_request:
     branches: [master]
     paths:
       - "go/**"
+      - "go.mod"
+      - "go.sum"
       - "core/**"
       - ".github/workflows/test-go.yml"
 
@@ -28,10 +32,12 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
 
+      # go.mod is at repo root (module path:
+      # github.com/amir-magdy-of-wizardlabz/kiahk). The package code lives
+      # in go/ as a subpackage. Tests scope to ./go/... so future subpackages
+      # aren't accidentally pulled in.
       - name: go vet
-        working-directory: go
-        run: go vet ./...
+        run: go vet ./go/...
 
       - name: go test
-        working-directory: go
-        run: go test -v ./...
+        run: go test -v ./go/...

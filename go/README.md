@@ -15,10 +15,12 @@ Coptic calendar arithmetic — date conversion, Easter, and feast days. Go port 
 ## Install
 
 ```bash
-go get github.com/amir-magdy-of-wizardlabz/kiahk/go
+go get github.com/amir-magdy-of-wizardlabz/kiahk/go@latest
 ```
 
-Released via subdirectory-prefixed tags (e.g. `go/v0.1.3`). `go get` resolves the latest automatically.
+## Repo layout note
+
+`go.mod` lives at the repo root (module path `github.com/amir-magdy-of-wizardlabz/kiahk`); the package source lives in `go/` as a subpackage. This mirrors the multi-language pattern used by `Kiahk.podspec` (root) and `Package.swift` (root) with sources under their language-specific subdirectories. Same import path you'd expect, single repo-wide tag scheme (`v0.1.4`, `v0.1.5`, …) — no subdirectory tag prefixes.
 
 ## Quick start
 
