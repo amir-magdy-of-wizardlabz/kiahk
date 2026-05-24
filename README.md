@@ -38,6 +38,15 @@ Coptic calendar arithmetic — date conversion, Easter, and feast days. Ported t
 
 Every port must produce identical results against `core/test-vectors.json`.
 
+## Demo
+
+A small browser demo of the JS port lives in [`demo/`](demo/). It lets you:
+
+- Pick a Gregorian date and see its Coptic equivalent
+- Enter a Gregorian year and view every major Coptic feast (en + ar names)
+
+See [`demo/README.md`](demo/README.md) for how to run it locally (one `npm run build` in `js/`, then a static HTTP server).
+
 ## License
 
 Licensed under the [MIT License](LICENSE).
