@@ -16,6 +16,7 @@ Coptic calendar arithmetic — date conversion, Easter, and feast days. Ported t
 
 [![npm](https://img.shields.io/npm/v/kiahk.svg?label=npm&logo=npm)](https://www.npmjs.com/package/kiahk)
 [![PyPI](https://img.shields.io/pypi/v/kiahk.svg?label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/kiahk/)
+[![Packagist](https://img.shields.io/packagist/v/wizardlabz/kiahk.svg?label=Packagist&logo=packagist)](https://packagist.org/packages/wizardlabz/kiahk)
 [![pub.dev](https://img.shields.io/pub/v/kiahk.svg?label=pub.dev&logo=dart)](https://pub.dev/packages/kiahk)
 [![pkg.go.dev](https://img.shields.io/github/v/tag/amir-magdy-of-wizardlabz/kiahk?filter=v*&label=pkg.go.dev&logo=go)](https://pkg.go.dev/github.com/amir-magdy-of-wizardlabz/kiahk/go)
 [![NuGet](https://img.shields.io/nuget/v/Kiahk.svg?label=NuGet&logo=nuget)](https://www.nuget.org/packages/Kiahk/)
@@ -32,6 +33,7 @@ Coptic calendar arithmetic — date conversion, Easter, and feast days. Ported t
 [![swift tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-swift.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-swift.yml)
 [![csharp tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-csharp.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-csharp.yml)
 [![c tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-c.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-c.yml)
+[![php tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-php.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-php.yml)
 
 ## Ports & distributions
 
@@ -41,6 +43,7 @@ Same algorithms, same `core/test-vectors.json` contract, distributed through eac
 | --- | --- | --- | --- |
 | TypeScript / JavaScript | [`js/`](js/) | [![npm](https://img.shields.io/npm/v/kiahk.svg?label=npm)](https://www.npmjs.com/package/kiahk) | `npm install kiahk` |
 | Python | [`py/`](py/) | [![PyPI](https://img.shields.io/pypi/v/kiahk.svg?label=PyPI)](https://pypi.org/project/kiahk/) | `pip install kiahk` |
+| PHP | [`php/`](php/) | [![Packagist](https://img.shields.io/packagist/v/wizardlabz/kiahk.svg?label=Packagist)](https://packagist.org/packages/wizardlabz/kiahk) | `composer require wizardlabz/kiahk` |
 | Go | [`go/`](go/) | [![pkg.go.dev](https://pkg.go.dev/badge/github.com/amir-magdy-of-wizardlabz/kiahk/go.svg)](https://pkg.go.dev/github.com/amir-magdy-of-wizardlabz/kiahk/go) | `go get github.com/amir-magdy-of-wizardlabz/kiahk/go` |
 | Dart / Flutter | [`dart/`](dart/) | [![pub.dev](https://img.shields.io/pub/v/kiahk.svg?label=pub.dev)](https://pub.dev/packages/kiahk) | `dart pub add kiahk` |
 | Swift (SwiftPM) | [`swift/`](swift/) | [![SwiftPM](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Famir-magdy-of-wizardlabz%2Fkiahk%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/amir-magdy-of-wizardlabz/kiahk) | add `https://github.com/amir-magdy-of-wizardlabz/kiahk.git` to `Package.swift` |

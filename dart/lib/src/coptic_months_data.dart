@@ -1,8 +1,14 @@
 /// One entry of the Coptic month-name table
 /// (mirror of one entry in core/coptic_months.json).
 class CopticMonthRecord {
+  /// Coptic month number, 1..13.
   final int month;
+
+  /// Localized names of this month, keyed by ISO 639-1 locale code
+  /// (e.g. `'en'` → `'Koiak'`, `'ar'` → `'كيهك'`).
   final Map<String, String> names;
+
+  /// Construct a Coptic month record. Both [month] and [names] are required.
   const CopticMonthRecord({required this.month, required this.names});
 }
 

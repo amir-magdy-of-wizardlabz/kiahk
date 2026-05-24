@@ -8,8 +8,15 @@ bool _isCopticLeap(int y) => y % 4 == 3;
 
 /// A calendar date on the Coptic (Anno Martyrum) calendar.
 class CopticDate {
+  /// Coptic year (Anno Martyrum, AM). Year 1 begins 11 September 284 CE
+  /// (proleptic Gregorian).
   final int year;
+
+  /// Coptic month, 1..13. Months 1..12 have 30 days; month 13 (Nasie) has
+  /// 5 days (6 in leap years).
   final int month;
+
+  /// Day of month, 1..30 (1..5 or 1..6 for month 13 depending on leap rule).
   final int day;
 
   /// Construct and validate. Throws [InvalidCopticDateException] on bad input.
