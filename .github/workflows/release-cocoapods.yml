@@ -68,13 +68,24 @@ jobs:
       - name: Install CocoaPods
         run: gem install cocoapods --no-document
 
+      - name: Show Xcode + Swift versions (debugging)
+        run: |
+          xcode-select -p
+          xcodebuild -version
+          swift --version
+
+      # --swift-version=5.0 is required: the macos-14 runner's Xcode generates
+      # its CocoaPods test project with SWIFT_VERSION=6.0 by default, but the
+      # Xcode build-setting SWIFT_VERSION only accepts 4.0/4.2/5.0 (Swift 6 is
+      # a language mode toggle, not a SWIFT_VERSION value). Forcing 5.0 sidesteps
+      # the issue; the actual library code compiles fine under any 5.x+ compiler.
       - name: Lint podspec
-        run: pod spec lint Kiahk.podspec --allow-warnings
+        run: pod spec lint Kiahk.podspec --allow-warnings --swift-version=5.0
 
       - name: Publish to CocoaPods trunk
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
-        run: pod trunk push Kiahk.podspec --allow-warnings --skip-import-validation
+        run: pod trunk push Kiahk.podspec --allow-warnings --skip-import-validation --swift-version=5.0
 
       - name: Summary
         if: success()
