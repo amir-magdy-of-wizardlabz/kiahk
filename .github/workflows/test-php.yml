@@ -1,0 +1,44 @@
+name: php tests
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "php/**"
+      - "core/**"
+      - ".github/workflows/test-php.yml"
+  pull_request:
+    branches: [master]
+    paths:
+      - "php/**"
+      - "core/**"
+      - ".github/workflows/test-php.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version: ["8.1", "8.2", "8.3", "8.4"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: json, mbstring
+          coverage: none
+          tools: composer:v2
+
+      - name: Validate composer.json
+        working-directory: php
+        run: composer validate --strict --no-check-publish
+
+      - name: Install dependencies
+        working-directory: php
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Run phpunit
+        working-directory: php
+        run: vendor/bin/phpunit --display-warnings --display-deprecations

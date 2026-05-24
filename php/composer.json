@@ -1,0 +1,46 @@
+{
+    "name": "wizardlabz/kiahk",
+    "description": "Coptic calendar arithmetic — date conversion, Easter, and feast days. PHP port of kiahk.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "coptic", "calendar", "easter", "kiahk", "aboqty",
+        "قبطي", "تقويم", "كيهك", "عيد", "القيامة", "أبقطي"
+    ],
+    "homepage": "https://github.com/amir-magdy-of-wizardlabz/kiahk",
+    "support": {
+        "issues": "https://github.com/amir-magdy-of-wizardlabz/kiahk/issues",
+        "source": "https://github.com/amir-magdy-of-wizardlabz/kiahk"
+    },
+    "authors": [
+        {
+            "name": "Amir Magdy",
+            "email": "amir.magdy@wizardlabz.com",
+            "homepage": "https://wizardlabz.com",
+            "role": "Maintainer"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5 || ^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wizardlabz\\Kiahk\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Wizardlabz\\Kiahk\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
