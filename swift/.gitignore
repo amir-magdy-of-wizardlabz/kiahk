@@ -1,0 +1,12 @@
+.build/
+.swiftpm/
+Package.resolved
+*.xcodeproj/
+*.xcworkspace/
+DerivedData/
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
+*.swp

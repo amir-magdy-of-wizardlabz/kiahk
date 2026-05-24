@@ -12,6 +12,7 @@ Coptic calendar arithmetic — date conversion, Easter, and feast days. Ported t
 [![py tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-py.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-py.yml)
 [![go tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-go.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-go.yml)
 [![dart tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-dart.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-dart.yml)
+[![swift tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-swift.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-swift.yml)
 
 (Additional language badges added as their ports land — see `docs/superpowers/specs/2026-05-23-multi-language-ports-design.md`.)
 
@@ -22,8 +23,8 @@ Coptic calendar arithmetic — date conversion, Easter, and feast days. Ported t
 | TypeScript | `js/` | reference port |
 | Python | `py/` | released |
 | Go | `go/` | released |
-| Dart | `dart/` | this PR |
-| Swift | `swift/` | planned |
+| Dart | `dart/` | released |
+| Swift | `swift/` | this PR |
 | C# | `csharp/` | planned |
 | C | `c/` | planned |
 
