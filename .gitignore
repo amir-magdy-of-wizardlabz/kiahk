@@ -28,6 +28,12 @@ bin/
 obj/
 *.user
 
+# PHP / Composer (composer.json is the public Packagist source)
+/vendor/
+/composer.lock
+/.phpunit.cache/
+/.phpunit.result.cache
+
 # General
 .DS_Store
 .superpowers/

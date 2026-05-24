@@ -9,12 +9,12 @@
          cacheDirectory=".phpunit.cache">
     <testsuites>
         <testsuite name="kiahk">
-            <directory>tests</directory>
+            <directory>php/tests</directory>
         </testsuite>
     </testsuites>
     <source>
         <include>
-            <directory>src</directory>
+            <directory>php/src</directory>
         </include>
     </source>
 </phpunit>
