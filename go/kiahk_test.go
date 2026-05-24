@@ -35,13 +35,27 @@ type invalidDate struct {
 	Year, Month, Day int
 }
 
+type monthNameVec struct {
+	Month  int    `json:"month"`
+	Locale string `json:"locale"`
+	Name   string `json:"name"`
+}
+
+type monthLocaleVec struct {
+	Month  int    `json:"month"`
+	Locale string `json:"locale"`
+}
+
 type vectors struct {
-	GregorianToCoptic     []gregCoptic  `json:"gregorian_to_coptic"`
-	CopticToGregorian     []gregCoptic  `json:"coptic_to_gregorian"`
-	Easter                []easterVec   `json:"easter"`
-	MoveableFeasts        []moveableVec `json:"moveable_feasts"`
-	InvalidCopticDates    []invalidDate `json:"invalid_coptic_dates"`
-	InvalidGregorianDates []invalidDate `json:"invalid_gregorian_dates"`
+	GregorianToCoptic            []gregCoptic     `json:"gregorian_to_coptic"`
+	CopticToGregorian            []gregCoptic     `json:"coptic_to_gregorian"`
+	Easter                       []easterVec      `json:"easter"`
+	MoveableFeasts               []moveableVec    `json:"moveable_feasts"`
+	InvalidCopticDates           []invalidDate    `json:"invalid_coptic_dates"`
+	InvalidGregorianDates        []invalidDate    `json:"invalid_gregorian_dates"`
+	CopticMonthNames             []monthNameVec   `json:"coptic_month_names"`
+	InvalidCopticMonthLocales    []monthLocaleVec `json:"invalid_coptic_month_locales"`
+	InvalidCopticMonthsForName   []int            `json:"invalid_coptic_months_for_name"`
 }
 
 var v vectors
@@ -453,6 +467,88 @@ func TestYearFeastsIncludesEaster(t *testing.T) {
 		}
 	}
 	t.Fatal("Easter not found in YearFeasts(2025)")
+}
+
+// ----------------------------------------------------------------------
+// CopticMonths parity with core/coptic_months.json
+// ----------------------------------------------------------------------
+
+func TestCopticMonthsDataMatchesCoreJSON(t *testing.T) {
+	data, err := os.ReadFile(filepath.Join("..", "core", "coptic_months.json"))
+	if err != nil {
+		t.Fatalf("cannot read core/coptic_months.json: %v", err)
+	}
+	var core []map[string]any
+	if err := json.Unmarshal(data, &core); err != nil {
+		t.Fatalf("cannot parse core/coptic_months.json: %v", err)
+	}
+	if len(kiahk.CopticMonths) != len(core) {
+		t.Fatalf("len(CopticMonths)=%d, want %d", len(kiahk.CopticMonths), len(core))
+	}
+	for i, m := range kiahk.CopticMonths {
+		ref := core[i]
+		refMonth := int(ref["month"].(float64))
+		if m.Month != refMonth {
+			t.Errorf("[%d] month mismatch: got %d want %d", i, m.Month, refMonth)
+		}
+		refNames := ref["names"].(map[string]any)
+		if m.Names["en"] != refNames["en"].(string) {
+			t.Errorf("[%d] en mismatch: got %q want %q", i, m.Names["en"], refNames["en"])
+		}
+		if m.Names["ar"] != refNames["ar"].(string) {
+			t.Errorf("[%d] ar mismatch: got %q want %q", i, m.Names["ar"], refNames["ar"])
+		}
+	}
+}
+
+// ----------------------------------------------------------------------
+// CopticMonthName (vectors)
+// ----------------------------------------------------------------------
+
+func TestCopticMonthNameVectors(t *testing.T) {
+	for _, vec := range v.CopticMonthNames {
+		got, err := kiahk.CopticMonthName(vec.Month, vec.Locale)
+		if err != nil {
+			t.Errorf("CopticMonthName(%d, %q) error: %v", vec.Month, vec.Locale, err)
+			continue
+		}
+		if got != vec.Name {
+			t.Errorf("CopticMonthName(%d, %q) = %q, want %q", vec.Month, vec.Locale, got, vec.Name)
+		}
+	}
+}
+
+func TestCopticMonthNameRejectsInvalidMonth(t *testing.T) {
+	for _, bad := range v.InvalidCopticMonthsForName {
+		_, err := kiahk.CopticMonthName(bad, "en")
+		if err == nil {
+			t.Errorf("CopticMonthName(%d, en) returned nil error", bad)
+			continue
+		}
+		if !errors.Is(err, kiahk.ErrInvalidCopticMonth) {
+			t.Errorf("expected ErrInvalidCopticMonth sentinel, got %v", err)
+		}
+	}
+}
+
+func TestCopticMonthNameRejectsUnsupportedLocale(t *testing.T) {
+	for _, vec := range v.InvalidCopticMonthLocales {
+		_, err := kiahk.CopticMonthName(vec.Month, vec.Locale)
+		if err == nil {
+			t.Errorf("CopticMonthName(%d, %q) returned nil error", vec.Month, vec.Locale)
+			continue
+		}
+		if !errors.Is(err, kiahk.ErrUnsupportedLocale) {
+			t.Errorf("expected ErrUnsupportedLocale sentinel, got %v", err)
+		}
+	}
+}
+
+func TestInvalidCopticMonthErrorImplementsErrorAndIs(t *testing.T) {
+	err := &kiahk.InvalidCopticMonthError{Month: 99}
+	if !errors.Is(err, kiahk.ErrInvalidCopticMonth) {
+		t.Fatal("errors.Is(InvalidCopticMonthError, ErrInvalidCopticMonth) must be true")
+	}
 }
 
 func lessOrEqualDate(a, b kiahk.GregorianDate) bool {

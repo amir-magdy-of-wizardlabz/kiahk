@@ -10,5 +10,6 @@ export 'src/algorithms.dart';
 export 'src/gregorian_date.dart';
 export 'src/coptic_date.dart';
 export 'src/feasts_data.dart';
+export 'src/coptic_months_data.dart';
 export 'src/feast.dart';
 export 'src/coptic_calendar.dart';

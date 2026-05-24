@@ -7,3 +7,6 @@ export declare class InvalidGregorianDateException extends Error {
 export declare class UnsupportedLocaleException extends Error {
     constructor(locale: string);
 }
+export declare class InvalidCopticMonthException extends Error {
+    constructor(month: number);
+}

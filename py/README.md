@@ -45,6 +45,45 @@ for feast in CopticCalendar.year_feasts(2025):
     print(f"{g.year}-{g.month:02d}-{g.day:02d}  {feast.name('en')}")
 ```
 
+**Sample output:**
+
+```
+1741 5 3
+2025 9 11
+2025 4 20
+2025-01-07  Nativity of Christ
+2025-01-19  Epiphany (Theophany)
+2025-02-10  Nineveh Fast
+2025-02-24  Great Lent (start)
+2025-04-07  Annunciation
+2025-04-13  Palm Sunday
+2025-04-20  Easter Sunday
+2025-05-29  Ascension
+2025-06-08  Pentecost
+2025-08-22  Assumption of Mary
+2025-09-27  Feast of the Cross
+```
+
+## Render a date in English and Arabic
+
+The library exposes Coptic month names in `en` + `ar` via `CopticCalendar.month_name(month, locale)`. The full 13-entry table is also re-exported as `COPTIC_MONTHS` for callers that prefer raw data.
+
+```python
+from kiahk import GregorianDate, CopticCalendar
+
+g = GregorianDate(2025, 4, 20)
+c = g.to_coptic()
+print(f"{c.day} {CopticCalendar.month_name(c.month, 'en')} {c.year} AM")
+print(f"{c.day} {CopticCalendar.month_name(c.month, 'ar')} {c.year} للشهداء")
+```
+
+**Sample output:**
+
+```
+12 Parmouti 1741 AM
+12 برمودة 1741 للشهداء
+```
+
 ## API at a glance
 
 | Type / method | Purpose |
@@ -59,8 +98,10 @@ for feast in CopticCalendar.year_feasts(2025):
 | `CopticCalendar.easter_date(year)` → `GregorianDate` | Coptic Easter |
 | `CopticCalendar.moveable_feast(feast_id, year)` → `Feast` | One moveable feast |
 | `CopticCalendar.year_feasts(year)` → `list[Feast]` | All feasts, sorted ascending |
+| `CopticCalendar.month_name(month, locale)` → `str` | Coptic month name; raises `InvalidCopticMonthError` / `UnsupportedLocaleError` |
+| `COPTIC_MONTHS` | 13-entry list of dicts (mirrors `core/coptic_months.json`) |
 
-Supported locales for `Feast.name(...)`: `en`, `ar`.
+Supported locales for `Feast.name(...)` and `CopticCalendar.month_name(...)`: `en`, `ar`.
 
 ## Run tests
 

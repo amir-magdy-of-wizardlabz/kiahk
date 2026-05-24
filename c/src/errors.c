@@ -9,6 +9,7 @@ const char *kiahk_error_message(kiahk_error err) {
         case KIAHK_ERR_UNKNOWN_FEAST: return "unknown feast id";
         case KIAHK_ERR_NOT_MOVEABLE: return "feast is not moveable";
         case KIAHK_ERR_BUFFER_TOO_SMALL: return "output buffer too small";
+        case KIAHK_ERR_INVALID_COPTIC_MONTH: return "invalid coptic month (expected 1..13)";
         default: return "unknown error";
     }
 }

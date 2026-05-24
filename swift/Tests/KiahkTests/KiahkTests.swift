@@ -43,6 +43,15 @@ private struct InvalidDate: Decodable {
     let month: Int
     let day: Int
 }
+private struct MonthNameVec: Decodable {
+    let month: Int
+    let locale: String
+    let name: String
+}
+private struct MonthLocaleVec: Decodable {
+    let month: Int
+    let locale: String
+}
 private struct Vectors: Decodable {
     let gregorian_to_coptic: [GregCoptic]
     let coptic_to_gregorian: [GregCoptic]
@@ -50,6 +59,9 @@ private struct Vectors: Decodable {
     let moveable_feasts: [MoveableVec]
     let invalid_coptic_dates: [InvalidDate]
     let invalid_gregorian_dates: [InvalidDate]
+    let coptic_month_names: [MonthNameVec]
+    let invalid_coptic_month_locales: [MonthLocaleVec]
+    let invalid_coptic_months_for_name: [Int]
 }
 
 private let vectors: Vectors = {
@@ -394,5 +406,61 @@ final class CopticCalendarYearFeastsTests: XCTestCase {
         if a.year != b.year { return a.year < b.year }
         if a.month != b.month { return a.month < b.month }
         return a.day <= b.day
+    }
+}
+
+// ----------------------------------------------------------------------
+// kCopticMonths parity with core/coptic_months.json
+// ----------------------------------------------------------------------
+
+final class CopticMonthsDataTests: XCTestCase {
+    func testMatchesCoreCopticMonthsJSON() throws {
+        let url = coreDir.appendingPathComponent("coptic_months.json")
+        let data = try Data(contentsOf: url)
+        let core = try JSONSerialization.jsonObject(with: data) as! [[String: Any]]
+
+        XCTAssertEqual(kCopticMonths.count, core.count)
+        for (i, m) in kCopticMonths.enumerated() {
+            let ref = core[i]
+            XCTAssertEqual(m.month, ref["month"] as? Int, "month [\(i)]")
+            let refNames = ref["names"] as! [String: String]
+            XCTAssertEqual(m.names["en"], refNames["en"], "en [\(i)]")
+            XCTAssertEqual(m.names["ar"], refNames["ar"], "ar [\(i)]")
+        }
+    }
+}
+
+// ----------------------------------------------------------------------
+// CopticCalendar.monthName
+// ----------------------------------------------------------------------
+
+final class CopticCalendarMonthNameTests: XCTestCase {
+    func testVectors() throws {
+        for vec in vectors.coptic_month_names {
+            let got = try CopticCalendar.monthName(month: vec.month, locale: vec.locale)
+            XCTAssertEqual(got, vec.name, "month \(vec.month) locale \(vec.locale)")
+        }
+    }
+
+    func testRejectsInvalidMonth() {
+        for bad in vectors.invalid_coptic_months_for_name {
+            XCTAssertThrowsError(try CopticCalendar.monthName(month: bad, locale: "en")) { err in
+                guard case KiahkError.invalidCopticMonth = err else {
+                    XCTFail("expected .invalidCopticMonth for \(bad), got \(err)")
+                    return
+                }
+            }
+        }
+    }
+
+    func testRejectsUnsupportedLocale() {
+        for vec in vectors.invalid_coptic_month_locales {
+            XCTAssertThrowsError(try CopticCalendar.monthName(month: vec.month, locale: vec.locale)) { err in
+                guard case KiahkError.unsupportedLocale = err else {
+                    XCTFail("expected .unsupportedLocale for \(vec), got \(err)")
+                    return
+                }
+            }
+        }
     }
 }

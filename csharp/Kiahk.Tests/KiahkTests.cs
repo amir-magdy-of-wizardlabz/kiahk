@@ -38,13 +38,18 @@ internal sealed record YMD(int Year, int Month, int Day);
 internal sealed record GregCoptic(YMD Gregorian, YMD Coptic);
 internal sealed record EasterVec(int Gregorian_Year, YMD Date);
 internal sealed record MoveableVec(int Gregorian_Year, string Feast_Id, YMD Date);
+internal sealed record MonthNameVec(int Month, string Locale, string Name);
+internal sealed record MonthLocaleVec(int Month, string Locale);
 internal sealed record Vectors(
     GregCoptic[] Gregorian_To_Coptic,
     GregCoptic[] Coptic_To_Gregorian,
     EasterVec[] Easter,
     MoveableVec[] Moveable_Feasts,
     YMD[] Invalid_Coptic_Dates,
-    YMD[] Invalid_Gregorian_Dates);
+    YMD[] Invalid_Gregorian_Dates,
+    MonthNameVec[] Coptic_Month_Names,
+    MonthLocaleVec[] Invalid_Coptic_Month_Locales,
+    int[] Invalid_Coptic_Months_For_Name);
 
 internal static class TestVectors
 {
@@ -425,5 +430,74 @@ public class CopticCalendarYearFeastsTests
         if (a.Year != b.Year) return a.Year < b.Year;
         if (a.Month != b.Month) return a.Month < b.Month;
         return a.Day <= b.Day;
+    }
+}
+
+// ----------------------------------------------------------------------
+// CopticMonthsData parity with core/coptic_months.json
+// ----------------------------------------------------------------------
+
+public class CopticMonthsDataTests
+{
+    [Fact]
+    public void MatchesCoreCopticMonthsJson()
+    {
+        var path = Path.Combine(Paths.CoreDir, "coptic_months.json");
+        var json = File.ReadAllText(path);
+        using var doc = JsonDocument.Parse(json);
+        var core = doc.RootElement;
+
+        Assert.Equal(core.GetArrayLength(), CopticMonthsData.Months.Count);
+        for (int i = 0; i < CopticMonthsData.Months.Count; i++)
+        {
+            var m = CopticMonthsData.Months[i];
+            var refEl = core[i];
+            Assert.Equal(refEl.GetProperty("month").GetInt32(), m.Month);
+            var refNames = refEl.GetProperty("names");
+            Assert.Equal(refNames.GetProperty("en").GetString(), m.Names["en"]);
+            Assert.Equal(refNames.GetProperty("ar").GetString(), m.Names["ar"]);
+        }
+    }
+}
+
+// ----------------------------------------------------------------------
+// CopticCalendar.MonthName
+// ----------------------------------------------------------------------
+
+public class CopticCalendarMonthNameTests
+{
+    public static IEnumerable<object[]> Vectors() =>
+        TestVectors.V.Coptic_Month_Names.Select(v => new object[]
+        {
+            v.Month, v.Locale, v.Name,
+        });
+
+    [Theory]
+    [MemberData(nameof(Vectors))]
+    public void Vectors_Match(int month, string locale, string name)
+    {
+        Assert.Equal(name, CopticCalendar.MonthName(month, locale));
+    }
+
+    public static IEnumerable<object[]> InvalidMonths() =>
+        TestVectors.V.Invalid_Coptic_Months_For_Name.Select(m => new object[] { m });
+
+    [Theory]
+    [MemberData(nameof(InvalidMonths))]
+    public void RejectsInvalidMonth(int month)
+    {
+        Assert.Throws<InvalidCopticMonthException>(
+            () => CopticCalendar.MonthName(month, "en"));
+    }
+
+    public static IEnumerable<object[]> InvalidLocales() =>
+        TestVectors.V.Invalid_Coptic_Month_Locales.Select(v => new object[] { v.Month, v.Locale });
+
+    [Theory]
+    [MemberData(nameof(InvalidLocales))]
+    public void RejectsUnsupportedLocale(int month, string locale)
+    {
+        Assert.Throws<UnsupportedLocaleException>(
+            () => CopticCalendar.MonthName(month, locale));
     }
 }

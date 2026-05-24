@@ -27,3 +27,15 @@ public sealed class UnsupportedLocaleException : Exception
         Locale = locale;
     }
 }
+
+/// <summary>Thrown when a Coptic month outside 1..13 is passed to a month-name lookup.</summary>
+public sealed class InvalidCopticMonthException : Exception
+{
+    public int Month { get; }
+
+    public InvalidCopticMonthException(int month)
+        : base($"Kiahk: invalid coptic month {month} (expected 1..13)")
+    {
+        Month = month;
+    }
+}

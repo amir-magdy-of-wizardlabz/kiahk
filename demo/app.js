@@ -5,20 +5,6 @@ import {
   InvalidGregorianDateException,
 } from '../js/dist/index.js';
 
-// Coptic month names, English + Arabic (1-indexed; index 0 unused).
-const COPTIC_MONTHS = {
-  en: [
-    '', 'Thout', 'Paopi', 'Hathor', 'Koiak', 'Tobi',
-    'Meshir', 'Paremhat', 'Parmouti', 'Pashons', 'Paoni',
-    'Epip', 'Mesori', 'Nasie',
-  ],
-  ar: [
-    '', 'توت', 'بابة', 'هاتور', 'كيهك', 'طوبة',
-    'أمشير', 'برمهات', 'برمودة', 'بشنس', 'بؤونة',
-    'أبيب', 'مسرى', 'نسيء',
-  ],
-};
-
 // ----- Date converter -----
 
 const gregInput = document.getElementById('gregInput');
@@ -38,8 +24,8 @@ function updateConverter() {
   try {
     const g = new GregorianDate(y, m, d);
     const c = g.toCoptic();
-    const enName = COPTIC_MONTHS.en[c.month] ?? `Month ${c.month}`;
-    const arName = COPTIC_MONTHS.ar[c.month] ?? '';
+    const enName = CopticCalendar.monthName(c.month, 'en');
+    const arName = CopticCalendar.monthName(c.month, 'ar');
     copticOutput.innerHTML = `
       <div class="result-line">
         <strong>${c.day} ${enName} ${c.year} AM</strong>

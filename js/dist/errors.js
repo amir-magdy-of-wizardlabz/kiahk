@@ -16,3 +16,9 @@ export class UnsupportedLocaleException extends Error {
         this.name = 'UnsupportedLocaleException';
     }
 }
+export class InvalidCopticMonthException extends Error {
+    constructor(month) {
+        super(`Invalid Coptic month: ${month} (expected 1..13)`);
+        this.name = 'InvalidCopticMonthException';
+    }
+}

@@ -6,6 +6,21 @@ import Foundation
 /// dispatch (`CopticCalendar.easterDate(gregorianYear:)`).
 public enum CopticCalendar {
 
+    /// Return the Coptic month name for `month` (1..13) in `locale`.
+    ///
+    /// - Throws: `KiahkError.invalidCopticMonth` if `month` is outside 1..13.
+    /// - Throws: `KiahkError.unsupportedLocale` if `locale` has no translation.
+    public static func monthName(month: Int, locale: String) throws -> String {
+        guard (1...13).contains(month) else {
+            throw KiahkError.invalidCopticMonth(month: month)
+        }
+        let record = kCopticMonths[month - 1]
+        guard let name = record.names[locale] else {
+            throw KiahkError.unsupportedLocale(feastID: "", locale: locale)
+        }
+        return name
+    }
+
     /// Return the Gregorian date of Coptic / Orthodox Easter for `gregorianYear`.
     public static func easterDate(gregorianYear: Int) throws -> GregorianDate {
         let r = computeEaster(gregorianYear: gregorianYear)

@@ -47,6 +47,55 @@ func main() {
 }
 ```
 
+**Sample output:**
+
+```
+1741 5 3
+2025 9 11
+2025 4 20
+2025-01-07  Nativity of Christ
+2025-01-19  Epiphany (Theophany)
+2025-02-10  Nineveh Fast
+2025-02-24  Great Lent (start)
+2025-04-07  Annunciation
+2025-04-13  Palm Sunday
+2025-04-20  Easter Sunday
+2025-05-29  Ascension
+2025-06-08  Pentecost
+2025-08-22  Assumption of Mary
+2025-09-27  Feast of the Cross
+```
+
+## Render a date in English and Arabic
+
+The library exposes Coptic month names in `en` + `ar` via `kiahk.CopticMonthName(month, locale)`. The full 13-entry table is also re-exported as `kiahk.CopticMonths` for callers that prefer raw data.
+
+```go
+package main
+
+import (
+	"fmt"
+
+	kiahk "github.com/amir-magdy-of-wizardlabz/kiahk/go"
+)
+
+func main() {
+	g, _ := kiahk.NewGregorianDate(2025, 4, 20)
+	c := g.ToCoptic()
+	en, _ := kiahk.CopticMonthName(c.Month, "en")
+	ar, _ := kiahk.CopticMonthName(c.Month, "ar")
+	fmt.Printf("%d %s %d AM\n", c.Day, en, c.Year)
+	fmt.Printf("%d %s %d للشهداء\n", c.Day, ar, c.Year)
+}
+```
+
+**Sample output:**
+
+```
+12 Parmouti 1741 AM
+12 برمودة 1741 للشهداء
+```
+
 ## API at a glance
 
 | Type / function | Purpose |
@@ -62,10 +111,12 @@ func main() {
 | `EasterDate(year int) GregorianDate` | Coptic Easter on the Gregorian calendar |
 | `MoveableFeast(id string, year int) (Feast, error)` | One moveable feast |
 | `YearFeasts(year int) []Feast` | All feasts in the year, sorted ascending |
+| `CopticMonthName(month int, locale string) (string, error)` | Coptic month name; errors wrap `ErrInvalidCopticMonth` / `ErrUnsupportedLocale` |
+| `CopticMonths []CopticMonthRecord` | 13-entry table (mirrors `core/coptic_months.json`) |
 
 Supported locales: `en`, `ar`.
 
-**Error pattern** — every typed error (`*InvalidCopticDateError`, `*InvalidGregorianDateError`, `*UnsupportedLocaleError`) wraps a sentinel (`ErrInvalidCopticDate`, `ErrInvalidGregorianDate`, `ErrUnsupportedLocale`). Use `errors.Is(err, kiahk.ErrInvalidCopticDate)` to test kind; type-assert the value to access details.
+**Error pattern** — every typed error (`*InvalidCopticDateError`, `*InvalidGregorianDateError`, `*UnsupportedLocaleError`, `*InvalidCopticMonthError`) wraps a sentinel (`ErrInvalidCopticDate`, `ErrInvalidGregorianDate`, `ErrUnsupportedLocale`, `ErrInvalidCopticMonth`). Use `errors.Is(err, kiahk.ErrInvalidCopticDate)` to test kind; type-assert the value to access details.
 
 ## Run tests
 

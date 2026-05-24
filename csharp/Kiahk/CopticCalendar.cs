@@ -6,6 +6,25 @@ namespace Kiahk;
 /// <summary>Entry points for Easter and feast lookups.</summary>
 public static class CopticCalendar
 {
+    /// <summary>
+    /// Return the Coptic month name for <paramref name="month"/> (1..13) in <paramref name="locale"/>.
+    /// </summary>
+    /// <exception cref="InvalidCopticMonthException">If <paramref name="month"/> is outside 1..13.</exception>
+    /// <exception cref="UnsupportedLocaleException">If <paramref name="locale"/> has no translation.</exception>
+    public static string MonthName(int month, string locale)
+    {
+        if (month < 1 || month > 13)
+        {
+            throw new InvalidCopticMonthException(month);
+        }
+        var record = CopticMonthsData.Months[month - 1];
+        if (!record.Names.TryGetValue(locale, out var name))
+        {
+            throw new UnsupportedLocaleException(string.Empty, locale);
+        }
+        return name;
+    }
+
     /// <summary>Return the Gregorian date of Coptic / Orthodox Easter for <paramref name="gregorianYear"/>.</summary>
     public static GregorianDate EasterDate(int gregorianYear)
     {

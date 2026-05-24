@@ -23,3 +23,12 @@ class UnsupportedLocaleException implements Exception {
   String toString() =>
       'UnsupportedLocaleException: feast "$feastId" has no name for locale "$locale"';
 }
+
+/// Thrown when a Coptic month outside 1..13 is passed to a month-name lookup.
+class InvalidCopticMonthException implements Exception {
+  final int month;
+  InvalidCopticMonthException(this.month);
+  @override
+  String toString() =>
+      'InvalidCopticMonthException: invalid Coptic month $month (expected 1..13)';
+}

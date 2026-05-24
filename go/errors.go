@@ -11,6 +11,7 @@ var (
 	ErrInvalidCopticDate    = errors.New("kiahk: invalid coptic date")
 	ErrInvalidGregorianDate = errors.New("kiahk: invalid gregorian date")
 	ErrUnsupportedLocale    = errors.New("kiahk: unsupported locale")
+	ErrInvalidCopticMonth   = errors.New("kiahk: invalid coptic month")
 )
 
 // InvalidCopticDateError wraps ErrInvalidCopticDate with the offending value.
@@ -45,3 +46,13 @@ func (e *UnsupportedLocaleError) Error() string {
 	return fmt.Sprintf("kiahk: feast %q has no name for locale %q", e.FeastID, e.Locale)
 }
 func (e *UnsupportedLocaleError) Unwrap() error { return ErrUnsupportedLocale }
+
+// InvalidCopticMonthError wraps ErrInvalidCopticMonth with the offending value.
+type InvalidCopticMonthError struct {
+	Month int
+}
+
+func (e *InvalidCopticMonthError) Error() string {
+	return fmt.Sprintf("kiahk: invalid coptic month %d (expected 1..13)", e.Month)
+}
+func (e *InvalidCopticMonthError) Unwrap() error { return ErrInvalidCopticMonth }

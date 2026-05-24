@@ -26,7 +26,8 @@ typedef enum {
     KIAHK_ERR_UNSUPPORTED_LOCALE = 3,
     KIAHK_ERR_UNKNOWN_FEAST = 4,
     KIAHK_ERR_NOT_MOVEABLE = 5,
-    KIAHK_ERR_BUFFER_TOO_SMALL = 6
+    KIAHK_ERR_BUFFER_TOO_SMALL = 6,
+    KIAHK_ERR_INVALID_COPTIC_MONTH = 7
 } kiahk_error;
 
 /* Human-readable static string for a given error code (never NULL). */
@@ -115,6 +116,25 @@ kiahk_error kiahk_coptic_date_init(kiahk_coptic_date *out, int year, int month, 
 
 /* Convert a Coptic date to a Gregorian date. */
 kiahk_error kiahk_coptic_date_to_gregorian(const kiahk_coptic_date *c, kiahk_gregorian_date *out);
+
+/* --- Coptic months data -------------------------------------------------- */
+
+/* One entry of the Coptic month-name table
+ * (mirror of one entry in core/coptic_months.json). */
+typedef struct {
+    int month;                /* 1..13 */
+    kiahk_feast_names names;  /* re-uses {en, ar} struct */
+} kiahk_coptic_month_record;
+
+extern const kiahk_coptic_month_record KIAHK_COPTIC_MONTHS[];
+extern const size_t KIAHK_COPTIC_MONTHS_COUNT;
+
+/* Look up the localized name of a Coptic month.
+ * Supported locales: "en", "ar".
+ * On success *out points to a static string.
+ * Returns KIAHK_ERR_INVALID_COPTIC_MONTH if month is outside 1..13,
+ * KIAHK_ERR_UNSUPPORTED_LOCALE if locale has no translation. */
+kiahk_error kiahk_coptic_month_name(int month, const char *locale, const char **out);
 
 /* --- Feasts data --------------------------------------------------------- */
 

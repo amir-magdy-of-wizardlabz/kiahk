@@ -46,5 +46,20 @@
     { "year": 2025, "month": 13, "day": 1  },
     { "year": 2025, "month": 2,  "day": 29 },
     { "year": 2025, "month": 4,  "day": 31 }
-  ]
+  ],
+  "coptic_month_names": [
+    { "month": 1,  "locale": "en", "name": "Thout" },
+    { "month": 1,  "locale": "ar", "name": "توت" },
+    { "month": 5,  "locale": "en", "name": "Tobi" },
+    { "month": 5,  "locale": "ar", "name": "طوبة" },
+    { "month": 8,  "locale": "en", "name": "Parmouti" },
+    { "month": 8,  "locale": "ar", "name": "برمودة" },
+    { "month": 13, "locale": "en", "name": "Nasie" },
+    { "month": 13, "locale": "ar", "name": "نسيء" }
+  ],
+  "invalid_coptic_month_locales": [
+    { "month": 5, "locale": "fr" },
+    { "month": 5, "locale": "" }
+  ],
+  "invalid_coptic_months_for_name": [0, 14, -1, 100]
 }

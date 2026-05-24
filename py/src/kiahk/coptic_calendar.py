@@ -2,12 +2,28 @@
 from __future__ import annotations
 
 from kiahk.algorithms import add_days, compute_easter
+from kiahk.coptic_months_data import COPTIC_MONTHS
+from kiahk.errors import InvalidCopticMonthError, UnsupportedLocaleError
 from kiahk.feast import Feast
 from kiahk.feasts_data import FEASTS, by_id
 from kiahk.gregorian_date import GregorianDate
 
 
 class CopticCalendar:
+    @staticmethod
+    def month_name(month: int, locale: str) -> str:
+        """Return the Coptic month name for `month` (1..13) in the given locale.
+
+        Raises InvalidCopticMonthError if month is outside 1..13, and
+        UnsupportedLocaleError if locale has no translation.
+        """
+        if not isinstance(month, int) or isinstance(month, bool) or month < 1 or month > 13:
+            raise InvalidCopticMonthError(f"Invalid Coptic month: {month} (expected 1..13)")
+        names = COPTIC_MONTHS[month - 1]["names"]
+        if locale not in names:
+            raise UnsupportedLocaleError(locale)
+        return names[locale]
+
     @staticmethod
     def easter_date(gregorian_year: int) -> GregorianDate:
         return GregorianDate(*compute_easter(gregorian_year))
