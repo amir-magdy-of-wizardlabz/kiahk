@@ -40,12 +40,18 @@ Every port must produce identical results against `core/test-vectors.json`.
 
 ## Demo
 
-**Try it live:** **<https://raw.githack.com/amir-magdy-of-wizardlabz/kiahk/master/demo/index.html>**
+**Try it live → <https://raw.githack.com/amir-magdy-of-wizardlabz/kiahk/master/demo/index.html>**
+
+<p align="center">
+  <a href="https://raw.githack.com/amir-magdy-of-wizardlabz/kiahk/master/demo/index.html">
+    <img src="assets/demo-screenshot.png" alt="Kiahk demo screenshot" width="640">
+  </a>
+</p>
 
 A small browser demo of the JS port lives in [`demo/`](demo/). It lets you:
 
-- Pick a Gregorian date and see its Coptic equivalent
-- Enter a Gregorian year and view every major Coptic feast (en + ar names)
+- Pick a Gregorian date and see its Coptic equivalent (English + Arabic month names)
+- Enter a Gregorian year and view every major Coptic feast (en + ar names, fixed vs moveable)
 
 Source: [`demo/index.html`](demo/index.html), [`demo/app.js`](demo/app.js). See [`demo/README.md`](demo/README.md) for how to run it locally.
 

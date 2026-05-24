@@ -5,12 +5,19 @@ import {
   InvalidGregorianDateException,
 } from '../js/dist/index.js';
 
-// Coptic month names (1-indexed; index 0 unused).
-const COPTIC_MONTHS = [
-  '', 'Thout', 'Paopi', 'Hathor', 'Koiak', 'Tobi',
-  'Meshir', 'Paremhat', 'Parmouti', 'Pashons', 'Paoni',
-  'Epip', 'Mesori', 'Nasie',
-];
+// Coptic month names, English + Arabic (1-indexed; index 0 unused).
+const COPTIC_MONTHS = {
+  en: [
+    '', 'Thout', 'Paopi', 'Hathor', 'Koiak', 'Tobi',
+    'Meshir', 'Paremhat', 'Parmouti', 'Pashons', 'Paoni',
+    'Epip', 'Mesori', 'Nasie',
+  ],
+  ar: [
+    '', 'توت', 'بابة', 'هاتور', 'كيهك', 'طوبة',
+    'أمشير', 'برمهات', 'برمودة', 'بشنس', 'بؤونة',
+    'أبيب', 'مسرى', 'نسيء',
+  ],
+};
 
 // ----- Date converter -----
 
@@ -31,13 +38,17 @@ function updateConverter() {
   try {
     const g = new GregorianDate(y, m, d);
     const c = g.toCoptic();
-    const monthName = COPTIC_MONTHS[c.month] ?? `Month ${c.month}`;
+    const enName = COPTIC_MONTHS.en[c.month] ?? `Month ${c.month}`;
+    const arName = COPTIC_MONTHS.ar[c.month] ?? '';
     copticOutput.innerHTML = `
       <div class="result-line">
-        <strong>${c.day} ${monthName} ${c.year} AM</strong>
+        <strong>${c.day} ${enName} ${c.year} AM</strong>
+      </div>
+      <div class="result-line-ar" dir="rtl" lang="ar">
+        ${c.day} ${arName} ${c.year} للشهداء
       </div>
       <div class="result-meta">
-        Coptic year ${c.year} &middot; month ${c.month} (${monthName}) &middot; day ${c.day}
+        Coptic year ${c.year} &middot; month ${c.month} &middot; day ${c.day}
       </div>
     `;
   } catch (err) {
