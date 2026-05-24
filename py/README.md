@@ -4,7 +4,14 @@
 
 # kiahk (Python)
 
+[![PyPI version](https://img.shields.io/pypi/v/kiahk.svg)](https://pypi.org/project/kiahk/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/kiahk.svg)](https://pypi.org/project/kiahk/)
+[![Python versions](https://img.shields.io/pypi/pyversions/kiahk.svg)](https://pypi.org/project/kiahk/)
+[![license](https://img.shields.io/pypi/l/kiahk.svg)](../LICENSE)
+
 Coptic calendar arithmetic — date conversion, Easter, and feast days. Python port of [kiahk](https://github.com/amir-magdy-of-wizardlabz/kiahk). Identical results to all other ports against `core/test-vectors.json`.
+
+**Package:** <https://pypi.org/project/kiahk/>
 
 ## Install
 

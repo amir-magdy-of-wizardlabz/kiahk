@@ -1,0 +1,81 @@
+name: release-c
+
+# C has no canonical package registry, so we package c/ as a source tarball
+# and attach it to the GitHub Release on every v*.*.* tag.
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag (e.g. v0.1.0)."
+        required: false
+
+permissions:
+  contents: write  # required to create the GitHub Release + upload assets
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Resolve release version
+        id: ver
+        shell: bash
+        run: |
+          REF="${{ github.event.inputs.tag || github.ref_name }}"
+          TAG="${REF#refs/tags/}"
+          VERSION="${TAG#v}"
+          echo "tag=$TAG"          >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION"  >> "$GITHUB_OUTPUT"
+
+      - name: Install build deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential
+
+      - name: Build + test
+        working-directory: c
+        run: |
+          cmake -S . -B build
+          cmake --build build
+          ctest --test-dir build --output-on-failure
+
+      - name: Create source tarball (kiahk-c-vX.Y.Z.tar.gz)
+        shell: bash
+        run: |
+          STAGE="kiahk-c-${{ steps.ver.outputs.version }}"
+          mkdir "$STAGE"
+          # Ship the C source tree + the canonical spec/vectors so consumers can re-verify.
+          cp -R c/CMakeLists.txt c/LICENSE c/README.md c/include c/src c/tests "$STAGE/"
+          mkdir "$STAGE/core"
+          cp core/algorithms.md core/feasts.json core/coptic_months.json core/test-vectors.json "$STAGE/core/"
+          tar czf "$STAGE.tar.gz" "$STAGE"
+          ls -lh "$STAGE.tar.gz"
+          echo "TARBALL=$STAGE.tar.gz" >> "$GITHUB_ENV"
+
+      - name: Create / update GitHub Release + upload tarball
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.ver.outputs.tag }}
+          name: ${{ steps.ver.outputs.tag }}
+          body: |
+            kiahk ${{ steps.ver.outputs.version }} — C source tarball
+
+            Same release as the other ports. The tarball below is the C
+            distribution; the other ports are on their respective registries
+            (npm, PyPI, pub.dev, NuGet, etc. — see README).
+          files: ${{ env.TARBALL }}
+          fail_on_unmatched_files: true
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "### Attached C source tarball to release ${{ steps.ver.outputs.tag }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Release: https://github.com/amir-magdy-of-wizardlabz/kiahk/releases/tag/${{ steps.ver.outputs.tag }}" >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,82 @@
+name: release-nuget
+
+# Publishes csharp/Kiahk to NuGet when a tag like v0.1.0 is pushed.
+# Requires the NUGET_API_KEY repo secret (API key from nuget.org).
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to publish (e.g. v0.1.0). Leave empty when triggering via tag push."
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Resolve release version
+        id: ver
+        shell: bash
+        run: |
+          REF="${{ github.event.inputs.tag || github.ref_name }}"
+          TAG="${REF#refs/tags/}"
+          VERSION="${TAG#v}"
+          echo "tag=$TAG"          >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION"  >> "$GITHUB_OUTPUT"
+
+      - name: Verify tag matches csproj version
+        shell: bash
+        working-directory: csharp
+        run: |
+          PKG_VERSION=$(grep -oE '<Version>[^<]+</Version>' Kiahk/Kiahk.csproj | sed 's/<Version>\(.*\)<\/Version>/\1/')
+          if [ "$PKG_VERSION" != "${{ steps.ver.outputs.version }}" ]; then
+            echo "::error::Tag version (${{ steps.ver.outputs.version }}) does not match csharp/Kiahk/Kiahk.csproj <Version> ($PKG_VERSION)."
+            echo "Bump csharp/Kiahk/Kiahk.csproj first, commit, then re-tag."
+            exit 1
+          fi
+          echo "Version match: $PKG_VERSION"
+
+      - name: Restore + Build + Test (Release)
+        working-directory: csharp
+        run: |
+          dotnet restore
+          dotnet build --no-restore --configuration Release
+          dotnet test --no-build --configuration Release --verbosity normal
+
+      - name: Pack
+        working-directory: csharp
+        run: dotnet pack --no-build --configuration Release Kiahk/Kiahk.csproj --output ./artifacts
+
+      - name: Push to NuGet
+        working-directory: csharp
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          dotnet nuget push ./artifacts/Kiahk.${{ steps.ver.outputs.version }}.nupkg \
+            --api-key "$NUGET_API_KEY" \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "### Published Kiahk ${{ steps.ver.outputs.version }} to NuGet" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- NuGet: https://www.nuget.org/packages/Kiahk/${{ steps.ver.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Install: \`dotnet add package Kiahk --version ${{ steps.ver.outputs.version }}\`" >> "$GITHUB_STEP_SUMMARY"

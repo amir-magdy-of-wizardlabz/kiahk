@@ -4,9 +4,17 @@
 
 # Kiahk (Swift)
 
+[![Swift Package Index](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Famir-magdy-of-wizardlabz%2Fkiahk%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/amir-magdy-of-wizardlabz/kiahk)
+[![Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Famir-magdy-of-wizardlabz%2Fkiahk%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/amir-magdy-of-wizardlabz/kiahk)
+[![CocoaPods version](https://img.shields.io/cocoapods/v/Kiahk.svg)](https://cocoapods.org/pods/Kiahk)
+[![license](https://img.shields.io/github/license/amir-magdy-of-wizardlabz/kiahk.svg)](../LICENSE)
+
 Coptic calendar arithmetic — date conversion, Easter, and feast days. Swift port of [kiahk](https://github.com/amir-magdy-of-wizardlabz/kiahk). Identical results to all other ports against `core/test-vectors.json`.
 
-## Install
+**Swift Package Index:** <https://swiftpackageindex.com/amir-magdy-of-wizardlabz/kiahk>
+**CocoaPods:** <https://cocoapods.org/pods/Kiahk>
+
+## Install (Swift Package Manager)
 
 Add to your `Package.swift`:
 
@@ -21,7 +29,19 @@ targets: [
 ]
 ```
 
-> The repository's `Package.swift` lives at the **repo root** so SwiftPM resolves the GitHub URL directly. The Swift sources themselves remain under `swift/Sources/Kiahk/` (referenced via the manifest's `path:` parameters) to preserve the multi-language repo layout.
+Or in Xcode: **File → Add Package Dependencies…** and paste the repo URL.
+
+## Install (CocoaPods)
+
+Add to your `Podfile`:
+
+```ruby
+pod 'Kiahk', '~> 0.1.3'
+```
+
+Then `pod install`. Supports iOS 13+, macOS 10.15+, tvOS 13+, watchOS 6+.
+
+> The repository's `Package.swift` and `Kiahk.podspec` live at the **repo root** so SwiftPM and CocoaPods both resolve the GitHub URL directly. The Swift sources themselves remain under `swift/Sources/Kiahk/` to preserve the multi-language repo layout.
 
 ## Quick start
 

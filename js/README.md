@@ -4,10 +4,16 @@
 
 # kiahk (JavaScript / TypeScript)
 
+[![npm version](https://img.shields.io/npm/v/kiahk.svg)](https://www.npmjs.com/package/kiahk)
+[![npm downloads](https://img.shields.io/npm/dm/kiahk.svg)](https://www.npmjs.com/package/kiahk)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/kiahk?label=min%2Bgzip)](https://bundlephobia.com/package/kiahk)
+[![license](https://img.shields.io/npm/l/kiahk.svg)](../LICENSE)
+
 Coptic calendar arithmetic — date conversion, Easter, and feast days. The reference port of [kiahk](https://github.com/amir-magdy-of-wizardlabz/kiahk). Identical results to all other ports against `core/test-vectors.json`.
 
 Works in **Node.js and the browser** — no Node-only APIs at runtime.
 
+**Package:** <https://www.npmjs.com/package/kiahk>
 **Live demo:** <https://raw.githack.com/amir-magdy-of-wizardlabz/kiahk/master/demo/index.html>
 
 ## Install

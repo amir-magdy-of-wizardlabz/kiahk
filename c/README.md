@@ -4,18 +4,45 @@
 
 # kiahk (C)
 
+[![GitHub release](https://img.shields.io/github/v/release/amir-magdy-of-wizardlabz/kiahk?label=release)](https://github.com/amir-magdy-of-wizardlabz/kiahk/releases/latest)
+[![C standard](https://img.shields.io/badge/C-99-blue.svg)](https://en.cppreference.com/w/c)
+[![license](https://img.shields.io/github/license/amir-magdy-of-wizardlabz/kiahk.svg)](../LICENSE)
+
 Coptic calendar arithmetic — date conversion, Easter, and feast days. C99 port of [kiahk](https://github.com/amir-magdy-of-wizardlabz/kiahk). Identical results to all other ports against `core/test-vectors.json`.
+
+**Releases:** <https://github.com/amir-magdy-of-wizardlabz/kiahk/releases> — each tagged release attaches `kiahk-c-vX.Y.Z.tar.gz` (C source tree + canonical spec, ready to drop into your build).
 
 ## Install
 
-The library is a single static library built with CMake. There's no central C package registry — clone the repo or add `c/` as a subdirectory in your CMake project:
+There's no central C package registry. Three options, in increasing order of pinning strictness:
+
+**1. Download a release tarball** (recommended for vendoring):
+
+```bash
+curl -L -o kiahk-c.tar.gz \
+  https://github.com/amir-magdy-of-wizardlabz/kiahk/releases/latest/download/kiahk-c-v0.1.3.tar.gz
+tar xzf kiahk-c.tar.gz
+```
+
+Then add it as a CMake subproject:
+
+```cmake
+add_subdirectory(third_party/kiahk-c-v0.1.3)
+target_link_libraries(your_target PRIVATE kiahk)
+```
+
+**2. Git submodule** (track upstream `master`):
+
+```bash
+git submodule add https://github.com/amir-magdy-of-wizardlabz/kiahk.git third_party/kiahk
+```
 
 ```cmake
 add_subdirectory(third_party/kiahk/c)
 target_link_libraries(your_target PRIVATE kiahk)
 ```
 
-Or for development:
+**3. Build from this repo** (for development):
 
 ```bash
 cd c
