@@ -1,0 +1,34 @@
+name: swift tests
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "swift/**"
+      - "core/**"
+      - ".github/workflows/test-swift.yml"
+  pull_request:
+    branches: [master]
+    paths:
+      - "swift/**"
+      - "core/**"
+      - ".github/workflows/test-swift.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: swift:${{ matrix.swift }}
+    strategy:
+      fail-fast: false
+      matrix:
+        swift: ["5.10", "6.0", "6.1"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        working-directory: swift
+        run: swift build
+
+      - name: Test
+        working-directory: swift
+        run: swift test
