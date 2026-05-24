@@ -1,13 +1,14 @@
 # Node
 node_modules/
-dist/
 *.tsbuildinfo
+# Note: js/dist/ is intentionally tracked so the browser demo can load
+# `js/dist/index.js` over an external URL (raw.githack / GitHub Pages).
 
 # Python
 __pycache__/
 *.pyc
 .venv/
-dist/
+/py/dist/
 *.egg-info/
 
 # Dart

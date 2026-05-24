@@ -40,12 +40,16 @@ Every port must produce identical results against `core/test-vectors.json`.
 
 ## Demo
 
+**Try it live:** **<https://raw.githack.com/amir-magdy-of-wizardlabz/kiahk/master/demo/index.html>**
+
 A small browser demo of the JS port lives in [`demo/`](demo/). It lets you:
 
 - Pick a Gregorian date and see its Coptic equivalent
 - Enter a Gregorian year and view every major Coptic feast (en + ar names)
 
-See [`demo/README.md`](demo/README.md) for how to run it locally (one `npm run build` in `js/`, then a static HTTP server).
+Source: [`demo/index.html`](demo/index.html), [`demo/app.js`](demo/app.js). See [`demo/README.md`](demo/README.md) for how to run it locally.
+
+> The hosted demo is served via [raw.githack.com](https://raw.githack.com), a free proxy that serves GitHub files with correct MIME types. It reads `master` directly, so the link tracks whatever's on `master` at any given moment.
 
 ## License
 
