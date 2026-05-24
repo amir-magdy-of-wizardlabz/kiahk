@@ -1,24 +1,50 @@
 {
   "name": "kiahk",
   "version": "0.1.0",
-  "description": "Coptic calendar arithmetic — date conversion, Easter, and feast days",
+  "description": "Coptic calendar arithmetic — date conversion, Easter, and feast days. Works in Node and the browser.",
   "type": "module",
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     }
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
   },
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublishOnly": "npm test && npm run build"
   },
-  "keywords": ["coptic", "calendar", "easter", "coptic-calendar", "kiahk"],
+  "keywords": [
+    "coptic",
+    "calendar",
+    "easter",
+    "coptic-calendar",
+    "kiahk",
+    "kiahk-calendar",
+    "orthodox",
+    "feast",
+    "aboqty",
+    "قبطي",
+    "تقويم",
+    "كيهك",
+    "عيد",
+    "القيامة",
+    "القيامه",
+    "أبوقطي"
+  ],
   "author": "WizardLabz",
   "contributors": [
     { "name": "Amir Magdy" }
@@ -32,6 +58,10 @@
   "homepage": "https://github.com/amir-magdy-of-wizardlabz/kiahk#readme",
   "bugs": {
     "url": "https://github.com/amir-magdy-of-wizardlabz/kiahk/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   },
   "devDependencies": {
     "typescript": "^5.4.0",
