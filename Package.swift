@@ -1,7 +1,7 @@
 // swift-tools-version:5.9
 //
 // SwiftPM manifest at repo root so consumers can use the GitHub URL directly:
-//   .package(url: "https://github.com/amir-magdy-of-wizardlabz/kiahk.git", from: "0.1.3")
+//   .package(url: "https://github.com/amir-magdy-of-wizardlabz/kiahk.git", from: "0.1.4")
 //
 // Sources stay under swift/ to preserve the multi-language repo layout —
 // the `path:` parameters point SwiftPM into that subdirectory.

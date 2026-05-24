@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.4
+
+- Coordinated release across all ports. No Dart API changes since 0.1.3 —
+  only release-plumbing changes.
+- The Go port's `go.mod` moved to the repo root, so the whole repo now uses
+  a single tag scheme (`v0.1.4`, `v0.1.5`, …). No more `go/vX.Y.Z` subdirectory
+  prefix needed.
+- CocoaPods publishing fixed (Xcode SWIFT_VERSION compatibility).
+- pub.dev release workflow now skips publishing gracefully if the version is
+  already on pub.dev (so re-runs and the manual-bootstrap pattern don't
+  surface as workflow failures).
+
 ## 0.1.3
 
 - First Dart release on pub.dev.

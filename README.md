@@ -17,7 +17,7 @@ Coptic calendar arithmetic — date conversion, Easter, and feast days. Ported t
 [![npm](https://img.shields.io/npm/v/kiahk.svg?label=npm&logo=npm)](https://www.npmjs.com/package/kiahk)
 [![PyPI](https://img.shields.io/pypi/v/kiahk.svg?label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/kiahk/)
 [![pub.dev](https://img.shields.io/pub/v/kiahk.svg?label=pub.dev&logo=dart)](https://pub.dev/packages/kiahk)
-[![pkg.go.dev](https://img.shields.io/github/v/tag/amir-magdy-of-wizardlabz/kiahk?filter=go%2Fv*&label=pkg.go.dev&logo=go)](https://pkg.go.dev/github.com/amir-magdy-of-wizardlabz/kiahk/go)
+[![pkg.go.dev](https://img.shields.io/github/v/tag/amir-magdy-of-wizardlabz/kiahk?filter=v*&label=pkg.go.dev&logo=go)](https://pkg.go.dev/github.com/amir-magdy-of-wizardlabz/kiahk/go)
 [![NuGet](https://img.shields.io/nuget/v/Kiahk.svg?label=NuGet&logo=nuget)](https://www.nuget.org/packages/Kiahk/)
 [![CocoaPods](https://img.shields.io/cocoapods/v/Kiahk.svg?label=CocoaPods&logo=cocoapods)](https://cocoapods.org/pods/Kiahk)
 [![SwiftPM](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Famir-magdy-of-wizardlabz%2Fkiahk%2Fbadge%3Ftype%3Dswift-versions&label=SwiftPM&logo=swift)](https://swiftpackageindex.com/amir-magdy-of-wizardlabz/kiahk)
