@@ -1,0 +1,29 @@
+# CMake / build
+build*/
+cmake-build-*/
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+
+# CMake artifacts (if someone runs `cmake .` in-tree without `-B build`)
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+Makefile
+compile_commands.json
+Testing/
+
+# Compile artifacts
+*.d
+*.dia
+*.swiftdeps
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
+*.swp
