@@ -1,0 +1,85 @@
+name: release-npm
+
+# Publishes the js/ package to npm when a tag like v0.1.0 is pushed.
+# Requires the NPM_TOKEN repo secret (Granular Access Token with read+write
+# on all packages, 2FA bypass enabled).
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to publish (e.g. v0.1.0). Leave empty when triggering via tag push."
+        required: false
+
+permissions:
+  contents: read
+  id-token: write  # required for npm provenance attestation
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Resolve release version
+        id: ver
+        shell: bash
+        run: |
+          # Strip "refs/tags/" prefix when triggered by a tag push.
+          REF="${{ github.event.inputs.tag || github.ref_name }}"
+          TAG="${REF#refs/tags/}"
+          VERSION="${TAG#v}"
+          echo "tag=$TAG"           >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION"   >> "$GITHUB_OUTPUT"
+          echo "Release tag:     $TAG"
+          echo "Release version: $VERSION"
+
+      - name: Verify tag matches package.json version
+        shell: bash
+        working-directory: js
+        run: |
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          if [ "$PKG_VERSION" != "${{ steps.ver.outputs.version }}" ]; then
+            echo "::error::Tag version (${{ steps.ver.outputs.version }}) does not match package.json version ($PKG_VERSION)."
+            echo "Bump js/package.json version first, commit, then re-tag."
+            exit 1
+          fi
+          echo "Version match: $PKG_VERSION"
+
+      - name: Install
+        working-directory: js
+        run: npm ci
+
+      - name: Test
+        working-directory: js
+        run: npm test
+
+      - name: Build
+        working-directory: js
+        run: npm run build
+
+      - name: Publish to npm
+        working-directory: js
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "### Published kiahk@${{ steps.ver.outputs.version }} to npm" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- npmjs.com page: https://www.npmjs.com/package/kiahk/v/${{ steps.ver.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- unpkg: https://unpkg.com/kiahk@${{ steps.ver.outputs.version }}/" >> "$GITHUB_STEP_SUMMARY"
+          echo "- jsdelivr: https://cdn.jsdelivr.net/npm/kiahk@${{ steps.ver.outputs.version }}/" >> "$GITHUB_STEP_SUMMARY"
