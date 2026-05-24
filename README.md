@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/amir-magdy-of-wizardlabz/kiahk/master/assets/kiahk.png" alt="Kiahk logo" width="160">
+</p>
+
 # Kiahk
 
 Coptic calendar arithmetic — date conversion, Easter, and feast days. Ported to multiple languages from a single canonical spec in `core/`.
@@ -7,6 +11,7 @@ Coptic calendar arithmetic — date conversion, Easter, and feast days. Ported t
 [![js tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-js.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-js.yml)
 [![py tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-py.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-py.yml)
 [![go tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-go.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-go.yml)
+[![dart tests](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-dart.yml/badge.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/actions/workflows/test-dart.yml)
 
 (Additional language badges added as their ports land — see `docs/superpowers/specs/2026-05-23-multi-language-ports-design.md`.)
 
@@ -16,8 +21,8 @@ Coptic calendar arithmetic — date conversion, Easter, and feast days. Ported t
 | --- | --- | --- |
 | TypeScript | `js/` | reference port |
 | Python | `py/` | released |
-| Go | `go/` | this PR |
-| Dart | `dart/` | planned |
+| Go | `go/` | released |
+| Dart | `dart/` | this PR |
 | Swift | `swift/` | planned |
 | C# | `csharp/` | planned |
 | C | `c/` | planned |
