@@ -71,7 +71,24 @@ jobs:
         working-directory: dart
         run: dart test
 
+      - name: Check if version already exists on pub.dev
+        id: existing
+        shell: bash
+        run: |
+          # pub.dev rejects re-publishing an existing version. This guard lets
+          # the workflow exit cleanly if the version is already up — useful when
+          # the first release of a brand-new package was published manually to
+          # claim the name (the workflow takes over from the next version).
+          HTTP=$(curl -s -o /tmp/pub.json -w "%{http_code}" "https://pub.dev/api/packages/kiahk")
+          if [ "$HTTP" = "200" ] && grep -q "\"version\":\"${{ steps.ver.outputs.version }}\"" /tmp/pub.json; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::kiahk ${{ steps.ver.outputs.version }} already exists on pub.dev — skipping publish."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Publish to pub.dev
+        if: steps.existing.outputs.exists != 'true'
         working-directory: dart
         run: dart pub publish --force
 

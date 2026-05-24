@@ -11,8 +11,12 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Existing tag (e.g. v0.1.4)."
+        description: "Tag to publish (e.g. v0.1.4). Used to validate podspec version + as the git source tag in the published pod."
+        required: true
+      ref:
+        description: "Git ref to checkout (default: same as tag). Use 'master' when fixing the podspec for an already-pushed tag without force-updating the tag."
         required: false
+        default: ""
 
 permissions:
   contents: read
@@ -26,7 +30,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.tag || github.ref }}
+          ref: ${{ github.event.inputs.ref != '' && github.event.inputs.ref || github.event.inputs.tag || github.ref }}
+          fetch-depth: 0  # we need all tags so the input.tag can be verified to exist
+
+      - name: Verify the git tag exists (when checked out from a different ref)
+        if: github.event.inputs.ref != ''
+        shell: bash
+        run: |
+          TAG="${{ github.event.inputs.tag }}"
+          if ! git rev-parse --verify "refs/tags/$TAG" >/dev/null 2>&1; then
+            echo "::error::Tag $TAG does not exist in git history. Push the tag first."
+            exit 1
+          fi
+          echo "Tag $TAG resolves to: $(git rev-parse refs/tags/$TAG)"
 
       - name: Resolve release version
         id: ver

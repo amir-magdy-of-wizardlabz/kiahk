@@ -21,7 +21,11 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '6.0'
   s.tvos.deployment_target    = '13.0'
 
-  s.swift_versions   = ['5.9', '5.10', '6.0']
+  # CocoaPods' swift_versions corresponds to Xcode's SWIFT_VERSION build setting,
+  # which only accepts major versions (4.0, 4.2, 5.0). The code itself compiles
+  # fine under Swift 5.9, 5.10, and 6.0 — they're language-mode toggles, not
+  # SWIFT_VERSION values.
+  s.swift_versions   = ['5.0']
 
   # Sources live under swift/Sources/Kiahk to preserve the multi-language
   # repo layout. CocoaPods consumers don't see the subdirectory — only the
