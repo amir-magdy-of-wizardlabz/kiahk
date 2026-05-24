@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,21 +8,24 @@ version = "0.1.0"
 description = "Coptic calendar arithmetic — date conversion, Easter, and feast days"
 readme = "README.md"
 requires-python = ">=3.10"
-license = { text = "MIT" }
-authors = [{ name = "Amir Magdy" }]
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "WizardLabz" }]
+maintainers = [{ name = "Amir Magdy" }]
 keywords = ["coptic", "calendar", "easter", "kiahk"]
 classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
-  "License :: OSI Approved :: MIT License",
   "Topic :: Software Development :: Libraries",
 ]
 
 [project.urls]
 Homepage = "https://github.com/amir-magdy-of-wizardlabz/kiahk"
 Repository = "https://github.com/amir-magdy-of-wizardlabz/kiahk"
+Issues = "https://github.com/amir-magdy-of-wizardlabz/kiahk/issues"
+License = "https://github.com/amir-magdy-of-wizardlabz/kiahk/blob/master/LICENSE"
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]

@@ -1,0 +1,41 @@
+name: dart tests
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "dart/**"
+      - "core/**"
+      - ".github/workflows/test-dart.yml"
+  pull_request:
+    branches: [master]
+    paths:
+      - "dart/**"
+      - "core/**"
+      - ".github/workflows/test-dart.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sdk: [stable, "3.3"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Dart ${{ matrix.sdk }}
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ matrix.sdk }}
+
+      - name: Install
+        working-directory: dart
+        run: dart pub get
+
+      - name: Analyze
+        working-directory: dart
+        run: dart analyze
+
+      - name: Test
+        working-directory: dart
+        run: dart test
