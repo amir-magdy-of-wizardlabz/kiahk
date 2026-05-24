@@ -9,7 +9,9 @@ description = "Coptic calendar arithmetic — date conversion, Easter, and feast
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
-authors = [{ name = "Amir Magdy" }]
+license-files = ["LICENSE"]
+authors = [{ name = "WizardLabz" }]
+maintainers = [{ name = "Amir Magdy" }]
 keywords = ["coptic", "calendar", "easter", "kiahk"]
 classifiers = [
   "Programming Language :: Python :: 3",
@@ -23,6 +25,8 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/amir-magdy-of-wizardlabz/kiahk"
 Repository = "https://github.com/amir-magdy-of-wizardlabz/kiahk"
+Issues = "https://github.com/amir-magdy-of-wizardlabz/kiahk/issues"
+License = "https://github.com/amir-magdy-of-wizardlabz/kiahk/blob/master/LICENSE"
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]

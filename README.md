@@ -37,4 +37,6 @@ Every port must produce identical results against `core/test-vectors.json`.
 
 ## License
 
-MIT
+Licensed under the [MIT License](LICENSE).
+
+Maintained by Amir Magdy at WizardLabz.

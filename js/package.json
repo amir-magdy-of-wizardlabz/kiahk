@@ -19,7 +19,20 @@
     "test:watch": "vitest"
   },
   "keywords": ["coptic", "calendar", "easter", "coptic-calendar", "kiahk"],
+  "author": "WizardLabz",
+  "contributors": [
+    { "name": "Amir Magdy" }
+  ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amir-magdy-of-wizardlabz/kiahk.git",
+    "directory": "js"
+  },
+  "homepage": "https://github.com/amir-magdy-of-wizardlabz/kiahk#readme",
+  "bugs": {
+    "url": "https://github.com/amir-magdy-of-wizardlabz/kiahk/issues"
+  },
   "devDependencies": {
     "typescript": "^5.4.0",
     "vitest": "^1.6.0",

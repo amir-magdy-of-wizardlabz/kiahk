@@ -73,4 +73,6 @@ dart test
 
 ## License
 
-MIT
+Licensed under the [MIT License](LICENSE).
+
+Maintained by Amir Magdy at WizardLabz.
