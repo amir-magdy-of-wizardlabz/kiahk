@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!-- NuGet package metadata -->
+    <PackageId>Kiahk</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>WizardLabz</Authors>
+    <Company>WizardLabz</Company>
+    <Description>Coptic calendar arithmetic — date conversion, Easter, and feast days.</Description>
+    <PackageTags>coptic;calendar;easter;kiahk</PackageTags>
+    <PackageProjectUrl>https://github.com/amir-magdy-of-wizardlabz/kiahk</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/amir-magdy-of-wizardlabz/kiahk</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>kiahk.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE" Pack="true" PackagePath="\" />
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\assets\kiahk.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

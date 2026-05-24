@@ -1,0 +1,18 @@
+# .NET build artifacts
+bin/
+obj/
+*.user
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.suo
+*.userprefs
+
+# NuGet
+*.nupkg
+*.snupkg
+
+# OS
+.DS_Store
