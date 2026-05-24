@@ -10,6 +10,9 @@ public enum KiahkError: Error, Equatable, Sendable {
 
     /// `Feast.name(locale:)` was asked for a locale that has no translation.
     case unsupportedLocale(feastID: String, locale: String)
+
+    /// `CopticCalendar.monthName(month:locale:)` was asked for a month outside 1..13.
+    case invalidCopticMonth(month: Int)
 }
 
 extension KiahkError: LocalizedError {
@@ -21,6 +24,8 @@ extension KiahkError: LocalizedError {
             return "Kiahk: invalid gregorian date \(y)-\(String(format: "%02d", m))-\(String(format: "%02d", d)): \(reason)"
         case .unsupportedLocale(let id, let locale):
             return "Kiahk: feast \"\(id)\" has no name for locale \"\(locale)\""
+        case .invalidCopticMonth(let month):
+            return "Kiahk: invalid coptic month \(month) (expected 1..13)"
         }
     }
 }

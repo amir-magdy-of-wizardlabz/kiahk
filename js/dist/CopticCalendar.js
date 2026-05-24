@@ -3,8 +3,19 @@ import { GregorianDate } from './GregorianDate.js';
 import { CopticDate } from './CopticDate.js';
 import { Feast } from './Feast.js';
 import { FEASTS } from './feasts-data.js';
+import { COPTIC_MONTHS } from './coptic-months-data.js';
+import { InvalidCopticMonthException, UnsupportedLocaleException } from './errors.js';
 export class CopticCalendar {
     constructor() { }
+    static monthName(month, locale) {
+        if (!Number.isInteger(month) || month < 1 || month > 13) {
+            throw new InvalidCopticMonthException(month);
+        }
+        const record = COPTIC_MONTHS[month - 1];
+        if (!(locale in record.names))
+            throw new UnsupportedLocaleException(locale);
+        return record.names[locale];
+    }
     static easterDate(gregorianYear) {
         const [y, m, d] = computeEaster(gregorianYear);
         return new GregorianDate(y, m, d);

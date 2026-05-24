@@ -66,6 +66,7 @@ static void test_error_messages_are_non_null(int *failed) {
     KIAHK_ASSERT_TRUE(kiahk_error_message(KIAHK_ERR_UNSUPPORTED_LOCALE) != NULL);
     KIAHK_ASSERT_TRUE(kiahk_error_message(KIAHK_ERR_UNKNOWN_FEAST) != NULL);
     KIAHK_ASSERT_TRUE(kiahk_error_message(KIAHK_ERR_NOT_MOVEABLE) != NULL);
+    KIAHK_ASSERT_TRUE(kiahk_error_message(KIAHK_ERR_INVALID_COPTIC_MONTH) != NULL);
 }
 
 static void test_error_messages_distinct(int *failed) {
@@ -360,6 +361,66 @@ static void test_year_feasts_buffer_too_small(int *failed) {
     KIAHK_ASSERT_EQ_INT((int)count, (int)KIAHK_FEASTS_COUNT);
 }
 
+static void test_coptic_months_data_parity(int *failed) {
+    /* Verify KIAHK_COPTIC_MONTHS mirrors core/coptic_months.json by month/en/ar in order. */
+    char path[1024];
+    snprintf(path, sizeof(path), "%s/coptic_months.json", KIAHK_CORE_DIR);
+    char *json = read_file_to_string(path);
+    KIAHK_ASSERT_TRUE(json != NULL);
+    cJSON *arr = cJSON_Parse(json);
+    free(json);
+    KIAHK_ASSERT_TRUE(arr != NULL);
+
+    size_t core_count = (size_t)cJSON_GetArraySize(arr);
+    KIAHK_ASSERT_EQ_INT((int)KIAHK_COPTIC_MONTHS_COUNT, (int)core_count);
+
+    for (size_t i = 0; i < core_count; i++) {
+        cJSON *ref = cJSON_GetArrayItem(arr, (int)i);
+        const kiahk_coptic_month_record *m = &KIAHK_COPTIC_MONTHS[i];
+        KIAHK_ASSERT_EQ_INT(m->month, cJSON_GetObjectItemCaseSensitive(ref, "month")->valueint);
+        cJSON *names = cJSON_GetObjectItemCaseSensitive(ref, "names");
+        KIAHK_ASSERT_EQ_STR(m->names.en, cJSON_GetObjectItemCaseSensitive(names, "en")->valuestring);
+        KIAHK_ASSERT_EQ_STR(m->names.ar, cJSON_GetObjectItemCaseSensitive(names, "ar")->valuestring);
+    }
+    cJSON_Delete(arr);
+}
+
+static void test_coptic_month_name_vectors(int *failed) {
+    cJSON *arr = vec_array("coptic_month_names");
+    cJSON *vec;
+    cJSON_ArrayForEach(vec, arr) {
+        int month = cJSON_GetObjectItemCaseSensitive(vec, "month")->valueint;
+        const char *locale = cJSON_GetObjectItemCaseSensitive(vec, "locale")->valuestring;
+        const char *expected = cJSON_GetObjectItemCaseSensitive(vec, "name")->valuestring;
+        const char *got = NULL;
+        KIAHK_ASSERT_EQ_INT(kiahk_coptic_month_name(month, locale, &got), KIAHK_OK);
+        KIAHK_ASSERT_EQ_STR(got, expected);
+    }
+}
+
+static void test_coptic_month_name_rejects_invalid_month(int *failed) {
+    cJSON *arr = vec_array("invalid_coptic_months_for_name");
+    cJSON *vec;
+    cJSON_ArrayForEach(vec, arr) {
+        int bad = vec->valueint;
+        const char *got = NULL;
+        KIAHK_ASSERT_EQ_INT(kiahk_coptic_month_name(bad, "en", &got),
+                            KIAHK_ERR_INVALID_COPTIC_MONTH);
+    }
+}
+
+static void test_coptic_month_name_rejects_unsupported_locale(int *failed) {
+    cJSON *arr = vec_array("invalid_coptic_month_locales");
+    cJSON *vec;
+    cJSON_ArrayForEach(vec, arr) {
+        int month = cJSON_GetObjectItemCaseSensitive(vec, "month")->valueint;
+        const char *locale = cJSON_GetObjectItemCaseSensitive(vec, "locale")->valuestring;
+        const char *got = NULL;
+        KIAHK_ASSERT_EQ_INT(kiahk_coptic_month_name(month, locale, &got),
+                            KIAHK_ERR_UNSUPPORTED_LOCALE);
+    }
+}
+
 /* --- main ---------------------------------------------------------------- */
 
 int main(void) {
@@ -390,6 +451,10 @@ int main(void) {
     KIAHK_TEST_RUN(year_feasts_non_empty_and_sorted);
     KIAHK_TEST_RUN(year_feasts_includes_easter);
     KIAHK_TEST_RUN(year_feasts_buffer_too_small);
+    KIAHK_TEST_RUN(coptic_months_data_parity);
+    KIAHK_TEST_RUN(coptic_month_name_vectors);
+    KIAHK_TEST_RUN(coptic_month_name_rejects_invalid_month);
+    KIAHK_TEST_RUN(coptic_month_name_rejects_unsupported_locale);
 
     cJSON_Delete(g_vectors);
     KIAHK_TEST_REPORT_AND_EXIT();

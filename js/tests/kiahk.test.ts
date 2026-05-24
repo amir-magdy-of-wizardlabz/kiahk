@@ -3,14 +3,19 @@ import { readFileSync } from 'fs'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import {
-  CopticDate, GregorianDate, CopticCalendar,
-  InvalidCopticDateException, InvalidGregorianDateException, UnsupportedLocaleException
+  CopticDate, GregorianDate, CopticCalendar, COPTIC_MONTHS,
+  InvalidCopticDateException, InvalidGregorianDateException,
+  InvalidCopticMonthException, UnsupportedLocaleException
 } from '../src/index.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const vectors = JSON.parse(
   readFileSync(resolve(__dirname, '../../core/test-vectors.json'), 'utf8')
+)
+
+const coreCopticMonths = JSON.parse(
+  readFileSync(resolve(__dirname, '../../core/coptic_months.json'), 'utf8')
 )
 
 describe('Gregorian → Coptic', () => {
@@ -94,6 +99,33 @@ describe('GregorianDate.fromNativeDate()', () => {
     expect(g.month).toBe(1)
     expect(g.day).toBe(11)
   })
+})
+
+describe('Coptic months — data parity with core/coptic_months.json', () => {
+  it('matches core data line-for-line', () => {
+    expect(COPTIC_MONTHS).toEqual(coreCopticMonths)
+  })
+})
+
+describe('CopticCalendar.monthName()', () => {
+  it.each(vectors.coptic_month_names)(
+    'month $month locale $locale → $name',
+    ({ month, locale, name }: any) => {
+      expect(CopticCalendar.monthName(month, locale)).toBe(name)
+    }
+  )
+  it.each(vectors.invalid_coptic_months_for_name)(
+    'throws InvalidCopticMonthException for month %s',
+    (month: any) => {
+      expect(() => CopticCalendar.monthName(month, 'en')).toThrow(InvalidCopticMonthException)
+    }
+  )
+  it.each(vectors.invalid_coptic_month_locales)(
+    'throws UnsupportedLocaleException for month $month locale $locale',
+    ({ month, locale }: any) => {
+      expect(() => CopticCalendar.monthName(month, locale)).toThrow(UnsupportedLocaleException)
+    }
+  )
 })
 
 describe('yearFeasts', () => {

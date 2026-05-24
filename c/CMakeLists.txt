@@ -16,6 +16,7 @@ add_library(kiahk STATIC
     src/gregorian_date.c
     src/coptic_date.c
     src/feasts_data.c
+    src/coptic_months_data.c
     src/feast.c
     src/coptic_calendar.c
 )

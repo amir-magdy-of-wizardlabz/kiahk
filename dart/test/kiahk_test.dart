@@ -275,6 +275,59 @@ void main() {
     }
   });
 
+  group('coptic months data parity', () {
+    test('matches core/coptic_months.json exactly', () {
+      final core =
+          (jsonDecode(File('../core/coptic_months.json').readAsStringSync())
+                  as List<dynamic>)
+              .cast<Map<String, dynamic>>();
+      expect(kCopticMonths.length, core.length);
+      for (var i = 0; i < kCopticMonths.length; i++) {
+        final m = kCopticMonths[i];
+        final ref = core[i];
+        expect(m.month, ref['month'], reason: 'month [$i]');
+        final refNames = ref['names'] as Map<String, dynamic>;
+        expect(m.names['en'], refNames['en'], reason: 'en [$i]');
+        expect(m.names['ar'], refNames['ar'], reason: 'ar [$i]');
+      }
+    });
+  });
+
+  group('CopticCalendar.monthName', () {
+    for (final vec in _vecList('coptic_month_names')) {
+      final month = vec['month'] as int;
+      final locale = vec['locale'] as String;
+      final name = vec['name'] as String;
+      test('month $month locale $locale → $name', () {
+        expect(CopticCalendar.monthName(month, locale), name);
+      });
+    }
+
+    test('rejects invalid month from vectors', () {
+      final bad = (vectors['invalid_coptic_months_for_name'] as List<dynamic>)
+          .cast<int>();
+      for (final m in bad) {
+        expect(
+          () => CopticCalendar.monthName(m, 'en'),
+          throwsA(isA<InvalidCopticMonthException>()),
+          reason: 'should reject month $m',
+        );
+      }
+    });
+
+    test('rejects unsupported locale from vectors', () {
+      for (final vec in _vecList('invalid_coptic_month_locales')) {
+        final m = vec['month'] as int;
+        final loc = vec['locale'] as String;
+        expect(
+          () => CopticCalendar.monthName(m, loc),
+          throwsA(isA<UnsupportedLocaleException>()),
+          reason: 'should reject locale "$loc" for month $m',
+        );
+      }
+    });
+  });
+
   group('CopticCalendar.yearFeasts', () {
     test('returns non-empty list sorted by date', () {
       final feasts = CopticCalendar.yearFeasts(2025);

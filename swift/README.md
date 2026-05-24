@@ -50,6 +50,47 @@ for feast in CopticCalendar.yearFeasts(gregorianYear: 2025) {
 }
 ```
 
+**Sample output:**
+
+```
+1741 5 3
+2025 9 11
+2025 4 20
+2025-01-07  Nativity of Christ
+2025-01-19  Epiphany (Theophany)
+2025-02-10  Nineveh Fast
+2025-02-24  Great Lent (start)
+2025-04-07  Annunciation
+2025-04-13  Palm Sunday
+2025-04-20  Easter Sunday
+2025-05-29  Ascension
+2025-06-08  Pentecost
+2025-08-22  Assumption of Mary
+2025-09-27  Feast of the Cross
+```
+
+## Render a date in English and Arabic
+
+The library exposes Coptic month names in `en` + `ar` via `CopticCalendar.monthName(month:locale:)`. The full 13-entry table is also re-exported as `kCopticMonths` for callers that prefer raw data.
+
+```swift
+import Kiahk
+
+let g = try GregorianDate(year: 2025, month: 4, day: 20)
+let c = try g.toCoptic()
+let en = try CopticCalendar.monthName(month: c.month, locale: "en")
+let ar = try CopticCalendar.monthName(month: c.month, locale: "ar")
+print("\(c.day) \(en) \(c.year) AM")
+print("\(c.day) \(ar) \(c.year) للشهداء")
+```
+
+**Sample output:**
+
+```
+12 Parmouti 1741 AM
+12 برمودة 1741 للشهداء
+```
+
 ## API at a glance
 
 | Type / function | Purpose |
@@ -64,10 +105,12 @@ for feast in CopticCalendar.yearFeasts(gregorianYear: 2025) {
 | `try CopticCalendar.easterDate(gregorianYear:)` → `GregorianDate` | Coptic Easter |
 | `try CopticCalendar.moveableFeast(id:gregorianYear:)` → `Feast` | One moveable feast |
 | `CopticCalendar.yearFeasts(gregorianYear:)` → `[Feast]` | All feasts, sorted ascending |
+| `try CopticCalendar.monthName(month:locale:)` → `String` | Coptic month name; throws `KiahkError.invalidCopticMonth` / `.unsupportedLocale` |
+| `kCopticMonths` | 13-entry `[CopticMonthRecord]` (mirrors `core/coptic_months.json`) |
 
-Supported locales for `Feast.name(locale:)`: `en`, `ar`.
+Supported locales for `Feast.name(locale:)` and `CopticCalendar.monthName(month:locale:)`: `en`, `ar`.
 
-**Error pattern** — every fallible operation throws a single `KiahkError` enum with three cases (`invalidCopticDate`, `invalidGregorianDate`, `unsupportedLocale`). Pattern-match with `catch KiahkError.invalidCopticDate(...)`.
+**Error pattern** — every fallible operation throws a single `KiahkError` enum with four cases (`invalidCopticDate`, `invalidGregorianDate`, `unsupportedLocale`, `invalidCopticMonth`). Pattern-match with `catch KiahkError.invalidCopticDate(...)`.
 
 ## Run tests
 

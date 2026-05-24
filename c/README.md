@@ -68,6 +68,54 @@ int main(void) {
 }
 ```
 
+**Sample output:**
+
+```
+1741 5 3
+2025 9 11
+2025 4 20
+2025-01-07  Nativity of Christ
+2025-01-19  Epiphany (Theophany)
+2025-02-10  Nineveh Fast
+2025-02-24  Great Lent (start)
+2025-04-07  Annunciation
+2025-04-13  Palm Sunday
+2025-04-20  Easter Sunday
+2025-05-29  Ascension
+2025-06-08  Pentecost
+2025-08-22  Assumption of Mary
+2025-09-27  Feast of the Cross
+```
+
+## Render a date in English and Arabic
+
+The library exposes Coptic month names in `en` + `ar` via `kiahk_coptic_month_name(month, locale, &out)`. The full 13-entry table is also re-exported as the extern `KIAHK_COPTIC_MONTHS[]` (length `KIAHK_COPTIC_MONTHS_COUNT`) for callers that prefer raw data.
+
+```c
+#include <stdio.h>
+#include <kiahk.h>
+
+int main(void) {
+    kiahk_gregorian_date g;
+    kiahk_gregorian_date_init(&g, 2025, 4, 20);
+    kiahk_coptic_date c;
+    kiahk_gregorian_date_to_coptic(&g, &c);
+    const char *en = NULL, *ar = NULL;
+    kiahk_coptic_month_name(c.month, "en", &en);
+    kiahk_coptic_month_name(c.month, "ar", &ar);
+    printf("%d %s %d AM\n",      c.day, en, c.year);
+    printf("%d %s %d للشهداء\n", c.day, ar, c.year);
+    return 0;
+}
+```
+
+**Sample output:**
+
+```
+12 Parmouti 1741 AM
+12 برمودة 1741 للشهداء
+```
+
 ## API at a glance
 
 | Function | Purpose |
@@ -80,8 +128,10 @@ int main(void) {
 | `kiahk_easter_date(year, *out)` | Coptic Easter on the Gregorian calendar |
 | `kiahk_moveable_feast(id, year, *out)` | One moveable feast |
 | `kiahk_year_feasts(year, buf, cap, *count)` | All feasts in the year, sorted ascending |
+| `kiahk_coptic_month_name(month, locale, *out)` | Coptic month name; returns `KIAHK_ERR_INVALID_COPTIC_MONTH` / `KIAHK_ERR_UNSUPPORTED_LOCALE` |
+| `KIAHK_COPTIC_MONTHS[]` + `KIAHK_COPTIC_MONTHS_COUNT` | 13-entry table (mirrors `core/coptic_months.json`) |
 
-Supported locales for `kiahk_feast_name`: `"en"`, `"ar"`.
+Supported locales for `kiahk_feast_name` and `kiahk_coptic_month_name`: `"en"`, `"ar"`.
 
 **Algorithm primitives** are also public: `kiahk_gregorian_to_jdn`, `kiahk_jdn_to_gregorian`, `kiahk_coptic_to_jdn`, `kiahk_jdn_to_coptic`, `kiahk_gregorian_to_coptic`, `kiahk_coptic_to_gregorian`, `kiahk_compute_easter`, `kiahk_add_days`.
 

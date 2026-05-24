@@ -311,8 +311,51 @@ def test_public_api_surface():
         "GregorianDate",
         "Feast",
         "CopticCalendar",
+        "COPTIC_MONTHS",
         "InvalidCopticDateError",
+        "InvalidCopticMonthError",
         "InvalidGregorianDateError",
         "UnsupportedLocaleError",
     }
     assert expected.issubset(set(dir(kiahk)))
+
+
+# ---- coptic_months_data ----------------------------------------------------
+
+
+def test_coptic_months_data_matches_core_coptic_months_json():
+    """coptic_months_data.py must be a structural mirror of core/coptic_months.json."""
+    from kiahk.coptic_months_data import COPTIC_MONTHS
+
+    core_months = json.loads(
+        (VECTORS_PATH.parent / "coptic_months.json").read_text(encoding="utf-8")
+    )
+    assert COPTIC_MONTHS == core_months
+
+
+# ---- CopticCalendar.month_name ---------------------------------------------
+
+
+@pytest.mark.parametrize("vec", VECTORS["coptic_month_names"])
+def test_coptic_calendar_month_name_vectors(vec):
+    from kiahk.coptic_calendar import CopticCalendar
+
+    assert CopticCalendar.month_name(vec["month"], vec["locale"]) == vec["name"]
+
+
+@pytest.mark.parametrize("bad_month", VECTORS["invalid_coptic_months_for_name"])
+def test_coptic_calendar_month_name_rejects_invalid_month(bad_month):
+    from kiahk.coptic_calendar import CopticCalendar
+    from kiahk.errors import InvalidCopticMonthError
+
+    with pytest.raises(InvalidCopticMonthError):
+        CopticCalendar.month_name(bad_month, "en")
+
+
+@pytest.mark.parametrize("vec", VECTORS["invalid_coptic_month_locales"])
+def test_coptic_calendar_month_name_rejects_unsupported_locale(vec):
+    from kiahk.coptic_calendar import CopticCalendar
+    from kiahk.errors import UnsupportedLocaleError
+
+    with pytest.raises(UnsupportedLocaleError):
+        CopticCalendar.month_name(vec["month"], vec["locale"])

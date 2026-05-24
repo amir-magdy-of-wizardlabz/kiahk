@@ -5,6 +5,22 @@ import (
 	"sort"
 )
 
+// CopticMonthName returns the localized name of Coptic month `month` (1..13)
+// in the given locale. It returns *InvalidCopticMonthError (wrapping
+// ErrInvalidCopticMonth) for an out-of-range month, and *UnsupportedLocaleError
+// (wrapping ErrUnsupportedLocale) for an unknown locale.
+func CopticMonthName(month int, locale string) (string, error) {
+	if month < 1 || month > 13 {
+		return "", &InvalidCopticMonthError{Month: month}
+	}
+	rec := CopticMonths[month-1]
+	name, ok := rec.Names[locale]
+	if !ok {
+		return "", &UnsupportedLocaleError{FeastID: "", Locale: locale}
+	}
+	return name, nil
+}
+
 // EasterDate returns the Gregorian date of Coptic/Orthodox Easter for the given Gregorian year.
 func EasterDate(gregorianYear int) GregorianDate {
 	y, m, d := ComputeEaster(gregorianYear)

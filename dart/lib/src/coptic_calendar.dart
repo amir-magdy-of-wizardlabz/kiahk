@@ -1,4 +1,6 @@
 import 'algorithms.dart';
+import 'coptic_months_data.dart';
+import 'errors.dart';
 import 'feast.dart';
 import 'feasts_data.dart';
 import 'gregorian_date.dart';
@@ -6,6 +8,22 @@ import 'gregorian_date.dart';
 /// Entry points for Easter and feast lookups.
 class CopticCalendar {
   CopticCalendar._(); // prevent instantiation
+
+  /// Return the Coptic month name for [month] (1..13) in [locale].
+  ///
+  /// Throws [InvalidCopticMonthException] if [month] is outside 1..13, and
+  /// [UnsupportedLocaleException] if [locale] has no translation.
+  static String monthName(int month, String locale) {
+    if (month < 1 || month > 13) {
+      throw InvalidCopticMonthException(month);
+    }
+    final record = kCopticMonths[month - 1];
+    final name = record.names[locale];
+    if (name == null) {
+      throw UnsupportedLocaleException('', locale);
+    }
+    return name;
+  }
 
   /// Return the Gregorian date of Coptic / Orthodox Easter for [gregorianYear].
   static GregorianDate easterDate(int gregorianYear) {
