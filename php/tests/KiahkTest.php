@@ -22,6 +22,7 @@ final class KiahkTest extends TestCase
     private static function vectors(): array
     {
         // Load the shared cross-port test contract from core/test-vectors.json.
+        // __DIR__ is php/tests/ → ../../core/test-vectors.json (repo root).
         $path = __DIR__ . '/../../core/test-vectors.json';
         $json = file_get_contents($path);
         if ($json === false) {

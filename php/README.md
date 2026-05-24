@@ -24,7 +24,8 @@ composer require wizardlabz/kiahk
 Or from this repo for development:
 
 ```bash
-cd php
+# composer.json lives at the repo root (canonical Packagist source) — sources
+# are in php/src/, tests in php/tests/, run everything from the repo root:
 composer install
 composer test
 ```
@@ -121,7 +122,7 @@ Supported locales for `Feast::name(...)` and `CopticCalendar::monthName(...)`: `
 ## Run tests
 
 ```bash
-cd php
+# From repo root (composer.json + phpunit.xml.dist live there)
 composer install
 composer test
 ```

@@ -29,12 +29,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Wizardlabz\\Kiahk\\": "src/"
+            "Wizardlabz\\Kiahk\\": "php/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Wizardlabz\\Kiahk\\Tests\\": "tests/"
+            "Wizardlabz\\Kiahk\\Tests\\": "php/tests/"
         }
     },
     "scripts": {

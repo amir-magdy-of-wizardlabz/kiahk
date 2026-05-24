@@ -5,12 +5,16 @@ on:
     branches: [master]
     paths:
       - "php/**"
+      - "composer.json"
+      - "phpunit.xml.dist"
       - "core/**"
       - ".github/workflows/test-php.yml"
   pull_request:
     branches: [master]
     paths:
       - "php/**"
+      - "composer.json"
+      - "phpunit.xml.dist"
       - "core/**"
       - ".github/workflows/test-php.yml"
 
@@ -31,14 +35,14 @@ jobs:
           coverage: none
           tools: composer:v2
 
+      # composer.json + phpunit.xml.dist live at the repo root (canonical
+       # Packagist source). PHP sources are autoloaded from php/src and tests
+       # run from php/tests via the phpunit config.
       - name: Validate composer.json
-        working-directory: php
         run: composer validate --strict --no-check-publish
 
       - name: Install dependencies
-        working-directory: php
         run: composer install --prefer-dist --no-progress --no-interaction
 
       - name: Run phpunit
-        working-directory: php
         run: vendor/bin/phpunit --display-warnings --display-deprecations
