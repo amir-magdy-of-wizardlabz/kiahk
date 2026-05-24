@@ -1,7 +1,10 @@
 # Node / npm
 node_modules/
-dist/
 *.tsbuildinfo
+# Note: dist/ is intentionally NOT ignored — the browser demo at /demo/
+# imports compiled output via `../js/dist/index.js` over an external URL
+# (raw.githack / GitHub Pages), so dist/ needs to be tracked. Re-run
+# `npm run build` after source changes; commit the regenerated dist/.
 
 # Test / coverage
 coverage/
