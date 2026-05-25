@@ -5,6 +5,7 @@
 # kiahk (C)
 
 [![GitHub release](https://img.shields.io/github/v/release/amir-magdy-of-wizardlabz/kiahk?label=release)](https://github.com/amir-magdy-of-wizardlabz/kiahk/releases/latest)
+[![Tarball downloads](https://img.shields.io/github/downloads/amir-magdy-of-wizardlabz/kiahk/total.svg?label=tarball%20DL)](https://github.com/amir-magdy-of-wizardlabz/kiahk/releases)
 [![C standard](https://img.shields.io/badge/C-99-blue.svg)](https://en.cppreference.com/w/c)
 [![license](https://img.shields.io/github/license/amir-magdy-of-wizardlabz/kiahk.svg)](../LICENSE)
 

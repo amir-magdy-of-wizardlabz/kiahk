@@ -5,9 +5,12 @@
 # kiahk (JavaScript / TypeScript)
 
 [![npm version](https://img.shields.io/npm/v/kiahk.svg)](https://www.npmjs.com/package/kiahk)
-[![npm downloads](https://img.shields.io/npm/dm/kiahk.svg)](https://www.npmjs.com/package/kiahk)
+[![npm downloads](https://img.shields.io/npm/dm/kiahk.svg)](https://npm-stat.com/charts.html?package=kiahk)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/kiahk?label=min%2Bgzip)](https://bundlephobia.com/package/kiahk)
+[![tree-shakeable](https://img.shields.io/badge/tree--shakeable-yes-brightgreen)](https://www.npmjs.com/package/kiahk)
 [![license](https://img.shields.io/npm/l/kiahk.svg)](../LICENSE)
+
+> The downloads badge links to [npm-stat.com](https://npm-stat.com/charts.html?package=kiahk) which charts daily downloads, country breakdown, and total-since-publish. npm's raw stats include CI install activity.
 
 Coptic calendar arithmetic — date conversion, Easter, and feast days. The reference port of [kiahk](https://github.com/amir-magdy-of-wizardlabz/kiahk). Identical results to all other ports against `core/test-vectors.json`.
 

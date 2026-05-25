@@ -5,9 +5,12 @@
 # Kiahk (Kotlin / JVM)
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.wizardlabz/kiahk.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.wizardlabz/kiahk)
+[![Sonatype Central](https://img.shields.io/maven-central/last-update/com.wizardlabz/kiahk?label=last%20publish)](https://central.sonatype.com/artifact/com.wizardlabz/kiahk)
 [![Kotlin version](https://img.shields.io/badge/Kotlin-2.0+-7F52FF.svg?logo=kotlin)](https://kotlinlang.org)
 [![JVM target](https://img.shields.io/badge/JVM-11+-007396.svg?logo=openjdk)](https://openjdk.org)
 [![license](https://img.shields.io/github/license/amir-magdy-of-wizardlabz/kiahk.svg)](../LICENSE)
+
+> Maven Central doesn't expose public download counts. Adoption tracked via [Sonatype Central](https://central.sonatype.com/artifact/com.wizardlabz/kiahk) artifact page.
 
 Coptic calendar arithmetic — date conversion, Easter, and feast days. Kotlin/JVM port of [kiahk](https://github.com/amir-magdy-of-wizardlabz/kiahk). Identical results to all other ports against `core/test-vectors.json`.
 

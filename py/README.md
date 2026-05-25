@@ -5,9 +5,12 @@
 # kiahk (Python)
 
 [![PyPI version](https://img.shields.io/pypi/v/kiahk.svg)](https://pypi.org/project/kiahk/)
-[![PyPI downloads](https://img.shields.io/pypi/dm/kiahk.svg)](https://pypi.org/project/kiahk/)
+[![PyPI downloads / month](https://img.shields.io/pypi/dm/kiahk.svg?label=PyPI%20%2Fmo%20%28raw%29)](https://pypi.org/project/kiahk/)
+[![pepy.tech downloads](https://static.pepy.tech/badge/kiahk/month)](https://www.pepy.tech/projects/kiahk)
 [![Python versions](https://img.shields.io/pypi/pyversions/kiahk.svg)](https://pypi.org/project/kiahk/)
 [![license](https://img.shields.io/pypi/l/kiahk.svg)](../LICENSE)
+
+> The first PyPI badge shows raw download counts (includes mirror + scanner bot traffic). The pepy.tech badge filters most bot traffic — closer to real human-install counts.
 
 Coptic calendar arithmetic — date conversion, Easter, and feast days. Python port of [kiahk](https://github.com/amir-magdy-of-wizardlabz/kiahk). Identical results to all other ports against `core/test-vectors.json`.
 
