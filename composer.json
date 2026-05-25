@@ -5,6 +5,9 @@
     "license": "MIT",
     "keywords": [
         "coptic", "calendar", "easter", "kiahk", "aboqty",
+        "orthodox", "coptic-orthodox", "gregorian", "julian",
+        "date-conversion", "liturgical", "feast", "feasts",
+        "alexandrian", "anno-martyrum", "copts",
         "قبطي", "تقويم", "كيهك", "عيد", "القيامة", "أبقطي"
     ],
     "homepage": "https://github.com/amir-magdy-of-wizardlabz/kiahk",

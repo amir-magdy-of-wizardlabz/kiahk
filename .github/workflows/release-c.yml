@@ -73,9 +73,20 @@ jobs:
           files: ${{ env.TARBALL }}
           fail_on_unmatched_files: true
 
+      - name: Prime the Go module proxy
+        # pkg.go.dev only sees a new tag after something hits the proxy first.
+        # The release-c workflow is the natural place to do this because it's
+        # the only release workflow guaranteed to run (no external registry
+        # dependencies) and it touches GitHub Releases, which is the same
+        # source-of-truth the Go proxy resolves against.
+        if: success()
+        run: |
+          curl -s "https://proxy.golang.org/github.com/amir-magdy-of-wizardlabz/kiahk/@v/${{ steps.ver.outputs.tag }}.info" | head -1
+
       - name: Summary
         if: success()
         run: |
           echo "### Attached C source tarball to release ${{ steps.ver.outputs.tag }}" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "- Release: https://github.com/amir-magdy-of-wizardlabz/kiahk/releases/tag/${{ steps.ver.outputs.tag }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Go module: https://pkg.go.dev/github.com/amir-magdy-of-wizardlabz/kiahk@${{ steps.ver.outputs.tag }} (proxy primed)" >> "$GITHUB_STEP_SUMMARY"

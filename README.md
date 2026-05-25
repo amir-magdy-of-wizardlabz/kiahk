@@ -10,7 +10,9 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/amir-magdy-of-wizardlabz/kiahk.svg)](https://github.com/amir-magdy-of-wizardlabz/kiahk/commits/master)
 [![License: MIT](https://img.shields.io/github/license/amir-magdy-of-wizardlabz/kiahk.svg)](LICENSE)
 
-Coptic calendar arithmetic — date conversion, Easter, and feast days. Ported to multiple languages from a single canonical spec in `core/`.
+Coptic calendar arithmetic — date conversion, Easter, and feast days. A small, exact library for the **Coptic Orthodox (Alexandrian) calendar**: convert between Gregorian and Coptic dates, compute Coptic Easter (Pascha) using the Julian computus, and look up the major fixed and moveable feasts of the Coptic Orthodox church year. Ported to **9 languages** from a single canonical spec in [`core/`](core/) — every port produces identical results against the shared test vectors.
+
+**At a glance:** Anno Martyrum (AM) era · 13-month year (12×30 days + Nasie) · Julian-style leap rule (Y mod 4 == 3) · Coptic Easter via Meeus's compact Julian computus · English and Arabic month + feast names built in.
 
 ## Package versions
 
@@ -60,9 +62,63 @@ See each port's README for full install + quick-start examples, and for English 
 
 - `core/algorithms.md` — pseudocode for Gregorian↔Coptic, Easter, feasts
 - `core/feasts.json` — fixed + moveable feast registry
+- `core/coptic_months.json` — the 13 Coptic month names (English + Arabic)
 - `core/test-vectors.json` — cross-port test contract
 
 Every port must produce identical results against `core/test-vectors.json`.
+
+## FAQ
+
+### What is the Coptic calendar?
+The Coptic (Alexandrian) calendar is the liturgical calendar of the Coptic Orthodox Church of Alexandria. It derives from the ancient Egyptian civil calendar and was reformed by Augustus in 25 BC. Its era is **Anno Martyrum (AM)** — "Year of the Martyrs" — counted from **29 August 284 CE (Julian)**, the year of Diocletian's accession and the persecution of Christians.
+
+### What are the months of the Coptic year?
+There are **13 months**: 12 of exactly 30 days each, plus a short 13th month called **Nasie** of 5 days (6 in leap years). In order: Thout · Paopi · Hathor · Koiak · Tobi · Meshir · Paremhat · Parmouti · Pashons · Paoni · Epip · Mesori · Nasie. (Arabic: توت · بابة · هاتور · كيهك · طوبة · أمشير · برمهات · برمودة · بشنس · بؤونة · أبيب · مسرى · نسيء.) Available via `CopticCalendar.monthName(month, locale)` in every port.
+
+### When does the Coptic year start?
+**1 Tout** — falling on either **11 September** or **12 September** in the Gregorian calendar (the later date in the Gregorian year preceding a leap year). The current Coptic year began on 11 September 2025 (Gregorian) and is **1742 AM**.
+
+### When is Coptic Christmas?
+**29 Koiak** in the Coptic calendar, which falls on **7 January** in the Gregorian calendar every year (in the 20th–21st centuries). Same day every year because the Coptic calendar is fixed relative to the Julian calendar, and the Julian-to-Gregorian offset stays at +13 days through 28 February 2100.
+
+### When is Coptic Easter?
+Coptic Easter follows the **Julian computus** — the same calculation used by all Eastern Orthodox churches. It can fall anywhere between **April 4 and May 8** in the Gregorian calendar. Examples: 2025 → April 20, 2026 → April 12, 2027 → May 2, 2028 → April 16. Use `CopticCalendar.easterDate(gregorianYear)` to compute it.
+
+### How is Coptic Easter different from Western (Gregorian) Easter?
+Both use the same underlying rule ("Sunday after the first full moon on or after the spring equinox") but with different reference frames. Western Easter uses the Gregorian calendar and Gregorian computus; Coptic and Eastern Orthodox Easter use the Julian calendar and Julian computus. The two coincide in some years and can be up to **5 weeks apart** in others. Kiahk implements only the Coptic/Julian variant.
+
+### What are the major Coptic feasts?
+The seven major fixed feasts and the moveable feasts derived from Easter:
+
+| Feast | Type | Date |
+|---|---|---|
+| Nativity of Christ | fixed | 29 Koiak (7 January) |
+| Epiphany (Theophany) | fixed | 11 Tobi (19 January) |
+| Annunciation | fixed | 29 Paremhat (7 April) |
+| Palm Sunday | moveable | Easter − 7 days |
+| Easter Sunday | moveable | — |
+| Ascension | moveable | Easter + 39 days |
+| Pentecost | moveable | Easter + 49 days |
+| Feast of the Cross | fixed | 17 Thout (27 September) |
+| Assumption of Mary | fixed | 16 Mesori (22 August) |
+
+Plus the start of major fasts: Nineveh Fast (Easter − 69 days) and Great Lent (Easter − 55 days).
+
+### How does the Coptic leap year rule work?
+A Coptic year `Y` is a leap year if and only if `Y mod 4 == 3`. This is the Julian-style leap rule (one leap every 4 years, no century exception). The extra day always goes to month 13 (Nasie), giving it 6 days instead of 5.
+
+### Why does Kiahk use Julian Day Numbers internally?
+The **Julian Day Number (JDN)** is a continuous integer count of days from a single epoch (noon UTC, 1 January 4713 BC proleptic Julian). Routing every conversion through JDN gives you (a) one well-understood arithmetic primitive instead of N²×N two-calendar formulas, and (b) trivial day-arithmetic for moveable feasts (just add/subtract days). All 9 ports do this — see [`core/algorithms.md`](core/algorithms.md).
+
+### Can I use Kiahk in browser JavaScript / on Android / on iOS?
+Yes — every port is pure-language with no native dependencies:
+- **Browser JS** — the JS port is ESM-only and has zero Node-specific APIs at runtime; works in any modern browser
+- **Android** — the Kotlin/JVM port targets JVM 11, Android API 26+ (use Android Gradle Plugin's desugaring for older)
+- **iOS / macOS / tvOS / watchOS / visionOS / Linux** — the Swift port is pure-Swift with only `Foundation`; works on every Apple OS plus Linux (and even Android via SwiftPM)
+- **Server / CLI** — all 9 ports work as backend libraries
+
+### How do I report a bug or suggest a feature?
+Open an issue at <https://github.com/amir-magdy-of-wizardlabz/kiahk/issues>. If you have a security concern, see [`SECURITY.md`](SECURITY.md).
 
 ## Demo
 

@@ -13,7 +13,7 @@
     <Authors>WizardLabz</Authors>
     <Company>WizardLabz</Company>
     <Description>Coptic calendar arithmetic — date conversion, Easter, and feast days.</Description>
-    <PackageTags>coptic;calendar;easter;kiahk</PackageTags>
+    <PackageTags>coptic;calendar;easter;kiahk;aboqty;orthodox;coptic-orthodox;gregorian;julian;date-conversion;liturgical;feast;feasts;alexandrian;anno-martyrum</PackageTags>
     <PackageProjectUrl>https://github.com/amir-magdy-of-wizardlabz/kiahk</PackageProjectUrl>
     <RepositoryUrl>https://github.com/amir-magdy-of-wizardlabz/kiahk</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
