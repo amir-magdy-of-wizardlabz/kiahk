@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.5
+
+- Coordinated release across all ports — no Dart API changes since 0.1.4.
+- Two new sibling ports land in the same release: **PHP** (`wizardlabz/kiahk`
+  on Packagist) and **Kotlin/JVM** (`com.wizardlabz:kiahk` on Maven Central,
+  Android-compatible at API 26+).
+- Dart-side: added `example/kiahk_example.dart` and missing dartdoc on
+  `CopticDate.year/month/day` + `CopticMonthRecord.month`. Targets pub.dev's
+  full 160/160 score.
+
 ## 0.1.4
 
 - Coordinated release across all ports. No Dart API changes since 0.1.3 —

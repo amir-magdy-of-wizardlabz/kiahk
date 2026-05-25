@@ -20,7 +20,7 @@ Add to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/amir-magdy-of-wizardlabz/kiahk.git", from: "0.1.4"),
+    .package(url: "https://github.com/amir-magdy-of-wizardlabz/kiahk.git", from: "0.1.5"),
 ],
 targets: [
     .target(name: "YourTarget", dependencies: [
@@ -36,7 +36,7 @@ Or in Xcode: **File → Add Package Dependencies…** and paste the repo URL.
 Add to your `Podfile`:
 
 ```ruby
-pod 'Kiahk', '~> 0.1.4'
+pod 'Kiahk', '~> 0.1.5'
 ```
 
 Then `pod install`. Supports iOS 13+, macOS 10.15+, tvOS 13+, watchOS 6+.
