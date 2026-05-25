@@ -20,14 +20,14 @@ There's no central C package registry. Three options, in increasing order of pin
 
 ```bash
 curl -L -o kiahk-c.tar.gz \
-  https://github.com/amir-magdy-of-wizardlabz/kiahk/releases/latest/download/kiahk-c-v0.1.4.tar.gz
+  https://github.com/amir-magdy-of-wizardlabz/kiahk/releases/latest/download/kiahk-c-v0.1.5.tar.gz
 tar xzf kiahk-c.tar.gz
 ```
 
 Then add it as a CMake subproject:
 
 ```cmake
-add_subdirectory(third_party/kiahk-c-v0.1.4)
+add_subdirectory(third_party/kiahk-c-v0.1.5)
 target_link_libraries(your_target PRIVATE kiahk)
 ```
 
