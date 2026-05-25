@@ -27,7 +27,7 @@ Coptic calendar arithmetic — date conversion, Easter, and feast days. A small,
 [![SwiftPM](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Famir-magdy-of-wizardlabz%2Fkiahk%2Fbadge%3Ftype%3Dswift-versions&label=SwiftPM&logo=swift)](https://swiftpackageindex.com/amir-magdy-of-wizardlabz/kiahk)
 [![C release](https://img.shields.io/github/v/release/amir-magdy-of-wizardlabz/kiahk?label=C%20tarball&logo=github)](https://github.com/amir-magdy-of-wizardlabz/kiahk/releases/latest)
 
-## Downloads & adoption [ℹ️](#️-registry-download-counts) 
+## Downloads & adoption [ℹ️](#registry-download-counts)
 
 [![npm downloads](https://img.shields.io/npm/dm/kiahk.svg?label=npm%20%2Fmo&logo=npm)](https://npm-stat.com/charts.html?package=kiahk)
 [![PyPI downloads](https://static.pepy.tech/badge/kiahk/month)](https://www.pepy.tech/projects/kiahk)
