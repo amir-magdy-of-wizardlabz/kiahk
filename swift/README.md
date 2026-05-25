@@ -7,7 +7,10 @@
 [![Swift Package Index](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Famir-magdy-of-wizardlabz%2Fkiahk%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/amir-magdy-of-wizardlabz/kiahk)
 [![Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Famir-magdy-of-wizardlabz%2Fkiahk%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/amir-magdy-of-wizardlabz/kiahk)
 [![CocoaPods version](https://img.shields.io/cocoapods/v/Kiahk.svg)](https://cocoapods.org/pods/Kiahk)
+[![GitHub stars](https://img.shields.io/github/stars/amir-magdy-of-wizardlabz/kiahk?style=flat&logo=github)](https://github.com/amir-magdy-of-wizardlabz/kiahk/stargazers)
 [![license](https://img.shields.io/github/license/amir-magdy-of-wizardlabz/kiahk.svg)](../LICENSE)
+
+> Neither SwiftPM nor CocoaPods exposes reliable per-package download counts (SwiftPM has no central registry; the CocoaPods metrics service was deprecated). Adoption is tracked via GitHub stars + [Swift Package Index](https://swiftpackageindex.com/amir-magdy-of-wizardlabz/kiahk).
 
 Coptic calendar arithmetic — date conversion, Easter, and feast days. Swift port of [kiahk](https://github.com/amir-magdy-of-wizardlabz/kiahk). Identical results to all other ports against `core/test-vectors.json`.
 
