@@ -152,8 +152,18 @@ Source: [`demo/index.html`](demo/index.html), [`demo/app.js`](demo/app.js). See 
 
 > The hosted demo is served via [raw.githack.com](https://raw.githack.com), a free proxy that serves GitHub files with correct MIME types. It reads `master` directly, so the link tracks whatever's on `master` at any given moment.
 
-### ℹ️ Registry download counts
-are inflated by mirrors and security-scanner bots. The **PyPI badge above uses [pepy.tech](https://www.pepy.tech/projects/kiahk)** which filters most of that bot traffic. npm's true human-install count is on [npm-stat.com](https://npm-stat.com/charts.html?package=kiahk). Maven Central and pkg.go.dev don't expose public download stats by design.
+<a id="registry-download-counts"></a>
+
+### About those download numbers
+
+Registry download counts are inflated by mirrors and security-scanner bots — sometimes 90%+ of "downloads" for a small package are automated traffic, not human installs. A few things to know about how the badges above compare:
+
+- **PyPI** — the badge points to [pepy.tech](https://www.pepy.tech/projects/kiahk), which filters most bot traffic and gives the closest thing to a real human-install count.
+- **npm** — the badge points to [npm-stat.com](https://npm-stat.com/charts.html?package=kiahk) for daily / per-country breakdown. npm's raw `/dm/` counter includes a lot of CI install activity.
+- **Packagist** — counts are reasonably honest because Composer caches aggressively.
+- **NuGet / CocoaPods** — counts dominated by package-restore in CI; treat as a *direction-of-travel* indicator, not absolute usage.
+- **Maven Central** and **pkg.go.dev** — don't expose download stats publicly by design. The library is there; you just can't see who's pulling it.
+- **GitHub stars / forks** — small but more honest signals than any of the above. Star the repo if you find it useful.
 
 ## License
 
