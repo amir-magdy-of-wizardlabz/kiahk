@@ -66,7 +66,7 @@ Same algorithms, same `core/test-vectors.json` contract, distributed through eac
 | Swift (SwiftPM) | [`swift/`](swift/) | [![SwiftPM](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Famir-magdy-of-wizardlabz%2Fkiahk%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/amir-magdy-of-wizardlabz/kiahk) | add `https://github.com/amir-magdy-of-wizardlabz/kiahk.git` to `Package.swift` |
 | Swift (CocoaPods) | [`swift/`](swift/) | [![CocoaPods](https://img.shields.io/cocoapods/v/Kiahk.svg?label=CocoaPods)](https://cocoapods.org/pods/Kiahk) | `pod 'Kiahk'` in `Podfile` |
 | C# / .NET | [`csharp/`](csharp/) | [![NuGet](https://img.shields.io/nuget/v/Kiahk.svg?label=NuGet)](https://www.nuget.org/packages/Kiahk/) | `dotnet add package Kiahk` |
-| Kotlin / JVM / Android | [`kotlin/`](kotlin/) | [![Maven Central](https://img.shields.io/maven-central/v/com.wizardlabz/kiahk.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.wizardlabz/kiahk) | `implementation("com.wizardlabz:kiahk:0.1.5")` in Gradle |
+| Kotlin / JVM / Android | [`kotlin/`](kotlin/) | [![Maven Central](https://img.shields.io/maven-central/v/com.wizardlabz/kiahk.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.wizardlabz/kiahk) | `implementation("com.wizardlabz:kiahk:0.1.6")` in Gradle |
 | C | [`c/`](c/) | [![Release](https://img.shields.io/github/v/release/amir-magdy-of-wizardlabz/kiahk?label=release)](https://github.com/amir-magdy-of-wizardlabz/kiahk/releases/latest) | download tarball or `add_subdirectory(c)` in CMake |
 
 See each port's README for full install + quick-start examples, and for English + Arabic month-name rendering.

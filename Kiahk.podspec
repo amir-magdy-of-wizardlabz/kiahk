@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Kiahk'
-  s.version          = '0.1.5'
+  s.version          = '0.1.6'
   s.summary          = 'Coptic calendar arithmetic — date conversion, Easter, and feast days.'
   s.description      = <<-DESC
     Pure Swift Coptic calendar library. Gregorian↔Coptic date conversion,
