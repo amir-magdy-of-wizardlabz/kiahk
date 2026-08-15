@@ -27,7 +27,7 @@ export const FEASTS = [
     },
     {
         id: 'assumption',
-        names: { en: 'Assumption of Mary', ar: 'عيد انتقال العذراء' },
+        names: { en: 'Assumption of Mary', ar: 'عيد صعود جسد العذراء' },
         type: 'fixed', category: 'major',
         coptic_month: 12, coptic_day: 16
     },

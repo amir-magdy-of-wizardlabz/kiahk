@@ -48,7 +48,7 @@ public let kFeasts: [FeastRecord] = [
                 names: ["en": "Annunciation", "ar": "عيد البشارة"],
                 type: "fixed", category: "major", copticMonth: 7, copticDay: 29),
     FeastRecord(id: "assumption",
-                names: ["en": "Assumption of Mary", "ar": "عيد انتقال العذراء"],
+                names: ["en": "Assumption of Mary", "ar": "عيد صعود جسد العذراء"],
                 type: "fixed", category: "major", copticMonth: 12, copticDay: 16),
     FeastRecord(id: "cross",
                 names: ["en": "Feast of the Cross", "ar": "عيد الصليب"],

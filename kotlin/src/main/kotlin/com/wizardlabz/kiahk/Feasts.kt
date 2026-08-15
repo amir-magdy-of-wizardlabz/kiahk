@@ -29,7 +29,7 @@ object Feasts {
         FeastDefinition("nativity",     mapOf("en" to "Nativity of Christ",   "ar" to "عيد الميلاد المجيد"),   "fixed",    "major", copticMonth = 4,  copticDay = 29, observedCopticDayAfterLeap = 28),
         FeastDefinition("epiphany",     mapOf("en" to "Epiphany (Theophany)", "ar" to "عيد الغطاس"),          "fixed",    "major", copticMonth = 5,  copticDay = 11),
         FeastDefinition("annunciation", mapOf("en" to "Annunciation",         "ar" to "عيد البشارة"),         "fixed",    "major", copticMonth = 7,  copticDay = 29),
-        FeastDefinition("assumption",   mapOf("en" to "Assumption of Mary",   "ar" to "عيد انتقال العذراء"),  "fixed",    "major", copticMonth = 12, copticDay = 16),
+        FeastDefinition("assumption",   mapOf("en" to "Assumption of Mary",   "ar" to "عيد صعود جسد العذراء"),  "fixed",    "major", copticMonth = 12, copticDay = 16),
         FeastDefinition("cross",        mapOf("en" to "Feast of the Cross",   "ar" to "عيد الصليب"),          "fixed",    "major", copticMonth = 1,  copticDay = 17),
         FeastDefinition("nineveh_fast", mapOf("en" to "Nineveh Fast",         "ar" to "صوم نينوى"),           "moveable", "major", easterOffset = -69),
         FeastDefinition("great_lent",   mapOf("en" to "Great Lent (start)",   "ar" to "بداية الصوم الكبير"),  "moveable", "major", easterOffset = -55),

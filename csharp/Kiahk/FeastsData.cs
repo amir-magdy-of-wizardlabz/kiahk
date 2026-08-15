@@ -35,7 +35,7 @@ public static class FeastsData
             new Dictionary<string, string> { ["en"] = "Annunciation", ["ar"] = "عيد البشارة" },
             "fixed", "major", CopticMonth: 7, CopticDay: 29),
         new("assumption",
-            new Dictionary<string, string> { ["en"] = "Assumption of Mary", ["ar"] = "عيد انتقال العذراء" },
+            new Dictionary<string, string> { ["en"] = "Assumption of Mary", ["ar"] = "عيد صعود جسد العذراء" },
             "fixed", "major", CopticMonth: 12, CopticDay: 16),
         new("cross",
             new Dictionary<string, string> { ["en"] = "Feast of the Cross", ["ar"] = "عيد الصليب" },

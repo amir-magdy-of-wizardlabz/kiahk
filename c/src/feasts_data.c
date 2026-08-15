@@ -12,7 +12,7 @@ const kiahk_feast_record KIAHK_FEASTS[] = {
       { "Annunciation", "عيد البشارة" },
       "fixed", "major", 7, 29, 0, 0 },
     { "assumption",
-      { "Assumption of Mary", "عيد انتقال العذراء" },
+      { "Assumption of Mary", "عيد صعود جسد العذراء" },
       "fixed", "major", 12, 16, 0, 0 },
     { "cross",
       { "Feast of the Cross", "عيد الصليب" },

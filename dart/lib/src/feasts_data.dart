@@ -48,7 +48,7 @@ const List<FeastRecord> kFeasts = [
   ),
   FeastRecord(
     id: 'assumption',
-    names: {'en': 'Assumption of Mary', 'ar': 'عيد انتقال العذراء'},
+    names: {'en': 'Assumption of Mary', 'ar': 'عيد صعود جسد العذراء'},
     type: 'fixed', category: 'major',
     copticMonth: 12, copticDay: 16,
   ),
