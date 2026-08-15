@@ -6,6 +6,19 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ---
 
+## [Unreleased]
+
+### Fixed
+
+- **Nativity now resolves to 7 January in every year.** The feast was treated as purely fixed on 29 Koiak, which lands on 8 January in Coptic years that are a multiple of 4 (Gregorian leap years: 2016, 2020, 2024, 2028, …). The Coptic Church observes it on **28 Koiak** in those years so it stays on 7 January, keeping the interval from the Annunciation at 275 days. `core/feasts.json` gains an `observed_coptic_day_after_leap` field (only the Nativity sets it, to 28) and every port applies it when resolving fixed feasts. Rule and sources documented in `core/algorithms.md` §3a; validated against St-Takla.org's per-Coptic-year feast tables and daily Natiga.
+- No other feast is affected — Epiphany (11 Tobi) and the Feast of the Cross (17 Thout) still shift with the arithmetic, e.g. 20 January 2024 and 28 September 2023.
+
+### Added
+
+- `core/test-vectors.json` gains a `fixed_feasts` section (11 vectors covering the Nativity in shifted and ordinary years, plus Epiphany, Annunciation, Assumption, and Cross), wired into the test suite of all nine ports.
+
+---
+
 ## [0.1.5] — 2026-05-25
 
 ### Added

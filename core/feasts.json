@@ -3,7 +3,8 @@
     "id": "nativity",
     "names": { "en": "Nativity of Christ", "ar": "عيد الميلاد المجيد" },
     "type": "fixed", "category": "major",
-    "coptic_month": 4, "coptic_day": 29
+    "coptic_month": 4, "coptic_day": 29,
+    "observed_coptic_day_after_leap": 28
   },
   {
     "id": "epiphany",

@@ -76,6 +76,15 @@ class CopticCalendar {
   /// A Coptic month/day falls in two possible Coptic years that overlap with
   /// the same Gregorian year. Try both candidates, keep the one landing
   /// inside [gregorianYear]; fall back to the earlier candidate.
+  /// Coptic day [rec] is kept on in [copticYear]. The Nativity moves to
+  /// 28 Koiak when the Coptic year is a multiple of 4 — the year after a 6-day
+  /// Nasie — so it stays on 7 January. See core/algorithms.md §3a.
+  static int _observedCopticDay(FeastRecord rec, int copticYear) {
+    final observed = rec.observedCopticDayAfterLeap;
+    if (observed != null && copticYear % 4 == 0) return observed;
+    return rec.copticDay!;
+  }
+
   static Feast _fixedFeast(FeastRecord rec, int gregorianYear) {
     final cYearA = gregorianToCoptic(gregorianYear, 1, 1).year;
     final cYearB = gregorianToCoptic(gregorianYear, 12, 31).year;
@@ -83,11 +92,12 @@ class CopticCalendar {
     final seen = <int>{};
     for (final cy in [cYearA, cYearB]) {
       if (!seen.add(cy)) continue;
-      final d = copticToGregorian(cy, rec.copticMonth!, rec.copticDay!);
+      final d = copticToGregorian(cy, rec.copticMonth!, _observedCopticDay(rec, cy));
       if (d.year == gregorianYear) candidates.add(d);
     }
     if (candidates.isEmpty) {
-      candidates.add(copticToGregorian(cYearA, rec.copticMonth!, rec.copticDay!));
+      candidates.add(
+          copticToGregorian(cYearA, rec.copticMonth!, _observedCopticDay(rec, cYearA)));
     }
     candidates.sort((a, b) {
       if (a.year != b.year) return a.year.compareTo(b.year);

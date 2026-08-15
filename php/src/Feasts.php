@@ -15,12 +15,12 @@ final class Feasts
     /**
      * All feast records.
      *
-     * @return list<array{id:string,names:array<string,string>,type:string,category:string,coptic_month?:int,coptic_day?:int,easter_offset?:int}>
+     * @return list<array{id:string,names:array<string,string>,type:string,category:string,coptic_month?:int,coptic_day?:int,easter_offset?:int,observed_coptic_day_after_leap?:int}>
      */
     public static function all(): array
     {
         return [
-            ['id' => 'nativity',     'names' => ['en' => 'Nativity of Christ',   'ar' => 'عيد الميلاد المجيد'],   'type' => 'fixed',    'category' => 'major', 'coptic_month' => 4,  'coptic_day' => 29],
+            ['id' => 'nativity',     'names' => ['en' => 'Nativity of Christ',   'ar' => 'عيد الميلاد المجيد'],   'type' => 'fixed',    'category' => 'major', 'coptic_month' => 4,  'coptic_day' => 29, 'observed_coptic_day_after_leap' => 28],
             ['id' => 'epiphany',     'names' => ['en' => 'Epiphany (Theophany)', 'ar' => 'عيد الغطاس'],          'type' => 'fixed',    'category' => 'major', 'coptic_month' => 5,  'coptic_day' => 11],
             ['id' => 'annunciation', 'names' => ['en' => 'Annunciation',         'ar' => 'عيد البشارة'],         'type' => 'fixed',    'category' => 'major', 'coptic_month' => 7,  'coptic_day' => 29],
             ['id' => 'assumption',   'names' => ['en' => 'Assumption of Mary',   'ar' => 'عيد انتقال العذراء'],  'type' => 'fixed',    'category' => 'major', 'coptic_month' => 12, 'coptic_day' => 16],

@@ -8,6 +8,11 @@ class FeastRecord {
   final int? copticDay;
   final int? easterOffset;
 
+  /// Coptic day the feast is kept on in Coptic years that are a multiple of 4
+  /// (the year after a 6-day Nasie). Only the Nativity sets it: 28 Koiak, which
+  /// keeps it on 7 January. See core/algorithms.md §3a.
+  final int? observedCopticDayAfterLeap;
+
   const FeastRecord({
     required this.id,
     required this.names,
@@ -16,6 +21,7 @@ class FeastRecord {
     this.copticMonth,
     this.copticDay,
     this.easterOffset,
+    this.observedCopticDayAfterLeap,
   });
 }
 
@@ -26,6 +32,7 @@ const List<FeastRecord> kFeasts = [
     names: {'en': 'Nativity of Christ', 'ar': 'عيد الميلاد المجيد'},
     type: 'fixed', category: 'major',
     copticMonth: 4, copticDay: 29,
+    observedCopticDayAfterLeap: 28,
   ),
   FeastRecord(
     id: 'epiphany',

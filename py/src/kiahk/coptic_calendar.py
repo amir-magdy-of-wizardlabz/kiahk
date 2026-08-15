@@ -44,6 +44,19 @@ class CopticCalendar:
         )
 
     @staticmethod
+    def _observed_coptic_day(record: dict, coptic_year: int) -> int:
+        """Coptic day a fixed feast is kept on in `coptic_year`.
+
+        The Nativity is observed on 28 Koiak when the Coptic year is a multiple
+        of 4 — the year after a 6-day Nasie — so it stays on 7 January.
+        See core/algorithms.md §3a.
+        """
+        observed = record.get("observed_coptic_day_after_leap")
+        if observed is not None and coptic_year % 4 == 0:
+            return observed
+        return record["coptic_day"]
+
+    @staticmethod
     def _fixed_feast(record: dict, gregorian_year: int) -> Feast:
         """Resolve a fixed Coptic feast to its Gregorian date inside `gregorian_year`.
 
@@ -60,15 +73,20 @@ class CopticCalendar:
         c_year_b = gregorian_to_coptic(gregorian_year, 12, 31)[0]
         candidates = []
         for cy in {c_year_a, c_year_b}:
+            day = CopticCalendar._observed_coptic_day(record, cy)
             try:
-                date = coptic_to_gregorian(cy, record["coptic_month"], record["coptic_day"])
+                date = coptic_to_gregorian(cy, record["coptic_month"], day)
             except Exception:
                 continue
             if date[0] == gregorian_year:
                 candidates.append(date)
         if not candidates:
             candidates.append(
-                coptic_to_gregorian(c_year_a, record["coptic_month"], record["coptic_day"])
+                coptic_to_gregorian(
+                    c_year_a,
+                    record["coptic_month"],
+                    CopticCalendar._observed_coptic_day(record, c_year_a),
+                )
             )
         date = sorted(candidates)[0]
         return Feast(

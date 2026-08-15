@@ -127,6 +127,37 @@ this library targets (20th–21st century). The trick of running `f, g` through
 `gregorianToJdn` works because both calendars share month lengths; the +13
 shift handles the proleptic offset.
 
+## 3a. Fixed Feasts and the Nativity observance rule
+
+A fixed feast is a Coptic month/day. Resolving it inside a Gregorian year means
+trying both Coptic years that overlap that Gregorian year and keeping the
+candidate that lands inside it.
+
+One fixed feast is not purely calendrical. In a Coptic year `cY` with
+`cY mod 4 == 0` — the year immediately *after* a 6-day-Nasie leap year — every
+Coptic date between 1 Tout and the following Julian 29 February sits one
+Gregorian day later than usual, so 29 Koiak falls on **8 January** instead of
+7 January. The Church keeps the Nativity on 7 January in those years by
+observing it on **28 Koiak**, so that the interval from the Annunciation
+(29 Baramhat) to the Nativity stays at 275 days rather than 276.
+
+```
+function observedCopticDay(feast, copticYear):
+  if feast.observedCopticDayAfterLeap != null and copticYear mod 4 == 0:
+    return feast.observedCopticDayAfterLeap
+  return feast.copticDay
+```
+
+Only `nativity` carries `observed_coptic_day_after_leap` (28). Every other
+fixed feast follows the arithmetic date and does shift by a day in those years
+— e.g. Epiphany (11 Tobi) is 20 January 2024, and the Feast of the Cross
+(17 Thout) is 28 September 2023.
+
+Sources: St-Takla.org, *التقويم القبطي وحساب الأبقطي* (Roshdy Wasef Bahman),
+ch. 13 — "فهو ثلاثة سنين يكون 29 كيهك والسنة الرابعة يكون 28 كيهك"; and
+St-Takla's per-Coptic-year feast tables, e.g. AM 1740 → "29 كيهك — 7 يناير 2024
+— موعد عيد الميلاد المجيد (28 كيهك في السنة الكبيسة)".
+
 ## 4. Moveable Feasts
 
 All moveable feasts are derived from Easter Sunday:

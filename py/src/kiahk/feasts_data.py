@@ -11,6 +11,9 @@ FEASTS: list[dict[str, Any]] = [
         "category": "major",
         "coptic_month": 4,
         "coptic_day": 29,
+        # Observed on 28 Koiak when the Coptic year is a multiple of 4, keeping
+        # the Nativity on 7 January. See core/algorithms.md §3a.
+        "observed_coptic_day_after_leap": 28,
     },
     {
         "id": "epiphany",

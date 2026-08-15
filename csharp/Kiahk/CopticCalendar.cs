@@ -87,6 +87,14 @@ public static class CopticCalendar
     /// </summary>
     private static Feast FixedFeast(FeastRecord rec, int gregorianYear)
     {
+        // Coptic day the feast is kept on in a given Coptic year. The Nativity moves to
+        // 28 Koiak when the Coptic year is a multiple of 4 — the year after a 6-day Nasie
+        // — so it stays on 7 January. See core/algorithms.md §3a.
+        int ObservedCopticDay(int copticYear) =>
+            rec.ObservedCopticDayAfterLeap is int observed && copticYear % 4 == 0
+                ? observed
+                : rec.CopticDay!.Value;
+
         int cYearA = Algorithms.GregorianToCoptic(gregorianYear, 1, 1).Year;
         int cYearB = Algorithms.GregorianToCoptic(gregorianYear, 12, 31).Year;
         var candidates = new List<(int Year, int Month, int Day)>(2);
@@ -94,7 +102,7 @@ public static class CopticCalendar
         foreach (var cy in new[] { cYearA, cYearB })
         {
             if (!seen.Add(cy)) continue;
-            var d = Algorithms.CopticToGregorian(cy, rec.CopticMonth!.Value, rec.CopticDay!.Value);
+            var d = Algorithms.CopticToGregorian(cy, rec.CopticMonth!.Value, ObservedCopticDay(cy));
             if (d.Year == gregorianYear)
             {
                 candidates.Add(d);
@@ -102,7 +110,7 @@ public static class CopticCalendar
         }
         if (candidates.Count == 0)
         {
-            candidates.Add(Algorithms.CopticToGregorian(cYearA, rec.CopticMonth!.Value, rec.CopticDay!.Value));
+            candidates.Add(Algorithms.CopticToGregorian(cYearA, rec.CopticMonth!.Value, ObservedCopticDay(cYearA)));
         }
         candidates.Sort((a, b) =>
         {

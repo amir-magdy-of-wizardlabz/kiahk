@@ -11,6 +11,12 @@ data class FeastDefinition(
     val copticMonth: Int? = null,
     val copticDay: Int? = null,
     val easterOffset: Int? = null,
+    /**
+     * Coptic day the feast is kept on in Coptic years that are a multiple of 4
+     * (the year after a 6-day Nasie). Only the Nativity sets it: 28 Koiak, which
+     * keeps it on 7 January. See `core/algorithms.md` §3a.
+     */
+    val observedCopticDayAfterLeap: Int? = null,
 )
 
 /**
@@ -20,7 +26,7 @@ data class FeastDefinition(
 object Feasts {
     @JvmStatic
     val ALL: List<FeastDefinition> = listOf(
-        FeastDefinition("nativity",     mapOf("en" to "Nativity of Christ",   "ar" to "عيد الميلاد المجيد"),   "fixed",    "major", copticMonth = 4,  copticDay = 29),
+        FeastDefinition("nativity",     mapOf("en" to "Nativity of Christ",   "ar" to "عيد الميلاد المجيد"),   "fixed",    "major", copticMonth = 4,  copticDay = 29, observedCopticDayAfterLeap = 28),
         FeastDefinition("epiphany",     mapOf("en" to "Epiphany (Theophany)", "ar" to "عيد الغطاس"),          "fixed",    "major", copticMonth = 5,  copticDay = 11),
         FeastDefinition("annunciation", mapOf("en" to "Annunciation",         "ar" to "عيد البشارة"),         "fixed",    "major", copticMonth = 7,  copticDay = 29),
         FeastDefinition("assumption",   mapOf("en" to "Assumption of Mary",   "ar" to "عيد انتقال العذراء"),  "fixed",    "major", copticMonth = 12, copticDay = 16),

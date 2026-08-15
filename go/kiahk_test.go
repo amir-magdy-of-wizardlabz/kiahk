@@ -51,6 +51,7 @@ type vectors struct {
 	CopticToGregorian            []gregCoptic     `json:"coptic_to_gregorian"`
 	Easter                       []easterVec      `json:"easter"`
 	MoveableFeasts               []moveableVec    `json:"moveable_feasts"`
+	FixedFeasts                  []moveableVec    `json:"fixed_feasts"`
 	InvalidCopticDates           []invalidDate    `json:"invalid_coptic_dates"`
 	InvalidGregorianDates        []invalidDate    `json:"invalid_gregorian_dates"`
 	CopticMonthNames             []monthNameVec   `json:"coptic_month_names"`
@@ -433,6 +434,31 @@ func TestMoveableFeastVectors(t *testing.T) {
 		if g.Year != vec.Date.Year || g.Month != vec.Date.Month || g.Day != vec.Date.Day {
 			t.Errorf("MoveableFeast(%q, %d) date = %+v, want %d-%d-%d",
 				vec.FeastID, vec.GregorianYear, g, vec.Date.Year, vec.Date.Month, vec.Date.Day)
+		}
+	}
+}
+
+// ----------------------------------------------------------------------
+// Fixed feasts
+// ----------------------------------------------------------------------
+
+func TestFixedFeastVectors(t *testing.T) {
+	for _, vec := range v.FixedFeasts {
+		var found bool
+		for _, f := range kiahk.YearFeasts(vec.GregorianYear) {
+			if f.ID != vec.FeastID {
+				continue
+			}
+			found = true
+			g := f.GregorianDate
+			if g.Year != vec.Date.Year || g.Month != vec.Date.Month || g.Day != vec.Date.Day {
+				t.Errorf("YearFeasts(%d)[%q] date = %+v, want %d-%d-%d",
+					vec.GregorianYear, vec.FeastID, g, vec.Date.Year, vec.Date.Month, vec.Date.Day)
+			}
+			break
+		}
+		if !found {
+			t.Errorf("YearFeasts(%d) has no feast %q", vec.GregorianYear, vec.FeastID)
 		}
 	}
 }

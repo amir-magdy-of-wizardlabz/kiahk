@@ -92,7 +92,9 @@ There are **13 months**: 12 of exactly 30 days each, plus a short 13th month cal
 **1 Tout** — falling on either **11 September** or **12 September** in the Gregorian calendar (the later date in the Gregorian year preceding a leap year). The current Coptic year began on 11 September 2025 (Gregorian) and is **1742 AM**.
 
 ### When is Coptic Christmas?
-**29 Koiak** in the Coptic calendar, which falls on **7 January** in the Gregorian calendar every year (in the 20th–21st centuries). Same day every year because the Coptic calendar is fixed relative to the Julian calendar, and the Julian-to-Gregorian offset stays at +13 days through 28 February 2100.
+**7 January** every year in the 20th–21st centuries, because the Coptic calendar is fixed relative to the Julian calendar and the Julian-to-Gregorian offset stays at +13 days through 28 February 2100.
+
+It is kept on **29 Koiak** in three years out of four. In a Coptic year that is a multiple of 4 — the year right after a 6-day Nasie — every Coptic date from 1 Tout to the following 29 February sits one Gregorian day later, so 29 Koiak lands on 8 January; the Church observes the Nativity on **28 Koiak** in those years so it stays on 7 January (keeping the interval from the Annunciation at 275 days). Kiahk applies that rule, so `nativity` is 7 January in every year, 2024 and 2028 included. Every *other* fixed feast does shift with the arithmetic — Epiphany is 20 January 2024, and the Feast of the Cross is 28 September 2023. See [`core/algorithms.md`](core/algorithms.md) §3a.
 
 ### When is Coptic Easter?
 Coptic Easter follows the **Julian computus** — the same calculation used by all Eastern Orthodox churches. It can fall anywhere between **April 4 and May 8** in the Gregorian calendar. Examples: 2025 → April 20, 2026 → April 12, 2027 → May 2, 2028 → April 16. Use `CopticCalendar.easterDate(gregorianYear)` to compute it.
@@ -105,7 +107,7 @@ The seven major fixed feasts and the moveable feasts derived from Easter:
 
 | Feast | Type | Date |
 |---|---|---|
-| Nativity of Christ | fixed | 29 Koiak (7 January) |
+| Nativity of Christ | fixed | 29 Koiak — 28 Koiak when the Coptic year is a multiple of 4 (7 January) |
 | Epiphany (Theophany) | fixed | 11 Tobi (19 January) |
 | Annunciation | fixed | 29 Paremhat (7 April) |
 | Palm Sunday | moveable | Easter − 7 days |

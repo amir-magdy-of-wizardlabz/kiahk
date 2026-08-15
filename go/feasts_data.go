@@ -11,12 +11,18 @@ type FeastRecord struct {
 	CopticMonth  int               // valid when Type == "fixed"
 	CopticDay    int               // valid when Type == "fixed"
 	EasterOffset int               // valid when Type == "moveable"
+
+	// ObservedCopticDayAfterLeap, when non-zero, is the Coptic day the feast is
+	// kept on in Coptic years that are a multiple of 4 (the year after a 6-day
+	// Nasie). Only the Nativity uses it: 28 Koiak, keeping it on 7 January.
+	// See core/algorithms.md §3a.
+	ObservedCopticDayAfterLeap int
 }
 
 // Feasts is the hand-maintained mirror of core/feasts.json. Keep order
 // identical to the JSON for test parity.
 var Feasts = []FeastRecord{
-	{ID: "nativity", Names: map[string]string{"en": "Nativity of Christ", "ar": "عيد الميلاد المجيد"}, Type: "fixed", Category: "major", CopticMonth: 4, CopticDay: 29},
+	{ID: "nativity", Names: map[string]string{"en": "Nativity of Christ", "ar": "عيد الميلاد المجيد"}, Type: "fixed", Category: "major", CopticMonth: 4, CopticDay: 29, ObservedCopticDayAfterLeap: 28},
 	{ID: "epiphany", Names: map[string]string{"en": "Epiphany (Theophany)", "ar": "عيد الغطاس"}, Type: "fixed", Category: "major", CopticMonth: 5, CopticDay: 11},
 	{ID: "annunciation", Names: map[string]string{"en": "Annunciation", "ar": "عيد البشارة"}, Type: "fixed", Category: "major", CopticMonth: 7, CopticDay: 29},
 	{ID: "assumption", Names: map[string]string{"en": "Assumption of Mary", "ar": "عيد انتقال العذراء"}, Type: "fixed", Category: "major", CopticMonth: 12, CopticDay: 16},

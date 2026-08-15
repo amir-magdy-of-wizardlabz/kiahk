@@ -135,6 +135,31 @@ final class KiahkTest extends TestCase
     }
 
     // -------------------------------------------------------------------------
+    // Fixed feasts
+    // -------------------------------------------------------------------------
+
+    public static function fixedFeastProvider(): iterable
+    {
+        foreach (self::vectors()['fixed_feasts'] as $i => $v) {
+            yield "fixed#$i" => [$v['feast_id'], $v['gregorian_year'], $v['date']];
+        }
+    }
+
+    #[DataProvider('fixedFeastProvider')]
+    public function testFixedFeast(string $id, int $gYear, array $expected): void
+    {
+        $matches = array_values(array_filter(
+            CopticCalendar::yearFeasts($gYear),
+            static fn ($f): bool => $f->id() === $id
+        ));
+        self::assertCount(1, $matches, "yearFeasts($gYear) should contain $id exactly once");
+        $g = $matches[0]->gregorianDate;
+        self::assertSame($expected['year'], $g->year);
+        self::assertSame($expected['month'], $g->month);
+        self::assertSame($expected['day'], $g->day);
+    }
+
+    // -------------------------------------------------------------------------
     // Year feasts (full list, sorted)
     // -------------------------------------------------------------------------
 

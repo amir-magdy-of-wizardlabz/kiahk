@@ -11,7 +11,13 @@ public sealed record FeastRecord(
     string Category,
     int? CopticMonth = null,
     int? CopticDay = null,
-    int? EasterOffset = null);
+    int? EasterOffset = null,
+    /// <summary>
+    /// Coptic day the feast is kept on in Coptic years that are a multiple of 4
+    /// (the year after a 6-day Nasie). Only the Nativity sets it: 28 Koiak, which
+    /// keeps it on 7 January. See core/algorithms.md §3a.
+    /// </summary>
+    int? ObservedCopticDayAfterLeap = null);
 
 /// <summary>Hand-maintained mirror of core/feasts.json. Keep order identical for test parity.</summary>
 public static class FeastsData
@@ -21,7 +27,7 @@ public static class FeastsData
     {
         new("nativity",
             new Dictionary<string, string> { ["en"] = "Nativity of Christ", ["ar"] = "عيد الميلاد المجيد" },
-            "fixed", "major", CopticMonth: 4, CopticDay: 29),
+            "fixed", "major", CopticMonth: 4, CopticDay: 29, ObservedCopticDayAfterLeap: 28),
         new("epiphany",
             new Dictionary<string, string> { ["en"] = "Epiphany (Theophany)", ["ar"] = "عيد الغطاس" },
             "fixed", "major", CopticMonth: 5, CopticDay: 11),

@@ -128,6 +128,19 @@ describe('CopticCalendar.monthName()', () => {
   )
 })
 
+describe('fixed feasts', () => {
+  it.each(vectors.fixed_feasts)(
+    '$feast_id in $gregorian_year → $date',
+    ({ gregorian_year, feast_id, date }: any) => {
+      const feast = CopticCalendar.yearFeasts(gregorian_year).find(f => f.id === feast_id)
+      expect(feast).toBeDefined()
+      expect(feast!.gregorianDate.year).toBe(date.year)
+      expect(feast!.gregorianDate.month).toBe(date.month)
+      expect(feast!.gregorianDate.day).toBe(date.day)
+    }
+  )
+})
+
 describe('yearFeasts', () => {
   it('returns feasts sorted by date', () => {
     const feasts = CopticCalendar.yearFeasts(2025)

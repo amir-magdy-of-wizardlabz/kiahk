@@ -275,6 +275,21 @@ void main() {
     }
   });
 
+  group('CopticCalendar fixed feast vectors', () {
+    for (final vec in _vecList('fixed_feasts')) {
+      final year = vec['gregorian_year'] as int;
+      final id = vec['feast_id'] as String;
+      final d = vec['date'] as Map<String, dynamic>;
+      test('$id in $year', () {
+        final feast =
+            CopticCalendar.yearFeasts(year).firstWhere((f) => f.id == id);
+        final g = feast.gregorianDate;
+        expect((g.year, g.month, g.day),
+            (d['year'] as int, d['month'] as int, d['day'] as int));
+      });
+    }
+  });
+
   group('coptic months data parity', () {
     test('matches core/coptic_months.json exactly', () {
       final core =
