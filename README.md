@@ -103,21 +103,48 @@ Coptic Easter follows the **Julian computus** — the same calculation used by a
 Both use the same underlying rule ("Sunday after the first full moon on or after the spring equinox") but with different reference frames. Western Easter uses the Gregorian calendar and Gregorian computus; Coptic and Eastern Orthodox Easter use the Julian calendar and Julian computus. The two coincide in some years and can be up to **5 weeks apart** in others. Kiahk implements only the Coptic/Julian variant.
 
 ### What are the major Coptic feasts?
-The seven major fixed feasts and the moveable feasts derived from Easter:
+Eleven entries — five fixed feasts, four moveable feasts, and the start of the two major fasts. Every one carries both an English and an Arabic name; the `id` is the stable key you pass to the API.
 
-| Feast | Type | Date |
+| `id` | English | العربية | Type | Date |
+|---|---|---|---|---|
+| `nativity` | Nativity of Christ | عيد الميلاد المجيد | fixed | 29 Koiak — 28 Koiak when the Coptic year is a multiple of 4 (7 January) |
+| `epiphany` | Epiphany (Theophany) | عيد الغطاس | fixed | 11 Tobi (19 January) |
+| `annunciation` | Annunciation | عيد البشارة | fixed | 29 Paremhat (7 April) |
+| `assumption` | Assumption of Mary | عيد صعود جسد العذراء | fixed | 16 Mesori (22 August) |
+| `cross` | Feast of the Cross | عيد الصليب | fixed | 17 Thout (27 September) |
+| `nineveh_fast` | Nineveh Fast | صوم نينوى | moveable | Easter − 69 days |
+| `great_lent` | Great Lent (start) | بداية الصوم الكبير | moveable | Easter − 55 days |
+| `palm_sunday` | Palm Sunday | أحد الشعانين | moveable | Easter − 7 days |
+| `easter` | Easter Sunday | عيد القيامة المجيد | moveable | — |
+| `ascension` | Ascension | عيد الصعود | moveable | Easter + 39 days |
+| `pentecost` | Pentecost | عيد العنصرة | moveable | Easter + 49 days |
+
+### How do I get the Arabic names?
+Arabic is a first-class locale in all 9 ports, for both feast names and month names — pass `"ar"` wherever you'd pass `"en"`. An unrecognised locale raises the port's `UnsupportedLocale` error rather than silently falling back to English.
+
+```ts
+// TypeScript / JavaScript
+feast.name('ar')                     // عيد القيامة المجيد
+CopticCalendar.monthName(4, 'ar')    // كيهك
+```
+
+```python
+# Python
+feast.name("ar")
+CopticCalendar.month_name(4, "ar")
+```
+
+The other ports, exactly as their signatures read:
+
+| Port | Feast name | Month name |
 |---|---|---|
-| Nativity of Christ | fixed | 29 Koiak — 28 Koiak when the Coptic year is a multiple of 4 (7 January) |
-| Epiphany (Theophany) | fixed | 11 Tobi (19 January) |
-| Annunciation | fixed | 29 Paremhat (7 April) |
-| Palm Sunday | moveable | Easter − 7 days |
-| Easter Sunday | moveable | — |
-| Ascension | moveable | Easter + 39 days |
-| Pentecost | moveable | Easter + 49 days |
-| Feast of the Cross | fixed | 17 Thout (27 September) |
-| Assumption of Mary | fixed | 16 Mesori (22 August) |
+| PHP · Kotlin · Dart | `$feast->name('ar')` / `feast.name("ar")` | `CopticCalendar::monthName(4, 'ar')` / `CopticCalendar.monthName(4, "ar")` |
+| Swift | `try feast.name(locale: "ar")` | `try CopticCalendar.monthName(month: 4, locale: "ar")` |
+| Go | `feast.Name("ar")` → `(string, error)` | `kiahk.CopticMonthName(4, "ar")` → `(string, error)` |
+| C# | `feast.Name("ar")` | `CopticCalendar.MonthName(4, "ar")` |
+| C | `kiahk_feast_name(&feast, "ar", &name)` | `kiahk_coptic_month_name(4, "ar", &name)` |
 
-Plus the start of major fasts: Nineveh Fast (Easter − 69 days) and Great Lent (Easter − 55 days).
+The 13 month names in Arabic are listed under [the months question](#what-are-the-months-of-the-coptic-year) above. Note that Coptic month spellings vary in circulation (بابه / بابة, مسرى / مصرى) — lookup is by month **number**, so this only affects display.
 
 ### How does the Coptic leap year rule work?
 A Coptic year `Y` is a leap year if and only if `Y mod 4 == 3`. This is the Julian-style leap rule (one leap every 4 years, no century exception). The extra day always goes to month 13 (Nasie), giving it 6 days instead of 5.
