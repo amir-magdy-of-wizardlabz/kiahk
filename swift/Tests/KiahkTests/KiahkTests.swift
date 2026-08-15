@@ -57,6 +57,7 @@ private struct Vectors: Decodable {
     let coptic_to_gregorian: [GregCoptic]
     let easter: [EasterVec]
     let moveable_feasts: [MoveableVec]
+    let fixed_feasts: [MoveableVec]
     let invalid_coptic_dates: [InvalidDate]
     let invalid_gregorian_dates: [InvalidDate]
     let coptic_month_names: [MonthNameVec]
@@ -372,6 +373,26 @@ final class CopticCalendarMoveableFeastTests: XCTestCase {
             XCTAssertEqual(g.year, vec.date.year, "\(vec.feast_id) \(vec.gregorian_year) year")
             XCTAssertEqual(g.month, vec.date.month)
             XCTAssertEqual(g.day, vec.date.day)
+        }
+    }
+}
+
+// ----------------------------------------------------------------------
+// CopticCalendar fixed feasts
+// ----------------------------------------------------------------------
+
+final class CopticCalendarFixedFeastTests: XCTestCase {
+    func testVectors() throws {
+        for vec in vectors.fixed_feasts {
+            let feasts = CopticCalendar.yearFeasts(gregorianYear: vec.gregorian_year)
+            guard let feast = feasts.first(where: { $0.id == vec.feast_id }) else {
+                XCTFail("yearFeasts(\(vec.gregorian_year)) has no feast \(vec.feast_id)")
+                continue
+            }
+            let g = feast.gregorianDate
+            XCTAssertEqual(g.year, vec.date.year, "\(vec.feast_id) \(vec.gregorian_year) year")
+            XCTAssertEqual(g.month, vec.date.month, "\(vec.feast_id) \(vec.gregorian_year) month")
+            XCTAssertEqual(g.day, vec.date.day, "\(vec.feast_id) \(vec.gregorian_year) day")
         }
     }
 }

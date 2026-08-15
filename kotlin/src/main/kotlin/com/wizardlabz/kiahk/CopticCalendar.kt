@@ -39,6 +39,16 @@ object CopticCalendar {
     }
 
     /**
+     * Coptic day [def] is kept on in [copticYear]. The Nativity moves to 28 Koiak
+     * when the Coptic year is a multiple of 4 — the year after a 6-day Nasie — so
+     * it stays on 7 January. See `core/algorithms.md` §3a.
+     */
+    private fun observedCopticDay(def: FeastDefinition, copticYear: Int): Int {
+        val observed = def.observedCopticDayAfterLeap
+        return if (observed != null && copticYear % 4 == 0) observed else def.copticDay!!
+    }
+
+    /**
      * All fixed feasts that fall within the given Gregorian year.
      * A Gregorian year spans two Coptic years, so both are checked and
      * results deduped by feast id.
@@ -51,7 +61,7 @@ object CopticCalendar {
         for (cYear in listOf(cYearStart, cYearStart + 1)) {
             for (def in Feasts.ALL.filter { it.type == "fixed" }) {
                 try {
-                    val c = CopticDate(cYear, def.copticMonth!!, def.copticDay!!)
+                    val c = CopticDate(cYear, def.copticMonth!!, observedCopticDay(def, cYear))
                     val g = c.toGregorian()
                     if (g.year == gregorianYear && seen.add(def.id)) {
                         result += Feast(def, g, c)

@@ -78,6 +78,16 @@ func YearFeasts(gregorianYear int) []Feast {
 // year sit in the Coptic year ending in gregorianYear; later months in
 // the Coptic year starting in gregorianYear). Try both, keep the one
 // landing inside gregorianYear; fall back to the earlier candidate.
+// observedCopticDay is the Coptic day a fixed feast is kept on in copticYear.
+// The Nativity moves to 28 Koiak when the Coptic year is a multiple of 4 — the
+// year after a 6-day Nasie — so it stays on 7 January. See core/algorithms.md §3a.
+func observedCopticDay(rec FeastRecord, copticYear int) int {
+	if rec.ObservedCopticDayAfterLeap != 0 && copticYear%4 == 0 {
+		return rec.ObservedCopticDayAfterLeap
+	}
+	return rec.CopticDay
+}
+
 func fixedFeast(rec FeastRecord, gregorianYear int) Feast {
 	cYearA, _, _ := GregorianToCoptic(gregorianYear, 1, 1)
 	cYearB, _, _ := GregorianToCoptic(gregorianYear, 12, 31)
@@ -89,13 +99,13 @@ func fixedFeast(rec FeastRecord, gregorianYear int) Feast {
 			continue
 		}
 		seen[cy] = true
-		y, m, d := CopticToGregorian(cy, rec.CopticMonth, rec.CopticDay)
+		y, m, d := CopticToGregorian(cy, rec.CopticMonth, observedCopticDay(rec, cy))
 		if y == gregorianYear {
 			candidates = append(candidates, cand{y, m, d})
 		}
 	}
 	if len(candidates) == 0 {
-		y, m, d := CopticToGregorian(cYearA, rec.CopticMonth, rec.CopticDay)
+		y, m, d := CopticToGregorian(cYearA, rec.CopticMonth, observedCopticDay(rec, cYearA))
 		candidates = []cand{{y, m, d}}
 	}
 	// Earliest candidate wins.

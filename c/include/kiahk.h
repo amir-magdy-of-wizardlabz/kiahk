@@ -62,6 +62,11 @@ typedef struct {
     int coptic_month;        /* valid when type == "fixed" */
     int coptic_day;          /* valid when type == "fixed" */
     int easter_offset;       /* valid when type == "moveable" */
+    /* Coptic day the feast is kept on in Coptic years that are a multiple of 4
+     * (the year after a 6-day Nasie); 0 when the feast has no such rule. Only
+     * the Nativity sets it: 28 Koiak, keeping it on 7 January.
+     * See core/algorithms.md section 3a. */
+    int observed_coptic_day_after_leap;
 } kiahk_feast_record;
 
 /* A calendar-resolved feast (record + Gregorian date for a specific year). */

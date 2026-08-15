@@ -62,6 +62,21 @@ final class CopticCalendar
     }
 
     /**
+     * Coptic day a fixed feast is kept on in the given Coptic year. The Nativity
+     * moves to 28 Koiak when the Coptic year is a multiple of 4 — the year after a
+     * 6-day Nasie — so it stays on 7 January. See core/algorithms.md §3a.
+     *
+     * @param array{coptic_day?:int,observed_coptic_day_after_leap?:int} $entry
+     */
+    private static function observedCopticDay(array $entry, int $copticYear): int
+    {
+        if (isset($entry['observed_coptic_day_after_leap']) && $copticYear % 4 === 0) {
+            return $entry['observed_coptic_day_after_leap'];
+        }
+        return $entry['coptic_day'];
+    }
+
+    /**
      * All fixed feasts that fall within the given Gregorian year.
      * A Gregorian year spans two Coptic years, so we check both and dedupe.
      * @return list<Feast>
@@ -77,7 +92,7 @@ final class CopticCalendar
                     continue;
                 }
                 try {
-                    $c = new CopticDate($cYear, $entry['coptic_month'], $entry['coptic_day']);
+                    $c = new CopticDate($cYear, $entry['coptic_month'], self::observedCopticDay($entry, $cYear));
                     $g = $c->toGregorian();
                     if ($g->year === $gregorianYear && !isset($seen[$entry['id']])) {
                         $seen[$entry['id']] = true;

@@ -3,7 +3,8 @@
     "id": "nativity",
     "names": { "en": "Nativity of Christ", "ar": "عيد الميلاد المجيد" },
     "type": "fixed", "category": "major",
-    "coptic_month": 4, "coptic_day": 29
+    "coptic_month": 4, "coptic_day": 29,
+    "observed_coptic_day_after_leap": 28
   },
   {
     "id": "epiphany",
@@ -19,7 +20,7 @@
   },
   {
     "id": "assumption",
-    "names": { "en": "Assumption of Mary", "ar": "عيد انتقال العذراء" },
+    "names": { "en": "Assumption of Mary", "ar": "عيد صعود جسد العذراء" },
     "type": "fixed", "category": "major",
     "coptic_month": 12, "coptic_day": 16
   },

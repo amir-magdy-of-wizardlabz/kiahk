@@ -10,6 +10,7 @@ export interface FeastData {
     easter_offset?: number;
     coptic_month?: number;
     coptic_day?: number;
+    observed_coptic_day_after_leap?: number;
 }
 export declare class Feast {
     readonly id: string;

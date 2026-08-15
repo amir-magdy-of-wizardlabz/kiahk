@@ -275,6 +275,21 @@ def test_coptic_calendar_moveable_feast_vectors(vec):
     assert feast.id == vec["feast_id"]
 
 
+# ---- CopticCalendar fixed feasts --------------------------------------------
+
+
+@pytest.mark.parametrize("vec", VECTORS["fixed_feasts"])
+def test_coptic_calendar_fixed_feast_vectors(vec):
+    from kiahk.coptic_calendar import CopticCalendar
+
+    d = vec["date"]
+    feast = next(
+        f for f in CopticCalendar.year_feasts(vec["gregorian_year"]) if f.id == vec["feast_id"]
+    )
+    g = feast.gregorian_date
+    assert (g.year, g.month, g.day) == (d["year"], d["month"], d["day"])
+
+
 # ---- CopticCalendar.year_feasts ---------------------------------------------
 
 

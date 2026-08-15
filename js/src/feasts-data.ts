@@ -10,7 +10,10 @@ export const FEASTS: FeastData[] = [
     id: 'nativity',
     names: { en: 'Nativity of Christ', ar: 'عيد الميلاد المجيد' },
     type: 'fixed', category: 'major',
-    coptic_month: 4, coptic_day: 29
+    coptic_month: 4, coptic_day: 29,
+    // Observed on 28 Koiak when the Coptic year is a multiple of 4, keeping the
+    // Nativity on 7 January. See core/algorithms.md §3a.
+    observed_coptic_day_after_leap: 28
   },
   {
     id: 'epiphany',
@@ -26,7 +29,7 @@ export const FEASTS: FeastData[] = [
   },
   {
     id: 'assumption',
-    names: { en: 'Assumption of Mary', ar: 'عيد انتقال العذراء' },
+    names: { en: 'Assumption of Mary', ar: 'عيد صعود جسد العذراء' },
     type: 'fixed', category: 'major',
     coptic_month: 12, coptic_day: 16
   },

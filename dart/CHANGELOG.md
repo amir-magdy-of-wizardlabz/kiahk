@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.6
+
+- **Fix: the Nativity is now 7 January in every year.** It was resolved as a
+  purely fixed 29 Koiak, which lands on 8 January in Coptic years that are a
+  multiple of 4 (Gregorian leap years — 2024, 2028, …). The Coptic Church keeps
+  it on 28 Koiak in those years so the feast stays on 7 January. Other fixed
+  feasts are unaffected and still shift by a day (Epiphany is 20 January 2024).
+- **Fix: Arabic name of the Assumption** — `عيد صعود جسد العذراء` instead of
+  `عيد انتقال العذراء`, which names the Dormition (21 Tobi).
+- `FeastRecord` gains an optional `observedCopticDayAfterLeap` field.
+
+
 ## 0.1.5
 
 - Coordinated release across all ports — no Dart API changes since 0.1.4.

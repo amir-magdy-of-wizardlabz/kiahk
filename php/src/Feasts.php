@@ -15,15 +15,15 @@ final class Feasts
     /**
      * All feast records.
      *
-     * @return list<array{id:string,names:array<string,string>,type:string,category:string,coptic_month?:int,coptic_day?:int,easter_offset?:int}>
+     * @return list<array{id:string,names:array<string,string>,type:string,category:string,coptic_month?:int,coptic_day?:int,easter_offset?:int,observed_coptic_day_after_leap?:int}>
      */
     public static function all(): array
     {
         return [
-            ['id' => 'nativity',     'names' => ['en' => 'Nativity of Christ',   'ar' => 'عيد الميلاد المجيد'],   'type' => 'fixed',    'category' => 'major', 'coptic_month' => 4,  'coptic_day' => 29],
+            ['id' => 'nativity',     'names' => ['en' => 'Nativity of Christ',   'ar' => 'عيد الميلاد المجيد'],   'type' => 'fixed',    'category' => 'major', 'coptic_month' => 4,  'coptic_day' => 29, 'observed_coptic_day_after_leap' => 28],
             ['id' => 'epiphany',     'names' => ['en' => 'Epiphany (Theophany)', 'ar' => 'عيد الغطاس'],          'type' => 'fixed',    'category' => 'major', 'coptic_month' => 5,  'coptic_day' => 11],
             ['id' => 'annunciation', 'names' => ['en' => 'Annunciation',         'ar' => 'عيد البشارة'],         'type' => 'fixed',    'category' => 'major', 'coptic_month' => 7,  'coptic_day' => 29],
-            ['id' => 'assumption',   'names' => ['en' => 'Assumption of Mary',   'ar' => 'عيد انتقال العذراء'],  'type' => 'fixed',    'category' => 'major', 'coptic_month' => 12, 'coptic_day' => 16],
+            ['id' => 'assumption',   'names' => ['en' => 'Assumption of Mary',   'ar' => 'عيد صعود جسد العذراء'],  'type' => 'fixed',    'category' => 'major', 'coptic_month' => 12, 'coptic_day' => 16],
             ['id' => 'cross',        'names' => ['en' => 'Feast of the Cross',   'ar' => 'عيد الصليب'],          'type' => 'fixed',    'category' => 'major', 'coptic_month' => 1,  'coptic_day' => 17],
             ['id' => 'nineveh_fast', 'names' => ['en' => 'Nineveh Fast',         'ar' => 'صوم نينوى'],           'type' => 'moveable', 'category' => 'major', 'easter_offset' => -69],
             ['id' => 'great_lent',   'names' => ['en' => 'Great Lent (start)',   'ar' => 'بداية الصوم الكبير'],  'type' => 'moveable', 'category' => 'major', 'easter_offset' => -55],

@@ -35,6 +35,19 @@
     { "gregorian_year": 2026, "feast_id": "nineveh_fast", "date": { "year": 2026, "month": 2,  "day": 2  } },
     { "gregorian_year": 2026, "feast_id": "easter",       "date": { "year": 2026, "month": 4,  "day": 12 } }
   ],
+  "fixed_feasts": [
+    { "gregorian_year": 2023, "feast_id": "nativity",     "date": { "year": 2023, "month": 1,  "day": 7  } },
+    { "gregorian_year": 2024, "feast_id": "nativity",     "date": { "year": 2024, "month": 1,  "day": 7  } },
+    { "gregorian_year": 2025, "feast_id": "nativity",     "date": { "year": 2025, "month": 1,  "day": 7  } },
+    { "gregorian_year": 2026, "feast_id": "nativity",     "date": { "year": 2026, "month": 1,  "day": 7  } },
+    { "gregorian_year": 2020, "feast_id": "nativity",     "date": { "year": 2020, "month": 1,  "day": 7  } },
+    { "gregorian_year": 2024, "feast_id": "epiphany",     "date": { "year": 2024, "month": 1,  "day": 20 } },
+    { "gregorian_year": 2026, "feast_id": "epiphany",     "date": { "year": 2026, "month": 1,  "day": 19 } },
+    { "gregorian_year": 2024, "feast_id": "annunciation", "date": { "year": 2024, "month": 4,  "day": 7  } },
+    { "gregorian_year": 2024, "feast_id": "assumption",   "date": { "year": 2024, "month": 8,  "day": 22 } },
+    { "gregorian_year": 2023, "feast_id": "cross",        "date": { "year": 2023, "month": 9,  "day": 28 } },
+    { "gregorian_year": 2025, "feast_id": "cross",        "date": { "year": 2025, "month": 9,  "day": 27 } }
+  ],
   "invalid_coptic_dates": [
     { "year": 1741, "month": 0,  "day": 1  },
     { "year": 1741, "month": 14, "day": 1  },

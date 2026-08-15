@@ -24,7 +24,7 @@ Pure Kotlin, no Android-specific dependencies — runs on the **JVM (server, des
 
 ```kotlin
 dependencies {
-    implementation("com.wizardlabz:kiahk:0.1.5")
+    implementation("com.wizardlabz:kiahk:0.1.6")
 }
 ```
 
@@ -32,7 +32,7 @@ dependencies {
 
 ```groovy
 dependencies {
-    implementation 'com.wizardlabz:kiahk:0.1.5'
+    implementation 'com.wizardlabz:kiahk:0.1.6'
 }
 ```
 
@@ -42,7 +42,7 @@ dependencies {
 <dependency>
     <groupId>com.wizardlabz</groupId>
     <artifactId>kiahk</artifactId>
-    <version>0.1.5</version>
+    <version>0.1.6</version>
 </dependency>
 ```
 

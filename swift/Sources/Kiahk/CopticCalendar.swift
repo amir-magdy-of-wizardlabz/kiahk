@@ -77,6 +77,14 @@ public enum CopticCalendar {
     /// A Coptic month/day falls in two possible Coptic years that overlap with the
     /// same Gregorian year. Try both candidates, keep the one landing inside
     /// `gregorianYear`; fall back to the earlier candidate.
+    /// Coptic day `rec` is kept on in `copticYear`. The Nativity moves to
+    /// 28 Koiak when the Coptic year is a multiple of 4 — the year after a
+    /// 6-day Nasie — so it stays on 7 January. See core/algorithms.md §3a.
+    private static func _observedCopticDay(_ rec: FeastRecord, copticYear: Int) -> Int {
+        if let observed = rec.observedCopticDayAfterLeap, copticYear % 4 == 0 { return observed }
+        return rec.copticDay!
+    }
+
     private static func _fixedFeast(_ rec: FeastRecord, gregorianYear: Int) throws -> Feast {
         let cYearA = gregorianToCoptic(year: gregorianYear, month: 1, day: 1).year
         let cYearB = gregorianToCoptic(year: gregorianYear, month: 12, day: 31).year
@@ -84,13 +92,15 @@ public enum CopticCalendar {
         var candidates: [(year: Int, month: Int, day: Int)] = []
         var seen = Set<Int>()
         for cy in [cYearA, cYearB] where seen.insert(cy).inserted {
-            let d = copticToGregorian(year: cy, month: rec.copticMonth!, day: rec.copticDay!)
+            let d = copticToGregorian(year: cy, month: rec.copticMonth!,
+                                      day: _observedCopticDay(rec, copticYear: cy))
             if d.year == gregorianYear {
                 candidates.append(d)
             }
         }
         if candidates.isEmpty {
-            candidates.append(copticToGregorian(year: cYearA, month: rec.copticMonth!, day: rec.copticDay!))
+            candidates.append(copticToGregorian(year: cYearA, month: rec.copticMonth!,
+                                                day: _observedCopticDay(rec, copticYear: cYearA)))
         }
         candidates.sort { a, b in
             if a.year != b.year { return a.year < b.year }

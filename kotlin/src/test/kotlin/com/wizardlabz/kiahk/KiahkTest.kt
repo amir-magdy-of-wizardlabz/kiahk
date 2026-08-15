@@ -122,6 +122,25 @@ class KiahkTest {
         }
 
     // -------------------------------------------------------------------------
+    // Fixed feasts
+    // -------------------------------------------------------------------------
+
+    @TestFactory
+    fun fixedFeasts(): List<DynamicTest> =
+        vectors.array("fixed_feasts").mapIndexed { i, raw ->
+            DynamicTest.dynamicTest("fixed#$i") {
+                val v = raw.asJsonObject
+                val exp = v.obj("date")
+                val id = v["feast_id"].asString
+                val feast = CopticCalendar.yearFeasts(v.int("gregorian_year")).single { it.id == id }
+                assertEquals(exp.int("year"), feast.gregorianDate.year)
+                assertEquals(exp.int("month"), feast.gregorianDate.month)
+                assertEquals(exp.int("day"), feast.gregorianDate.day)
+                assertEquals("fixed", feast.type)
+            }
+        }
+
+    // -------------------------------------------------------------------------
     // Year feasts (sorting + completeness)
     // -------------------------------------------------------------------------
 

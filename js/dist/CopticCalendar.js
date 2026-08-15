@@ -29,6 +29,15 @@ export class CopticCalendar {
         const gDate = new GregorianDate(y, m, d);
         return new Feast(data, gDate, gDate.toCoptic());
     }
+    /**
+     * Coptic day a fixed feast is kept on in `copticYear`. The Nativity is
+     * observed on 28 Koiak when the Coptic year is a multiple of 4 — the year
+     * after a 6-day Nasie — so it stays on 7 January. See core/algorithms.md §3a.
+     */
+    static observedCopticDay(data, copticYear) {
+        const observed = data.observed_coptic_day_after_leap;
+        return observed !== undefined && copticYear % 4 === 0 ? observed : data.coptic_day;
+    }
     static fixedFeasts(gregorianYear) {
         // A Gregorian year spans two Coptic years — check both
         const cYearStart = new GregorianDate(gregorianYear, 1, 1).toCoptic().year;
@@ -37,7 +46,7 @@ export class CopticCalendar {
         for (const copticYear of [cYearStart, cYearStart + 1]) {
             for (const data of FEASTS.filter(f => f.type === 'fixed')) {
                 try {
-                    const c = new CopticDate(copticYear, data.coptic_month, data.coptic_day);
+                    const c = new CopticDate(copticYear, data.coptic_month, this.observedCopticDay(data, copticYear));
                     const g = c.toGregorian();
                     if (g.year === gregorianYear && !seen.has(data.id)) {
                         seen.add(data.id);

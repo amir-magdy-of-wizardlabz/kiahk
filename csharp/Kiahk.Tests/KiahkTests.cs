@@ -45,6 +45,7 @@ internal sealed record Vectors(
     GregCoptic[] Coptic_To_Gregorian,
     EasterVec[] Easter,
     MoveableVec[] Moveable_Feasts,
+    MoveableVec[] Fixed_Feasts,
     YMD[] Invalid_Coptic_Dates,
     YMD[] Invalid_Gregorian_Dates,
     MonthNameVec[] Coptic_Month_Names,
@@ -397,6 +398,23 @@ public class CopticCalendarMoveableFeastTests
     {
         var feast = CopticCalendar.MoveableFeast(id, year);
         Assert.Equal(id, feast.Id);
+        Assert.Equal((ey, em, ed), (feast.GregorianDate.Year, feast.GregorianDate.Month, feast.GregorianDate.Day));
+    }
+}
+
+public class CopticCalendarFixedFeastTests
+{
+    public static IEnumerable<object[]> Vectors() =>
+        TestVectors.V.Fixed_Feasts.Select(v => new object[]
+        {
+            v.Feast_Id, v.Gregorian_Year, v.Date.Year, v.Date.Month, v.Date.Day,
+        });
+
+    [Theory]
+    [MemberData(nameof(Vectors))]
+    public void FixedFeastVectors(string id, int year, int ey, int em, int ed)
+    {
+        var feast = CopticCalendar.YearFeasts(year).Single(f => f.Id == id);
         Assert.Equal((ey, em, ed), (feast.GregorianDate.Year, feast.GregorianDate.Month, feast.GregorianDate.Day));
     }
 }

@@ -32,6 +32,16 @@ kiahk_error kiahk_moveable_feast(const char *id, int gregorian_year, kiahk_feast
     return KIAHK_OK;
 }
 
+/* Coptic day a fixed feast is kept on in coptic_year. The Nativity moves to
+ * 28 Koiak when the Coptic year is a multiple of 4 -- the year after a 6-day
+ * Nasie -- so it stays on 7 January. See core/algorithms.md section 3a. */
+static int observed_coptic_day(const kiahk_feast_record *rec, int coptic_year) {
+    if (rec->observed_coptic_day_after_leap != 0 && coptic_year % 4 == 0) {
+        return rec->observed_coptic_day_after_leap;
+    }
+    return rec->coptic_day;
+}
+
 /* Resolve a fixed Coptic feast to its Gregorian date inside gregorian_year. */
 static kiahk_error fixed_feast(const kiahk_feast_record *rec, int gregorian_year, kiahk_feast *out) {
     int cy_a, cm_a, cd_a;
@@ -49,7 +59,8 @@ static kiahk_error fixed_feast(const kiahk_feast_record *rec, int gregorian_year
     int found = 0;
     for (int i = 0; i < n_candidates; i++) {
         int gy, gm, gd;
-        kiahk_coptic_to_gregorian(candidate_years[i], rec->coptic_month, rec->coptic_day, &gy, &gm, &gd);
+        kiahk_coptic_to_gregorian(candidate_years[i], rec->coptic_month,
+                                  observed_coptic_day(rec, candidate_years[i]), &gy, &gm, &gd);
         if (gy == gregorian_year) {
             if (!found) {
                 picked_y = gy; picked_m = gm; picked_d = gd; found = 1;
@@ -65,7 +76,7 @@ static kiahk_error fixed_feast(const kiahk_feast_record *rec, int gregorian_year
     }
     if (!found) {
         /* Fall back to the earlier candidate year. */
-        kiahk_coptic_to_gregorian(cy_a, rec->coptic_month, rec->coptic_day,
+        kiahk_coptic_to_gregorian(cy_a, rec->coptic_month, observed_coptic_day(rec, cy_a),
                                   &picked_y, &picked_m, &picked_d);
     }
     kiahk_gregorian_date g;

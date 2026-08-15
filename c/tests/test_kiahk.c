@@ -321,6 +321,29 @@ static void test_moveable_feast_vectors(int *failed) {
     }
 }
 
+static void test_fixed_feast_vectors(int *failed) {
+    cJSON *arr = vec_array("fixed_feasts");
+    cJSON *vec;
+    cJSON_ArrayForEach(vec, arr) {
+        const char *id = cJSON_GetObjectItemCaseSensitive(vec, "feast_id")->valuestring;
+        int year = cJSON_GetObjectItemCaseSensitive(vec, "gregorian_year")->valueint;
+        cJSON *d = cJSON_GetObjectItemCaseSensitive(vec, "date");
+        kiahk_feast buf[32];
+        size_t count = 0;
+        KIAHK_ASSERT_EQ_INT(kiahk_year_feasts(year, buf, 32, &count), KIAHK_OK);
+        int found = 0;
+        for (size_t i = 0; i < count; i++) {
+            if (strcmp(buf[i].id, id) != 0) continue;
+            found = 1;
+            KIAHK_ASSERT_EQ_INT(buf[i].gregorian_date.year, ymd_year(d));
+            KIAHK_ASSERT_EQ_INT(buf[i].gregorian_date.month, ymd_month(d));
+            KIAHK_ASSERT_EQ_INT(buf[i].gregorian_date.day, ymd_day(d));
+            break;
+        }
+        KIAHK_ASSERT_TRUE(found);
+    }
+}
+
 static void test_year_feasts_non_empty_and_sorted(int *failed) {
     kiahk_feast buf[32];
     size_t count = 0;
@@ -448,6 +471,7 @@ int main(void) {
     KIAHK_TEST_RUN(feast_name_unknown_locale);
     KIAHK_TEST_RUN(easter_date_vectors);
     KIAHK_TEST_RUN(moveable_feast_vectors);
+    KIAHK_TEST_RUN(fixed_feast_vectors);
     KIAHK_TEST_RUN(year_feasts_non_empty_and_sorted);
     KIAHK_TEST_RUN(year_feasts_includes_easter);
     KIAHK_TEST_RUN(year_feasts_buffer_too_small);

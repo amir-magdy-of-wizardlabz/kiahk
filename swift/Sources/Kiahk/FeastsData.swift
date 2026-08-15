@@ -9,6 +9,10 @@ public struct FeastRecord: Equatable, Hashable, Sendable {
     public let copticMonth: Int?    // valid when type == "fixed"
     public let copticDay: Int?      // valid when type == "fixed"
     public let easterOffset: Int?   // valid when type == "moveable"
+    /// Coptic day the feast is kept on in Coptic years that are a multiple of 4
+    /// (the year after a 6-day Nasie). Only the Nativity sets it: 28 Koiak,
+    /// which keeps it on 7 January. See core/algorithms.md §3a.
+    public let observedCopticDayAfterLeap: Int?
 
     public init(
         id: String,
@@ -17,7 +21,8 @@ public struct FeastRecord: Equatable, Hashable, Sendable {
         category: String,
         copticMonth: Int? = nil,
         copticDay: Int? = nil,
-        easterOffset: Int? = nil
+        easterOffset: Int? = nil,
+        observedCopticDayAfterLeap: Int? = nil
     ) {
         self.id = id
         self.names = names
@@ -26,6 +31,7 @@ public struct FeastRecord: Equatable, Hashable, Sendable {
         self.copticMonth = copticMonth
         self.copticDay = copticDay
         self.easterOffset = easterOffset
+        self.observedCopticDayAfterLeap = observedCopticDayAfterLeap
     }
 }
 
@@ -33,7 +39,8 @@ public struct FeastRecord: Equatable, Hashable, Sendable {
 public let kFeasts: [FeastRecord] = [
     FeastRecord(id: "nativity",
                 names: ["en": "Nativity of Christ", "ar": "عيد الميلاد المجيد"],
-                type: "fixed", category: "major", copticMonth: 4, copticDay: 29),
+                type: "fixed", category: "major", copticMonth: 4, copticDay: 29,
+                observedCopticDayAfterLeap: 28),
     FeastRecord(id: "epiphany",
                 names: ["en": "Epiphany (Theophany)", "ar": "عيد الغطاس"],
                 type: "fixed", category: "major", copticMonth: 5, copticDay: 11),
@@ -41,7 +48,7 @@ public let kFeasts: [FeastRecord] = [
                 names: ["en": "Annunciation", "ar": "عيد البشارة"],
                 type: "fixed", category: "major", copticMonth: 7, copticDay: 29),
     FeastRecord(id: "assumption",
-                names: ["en": "Assumption of Mary", "ar": "عيد انتقال العذراء"],
+                names: ["en": "Assumption of Mary", "ar": "عيد صعود جسد العذراء"],
                 type: "fixed", category: "major", copticMonth: 12, copticDay: 16),
     FeastRecord(id: "cross",
                 names: ["en": "Feast of the Cross", "ar": "عيد الصليب"],
